@@ -1,3 +1,5 @@
+"""Git test"""
+
 def intro():
     ch = ''
     while True:
