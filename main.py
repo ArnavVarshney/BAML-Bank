@@ -3,4 +3,4 @@ def intro():
     print('\t\tMAIN MENU')
 
 if(__name__ == "__main__"):
-    main()
+    intro()
