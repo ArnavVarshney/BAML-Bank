@@ -1,5 +1,3 @@
-"""Git test 2"""
-
 def intro():
     ch = ''
     while True:
@@ -18,7 +16,7 @@ def intro():
 def aboutUs():
     print('Team XXX')
     print('Members:')
-    print('\tArnav\n\tPradyumn\n\tAditi\n\tMihir\n\tShishir\n')
+    print('\t1. Arnav\n\t2. Pradyumn\n\t3. Aditi\n\t4. Mihir\n\t5. Shishir\n')
     intro()
 
 
