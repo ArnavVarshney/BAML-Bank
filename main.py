@@ -1,16 +1,32 @@
+import account
+
 def intro():
     ch = ''
     while True:
         print('\t  Welcome to XXX')
         print('\t\tMAIN MENU')
+        print('1. Create Account')
         print('#. About')
         print('*. Exit')
         ch = input('Enter your choice: ')
         if ch == '#':
             aboutUs()
+        elif ch == 1:
+            createAccount()
         elif ch == '*':
             print("Goodbye!")
             break
+
+
+def createAccount():
+    accNo = input("Account number: ")
+    name = input("Account holder's name: ")
+    balance = input("Initial balance: ")
+    addressStreet = input("Street: ")
+    addressCity = input("City: ")
+    addressState = input("State: ")
+    addressCountry = input("Country: ")
+    account.Account(accNo, name, balance)
 
 
 def aboutUs():

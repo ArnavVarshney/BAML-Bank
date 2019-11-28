@@ -11,3 +11,9 @@ class ContactDetails:
         self.email = email
         self.phoneNumber = phoneNumber
         self.address = address
+
+
+class PersonDetails:
+    def __init__(self, address, contact):
+        self.address = address
+        self.contact = contact
