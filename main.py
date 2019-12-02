@@ -62,7 +62,7 @@ class Customer(object):
         global_customer_id += 1
         self.customer_id = ("%04d" % global_customer_id)
         global_customer_map[self.customer_id] = self
-        print('Customer created successfully! Customer ID: ' + self.customer_id + '\n')
+        print('Customer created successfully! Customer ID: ' + self.customer_id)
 
     def delete_customer(self):
         global_customer_map.pop(self.customer_id)
@@ -104,7 +104,7 @@ class Account(object):
         self.account_number = str(
             self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts_number))
         self.customer.active_accounts[self.account_number] = self
-        print('Account created successfully! Account ID: ' + self.account_number + '\n')
+        print('Account created successfully! Account ID: ' + self.account_number)
 
     def delete_account(self):
         self.customer.active_accounts_number -= 1
@@ -140,6 +140,7 @@ def intro():
                  '7. About Us', '8. Exit']
     inp = ''
     while True:
+        print()
         print(27 * '=')
         print(1 * '\t' + 'Welcome to Bank XXX')
         print(27 * '=')
