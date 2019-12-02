@@ -44,15 +44,16 @@ class Customer(object):
 
 
 class Account(object):
-    def __init__(self, account_number, balance, customer, max_transaction_amount):
+    def __init__(self, account_number, balance, customer, max_transaction_amount, branch_code):
         self.account_number = account_number
         self.balance = balance
         self.customer = customer
         self.max_transaction_amount = max_transaction_amount
+        self.branch_code = branch_code
 
     def __str__(self):
         return str(
-            self.account_number + '\n' + 'Owner ID: ' + self.customer.customer_id + '\n' + self.balance + '\n' + self.max_transaction_amount)
+            self.account_number + '\n' + 'Owner ID: ' + self.customer.customer_id + '\n' + self.balance + '\n' + self.max_transaction_amount + '\n' + self.branch_code)
 
     def deposit(self, amount):
         if amount <= 0:
