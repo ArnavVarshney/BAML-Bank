@@ -120,11 +120,15 @@ class Account(object):
         else:
             self.balance -= amount
 
+    def get_branch_code(self):
+        return self.account_number[4:8]
+
 
 def intro():
-    menu_list = ['1. Open Account', '2. Close Account', '3. Modify Account', '4. Deposit/Withdraw',
-                 '5. Generate Report',
-                 '6. About Us', '7. Exit']
+    menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
+                 '5. Deposit/Withdraw',
+                 '6. Generate Report',
+                 '7. About Us', '8. Exit']
     inp = ''
     while True:
         print(27 * '=')
@@ -141,6 +145,9 @@ def intro():
             break
         elif inp == '6':
             about()
+        elif inp == '1':
+            c = Customer()
+            c.input_customer()
         else:
             print("Invalid entry!")
 
