@@ -1,7 +1,8 @@
 from datetime import datetime
 from time import sleep
 
-global_customer_id = 1
+global_customer_id = 0
+global_customer_map = {}
 
 
 class Address(object):
@@ -31,45 +32,70 @@ class Address(object):
 
 class Customer(object):
     def __init__(self):
-        global global_customer_id
         self.first_name = ''
         self.last_name = ''
         self.address = ''
         self.phone_number = 0
         self.email = ''
         self.active_accounts = 0
-        self.customer_id = global_customer_id
-        global_customer_id += 1
+        self.customer_id = ''
 
     def __str__(self):
-        return str('Customer ID: ' + str(
-            "%04d" % self.customer_id) + '\n' + 'Full Name: ' + self.first_name + ' ' + self.last_name + '\n' + str(
-            self.address) + '\n' + str(
-            self.phone_number) + '\n' + 'Email ID: ' + self.email + '\n' + 'Active accounts: ' + str(
-            self.active_accounts))
+        return str(
+            'Customer ID: ' + self.customer_id + '\n' + 'Full Name: ' + self.first_name + ' ' + self.last_name + '\n' + str(
+                self.address) + '\n' + str(
+                self.phone_number) + '\n' + 'Email ID: ' + self.email + '\n' + 'Active accounts: ' + str(
+                self.active_accounts))
 
     def input_customer(self):
+        global global_customer_id
         self.first_name = input('First Name: ')
         self.last_name = input('Last Name: ')
         self.address = Address()
         self.address.input_address()
         self.phone_number = input('Phone Number: ')
         self.email = input('Email: ')
+        global_customer_id += 1
+        self.customer_id = ("%04d" % global_customer_id)
+        global_customer_map[self.customer_id] = self
+        print('Customer created successfully! Customer ID: ' + self.customer_id)
 
 
 class Account(object):
-    def __init__(self, balance, customer, max_transaction_amount, branch_code):
-        customer.active_accounts += 1
-        self.account_number = str(
-            "%04d" % customer.customer_id + "%04d" % branch_code + "%02d" % customer.active_accounts)
-        self.balance = balance
-        self.customer = customer
-        self.max_transaction_amount = max_transaction_amount
-        self.branch_code = branch_code
+    def __init__(self):
+        self.account_number = ''
+        self.balance = 0
+        self.customer = Customer()
+        self.max_transaction_amount = 0
+        self.branch_code = 0
 
     def __str__(self):
         return str(
-            self.account_number + '\n' + 'Owner ID: ' + self.customer.customer_id + '\n' + self.balance + '\n' + self.max_transaction_amount + '\n' + self.branch_code)
+            'Account Number: ' + self.account_number + '\n' + 'Customer ID: ' + self.customer.customer_id + '\n' + 'Balance' + str(
+                self.balance) + '\n' + 'Maximum Transaction Amount' + str(
+                self.max_transaction_amount) + '\n' + 'Branch Code' + str(self.branch_code))
+
+    def input_account(self):
+        while True:
+            ch = input('Existing customer? (Y/N): ')
+            if ch.upper() == 'Y':
+                existing_customer_id = input('Existing Customer ID: ')
+                if existing_customer_id in global_customer_map:
+                    self.customer = global_customer_map[existing_customer_id]
+                    self.customer.active_accounts += 1
+                    break
+                else:
+                    print('Customer ID does not exist. Recheck ID or register as a new customer.')
+            else:
+                self.customer = Customer()
+                self.customer.input_customer()
+                break
+        self.max_transaction_amount = input('Maximum Transaction Amount: ')
+        self.balance = input('Initial Balance: ')
+        branch_code = input('Branch Code: ')
+        self.account_number = str(
+            self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts))
+        print('Account created successfully! Account ID: ' + self.account_number)
 
     def deposit(self, amount):
         if amount <= 0:
