@@ -1,9 +1,11 @@
 from datetime import datetime
 from time import sleep
 
+global_account_number = 1
+
 
 class Address(object):
-    def __init__(self, zip_code, street_name, city, state, country, landmark, building):
+    def __init__(self, building, street_name, landmark, city, state, country, zip_code):
         self.zip_code = zip_code
         self.street_name = street_name
         self.city = city
@@ -11,6 +13,9 @@ class Address(object):
         self.country = country
         self.landmark = landmark
         self.building = building
+
+    def __str__(self):
+        return 'Address\n\n' + self.building + self.street_name + self.landmark + self.city + self.state + self.country + self.zip_code
 
 
 def intro():
@@ -32,25 +37,33 @@ def intro():
             print('Goodbye!\nLogout time: ', datetime.now().strftime("%H:%M:%S"))
             break
         elif inp == '1':
-            createAccount()
+            create_account()
         elif inp == '6':
             about()
         else:
             print("Invalid entry!")
 
 
-def createAccount():
-    accNo = input("Account number: ")
-    name = input("Account holder's name: ")
-    balance = input("Initial balance: ")
-    addressStreet = input("Street: ")
-    addressCity = input("City: ")
-    addressState = input("State: ")
-    addressCountry = input("Country: ")
+def input_address():
+    loc_building = input('Building: ')
+    loc_street_name = input('Street Name: ')
+    loc_landmark = input('Landmark: ')
+    loc_city = input('City: ')
+    loc_state = input('State: ')
+    loc_country = input('Country: ')
+    loc_zip_code = input('Zip Code: ')
+    return Address(loc_building, loc_street_name, loc_landmark, loc_city, loc_state, loc_country, loc_zip_code)
+
+
+def create_account():
+    global global_account_number
+    account_address = input_address()
+    account_number = global_account_number
+    global_account_number += 1
 
 
 def about():
-    str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav\n\t\t2. Pradyumn\n\t\t3. Aditi\n\t\t4. Mihir\n\t\t5. Shishir\n\n'
+    str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir\n\n'
     for char in str:
         sleep(0.1)
         print(char, end='', flush=True)
