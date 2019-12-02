@@ -17,8 +17,9 @@ class Address(object):
 
     def __str__(self):
         return str(
-            'Building: ' + self.building + '\n' + 'Street: ' + self.street_name + '\n' + 'Landmark: ' + self.landmark + '\n' + 'City: ' + self.city + '\n' + 'State: ' + self.state + '\n' + 'Country: ' + self.country + '\n' + 'Zip Code: ' + str(
-                self.zip_code))
+            'Building: ' + self.building + '\n' + 'Street: ' + self.street_name + '\n' + 'Landmark: ' + self.landmark +
+            '\n' + 'City: ' + self.city + '\n' + 'State: ' + self.state + '\n' + 'Country: ' + self.country + '\n' +
+            'Zip Code: ' + str(self.zip_code))
 
     def input_address(self):
         self.building = input('Building: ')
