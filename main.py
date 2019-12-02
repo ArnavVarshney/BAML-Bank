@@ -37,15 +37,19 @@ class Customer(object):
         self.address = ''
         self.phone_number = 0
         self.email = ''
-        self.active_accounts = 0
+        self.active_accounts_number = 0
         self.customer_id = ''
+        self.active_accounts = []
 
     def __str__(self):
+        active_accounts = ''
+        for i in self.active_accounts:
+            active_accounts += (i + '\n')
         return str(
             'Customer ID: ' + self.customer_id + '\n' + 'Full Name: ' + self.first_name + ' ' + self.last_name + '\n' + str(
                 self.address) + '\n' + str(
                 self.phone_number) + '\n' + 'Email ID: ' + self.email + '\n' + 'Active accounts: ' + str(
-                self.active_accounts))
+                self.active_accounts_number) + '\n' + active_accounts)
 
     def input_customer(self):
         global global_customer_id
@@ -82,7 +86,7 @@ class Account(object):
                 existing_customer_id = input('Existing Customer ID: ')
                 if existing_customer_id in global_customer_map:
                     self.customer = global_customer_map[existing_customer_id]
-                    self.customer.active_accounts += 1
+                    self.customer.active_accounts_number += 1
                     break
                 else:
                     print('Customer ID does not exist. Recheck ID or register as a new customer.')
@@ -94,7 +98,8 @@ class Account(object):
         self.balance = input('Initial Balance: ')
         branch_code = input('Branch Code: ')
         self.account_number = str(
-            self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts))
+            self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts_number))
+        self.customer.active_accounts.append(self.account_number)
         print('Account created successfully! Account ID: ' + self.account_number)
 
     def deposit(self, amount):
