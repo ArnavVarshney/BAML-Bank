@@ -5,18 +5,19 @@ global_customer_id = 1
 
 
 class Address(object):
-    def __init__(self, building, street_name, landmark, city, state, country, zip_code):
-        self.zip_code = zip_code
-        self.street_name = street_name
-        self.city = city
-        self.state = state
-        self.country = country
-        self.landmark = landmark
-        self.building = building
+    def __init__(self):
+        self.zip_code = 0
+        self.street_name = ''
+        self.city = ''
+        self.state = ''
+        self.country = ''
+        self.landmark = ''
+        self.building = ''
 
     def __str__(self):
         return str(
-            self.building + '\n' + self.street_name + '\n' + self.landmark + '\n' + self.city + '\n' + self.state + '\n' + self.country + '\n' + self.zip_code)
+            'Building: ' + self.building + '\n' + 'Street: ' + self.street_name + '\n' + 'Landmark: ' + self.landmark + '\n' + 'City: ' + self.city + '\n' + 'State: ' + self.state + '\n' + 'Country: ' + self.country + '\n' + 'Zip Code: ' + str(
+                self.zip_code))
 
     def input_address(self):
         self.building = input('Building: ')
@@ -29,18 +30,31 @@ class Address(object):
 
 
 class Customer(object):
-    def __init__(self, first_name, last_name, address, phone_number, email, active_accounts, customer_id):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.address = address
-        self.phone_number = phone_number
-        self.email = email
-        self.active_accounts = active_accounts
-        self.customer_id = customer_id
+    def __init__(self):
+        global global_customer_id
+        self.first_name = ''
+        self.last_name = ''
+        self.address = ''
+        self.phone_number = 0
+        self.email = ''
+        self.active_accounts = 0
+        self.customer_id = global_customer_id
+        global_customer_id += 1
 
     def __str__(self):
-        return str(self.customer_id + '\n' + self.first_name + ' ' + self.last_name + '\n' + str(
-            self.address) + '\n' + self.phone_number + '\n' + self.email + '\n' + self.active_accounts)
+        return str('Customer ID: ' + str(
+            "%04d" % self.customer_id) + '\n' + 'Full Name: ' + self.first_name + ' ' + self.last_name + '\n' + str(
+            self.address) + '\n' + str(
+            self.phone_number) + '\n' + 'Email ID: ' + self.email + '\n' + 'Active accounts: ' + str(
+            self.active_accounts))
+
+    def input_customer(self):
+        self.first_name = input('First Name: ')
+        self.last_name = input('Last Name: ')
+        self.address = Address()
+        self.address.input_address()
+        self.phone_number = input('Phone Number: ')
+        self.email = input('Email: ')
 
 
 class Account(object):
