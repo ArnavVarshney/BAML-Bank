@@ -44,8 +44,10 @@ class Customer(object):
 
 
 class Account(object):
-    def __init__(self, account_number, balance, customer, max_transaction_amount, branch_code):
-        self.account_number = account_number
+    def __init__(self, balance, customer, max_transaction_amount, branch_code):
+        customer.active_accounts += 1
+        self.account_number = str(
+            "%04d" % customer.customer_id + "%04d" % branch_code + "%02d" % customer.active_accounts)
         self.balance = balance
         self.customer = customer
         self.max_transaction_amount = max_transaction_amount
