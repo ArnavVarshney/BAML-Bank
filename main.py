@@ -1,7 +1,7 @@
 from datetime import datetime
 from time import sleep
 
-global_account_number = 1
+global_customer_id = 0
 
 
 class Address(object):
@@ -15,7 +15,32 @@ class Address(object):
         self.building = building
 
     def __str__(self):
-        return 'Address\n\n' + self.building + self.street_name + self.landmark + self.city + self.state + self.country + self.zip_code
+        return str(
+            self.building + '\n' + self.street_name + '\n' + self.landmark + '\n' + self.city + '\n' + self.state + '\n' + self.country + '\n' + self.zip_code)
+
+    def input_address(self):
+        self.building = input('Building: ')
+        self.street_name = input('Street Name: ')
+        self.landmark = input('Landmark: ')
+        self.city = input('City: ')
+        self.state = input('State: ')
+        self.country = input('Country: ')
+        self.zip_code = input('Zip Code: ')
+
+
+class Customer(object):
+    def __init__(self, first_name, last_name, address, phone_number, email, active_accounts, customer_id):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.address = address
+        self.phone_number = phone_number
+        self.email = email
+        self.active_accounts = active_accounts
+        self.customer_id = customer_id
+
+    def __str__(self):
+        return str(self.customer_id + '\n' + self.first_name + ' ' + self.last_name + '\n' + str(
+            self.address) + '\n' + self.phone_number + '\n' + self.email + '\n' + self.active_accounts)
 
 
 def intro():
@@ -36,30 +61,10 @@ def intro():
         if inp == '7':
             print('Goodbye!\nLogout time: ', datetime.now().strftime("%H:%M:%S"))
             break
-        elif inp == '1':
-            create_account()
         elif inp == '6':
             about()
         else:
             print("Invalid entry!")
-
-
-def input_address():
-    loc_building = input('Building: ')
-    loc_street_name = input('Street Name: ')
-    loc_landmark = input('Landmark: ')
-    loc_city = input('City: ')
-    loc_state = input('State: ')
-    loc_country = input('Country: ')
-    loc_zip_code = input('Zip Code: ')
-    return Address(loc_building, loc_street_name, loc_landmark, loc_city, loc_state, loc_country, loc_zip_code)
-
-
-def create_account():
-    global global_account_number
-    account_address = input_address()
-    account_number = global_account_number
-    global_account_number += 1
 
 
 def about():
