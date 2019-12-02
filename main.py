@@ -39,7 +39,7 @@ class Customer(object):
         self.email = ''
         self.active_accounts_number = 0
         self.customer_id = ''
-        self.active_accounts = []
+        self.active_accounts = {}
 
     def __str__(self):
         active_accounts = ''
@@ -62,7 +62,11 @@ class Customer(object):
         global_customer_id += 1
         self.customer_id = ("%04d" % global_customer_id)
         global_customer_map[self.customer_id] = self
-        print('Customer created successfully! Customer ID: ' + self.customer_id)
+        print('Customer created successfully! Customer ID: ' + self.customer_id + '\n')
+
+    def delete_customer(self):
+        global_customer_map.pop(self.customer_id)
+        print('Sorry to see you go!')
 
 
 class Account(object):
@@ -99,8 +103,13 @@ class Account(object):
         branch_code = input('Branch Code: ')
         self.account_number = str(
             self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts_number))
-        self.customer.active_accounts.append(self.account_number)
-        print('Account created successfully! Account ID: ' + self.account_number)
+        self.customer.active_accounts[self.account_number] = self
+        print('Account created successfully! Account ID: ' + self.account_number + '\n')
+
+    def delete_account(self):
+        self.customer.active_accounts_number -= 1
+        self.customer.active_accounts.pop(self.account_number)
+        print('Account deleted successfully! Closing Balance: ' + str(self.balance))
 
     def deposit(self, amount):
         if amount <= 0:
@@ -135,19 +144,40 @@ def intro():
         print(1 * '\t' + 'Welcome to Bank XXX')
         print(27 * '=')
         print()
+        print('Login time: ', datetime.now().strftime("%H:%M:%S"))
+        print()
         for i in menu_list:
             print('\t' + i)
         print()
         inp = input('Command: ')
         print()
-        if inp == '7':
+        if inp == '8':
             print('Goodbye!\nLogout time: ', datetime.now().strftime("%H:%M:%S"))
             break
-        elif inp == '6':
+        elif inp == '7':
             about()
         elif inp == '1':
             c = Customer()
             c.input_customer()
+        elif inp == '2':
+            customer_id = input('Enter Customer ID: ')
+            if customer_id in global_customer_map:
+                global_customer_map[customer_id].delete_customer()
+            else:
+                print('Customer does not exist')
+        elif inp == '3':
+            a = Account()
+            a.input_account()
+        elif inp == '4':
+            customer_id = input('Enter Customer ID: ')
+            if customer_id in global_customer_map:
+                account_id = input('Enter Account ID: ')
+                if account_id in global_customer_map[customer_id].active_accounts:
+                    global_customer_map[customer_id].active_accounts[account_id].delete_account()
+                else:
+                    print('Account does not exist')
+            else:
+                print('Customer does not exist')
         else:
             print("Invalid entry!")
 
