@@ -27,6 +27,11 @@ class Transaction(object):
         self.closing_balance = closing_balance
         self.remarks = remarks
 
+    def __str__(self):
+        return str(self.customer_id) + ' | ' + str(
+            self.account_number) + ' | ' + self.date + ' | ' + self.time + ' | ' + str(self.branch) + ' | ' + str(
+            self.amount) + ' | ' + str(self.opening_balance) + ' | ' + str(self.closing_balance) + ' | ' + self.remarks
+
 
 class Address(object):
     def __init__(self):
@@ -263,6 +268,9 @@ def intro():
                         global_customer_map[customer_id].active_accounts[account_id2].deposit(transfer_amount)
                 else:
                     print('Customer does not exist!')
+        elif inp == '6':
+            for i in transactions:
+                print(i)
         else:
             print("Invalid entry!")
 
