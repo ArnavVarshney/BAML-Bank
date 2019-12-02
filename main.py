@@ -180,6 +180,31 @@ def intro():
                     print('Account does not exist!')
             else:
                 print('Customer does not exist!')
+        elif inp == '5':
+            print('\t\t1. Deposit\n\t\t2. Withdraw')
+            ch = input('Command: ')
+            if ch == '1':
+                bal = input('Amount to Deposit: ')
+                customer_id = input('Enter Customer ID: ')
+                if customer_id in global_customer_map:
+                    account_id = input('Enter Account ID: ')
+                    if account_id in global_customer_map[customer_id].active_accounts:
+                        global_customer_map[customer_id].active_accounts[account_id].deposit(bal)
+                    else:
+                        print('Account does not exist!')
+                else:
+                    print('Customer does not exist!')
+            else:
+                bal = input('Amount to Withdraw: ')
+                customer_id = input('Enter Customer ID: ')
+                if customer_id in global_customer_map:
+                    account_id = input('Enter Account ID: ')
+                    if account_id in global_customer_map[customer_id].active_accounts:
+                        global_customer_map[customer_id].active_accounts[account_id].withdraw(bal)
+                    else:
+                        print('Account does not exist!')
+                else:
+                    print('Customer does not exist!')
         else:
             print("Invalid entry!")
 
