@@ -164,7 +164,7 @@ def intro():
             if customer_id in global_customer_map:
                 global_customer_map[customer_id].delete_customer()
             else:
-                print('Customer does not exist')
+                print('Customer does not exist!')
         elif inp == '3':
             a = Account()
             a.input_account()
@@ -175,9 +175,9 @@ def intro():
                 if account_id in global_customer_map[customer_id].active_accounts:
                     global_customer_map[customer_id].active_accounts[account_id].delete_account()
                 else:
-                    print('Account does not exist')
+                    print('Account does not exist!')
             else:
-                print('Customer does not exist')
+                print('Customer does not exist!')
         else:
             print("Invalid entry!")
 
