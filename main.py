@@ -1,5 +1,3 @@
-import account
-
 def intro():
     ch = ''
     while True:
@@ -26,7 +24,6 @@ def createAccount():
     addressCity = input("City: ")
     addressState = input("State: ")
     addressCountry = input("Country: ")
-    account.Account(accNo, name, balance)
 
 
 def aboutUs():
