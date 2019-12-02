@@ -3,6 +3,29 @@ from time import sleep
 
 global_customer_id = 0
 global_customer_map = {}
+transactions = []
+
+
+def get_current_date():
+    return datetime.today().strftime('%d/%m/%Y')
+
+
+def get_current_time():
+    return datetime.now().strftime("%H:%M:%S")
+
+
+class Transaction(object):
+    def __init__(self, customer_id, account_number, date, time, branch, amount, opening_balance, closing_balance,
+                 remarks):
+        self.date = date
+        self.time = time
+        self.customer_id = customer_id
+        self.account_number = account_number
+        self.branch = branch
+        self.amount = amount
+        self.opening_balance = opening_balance
+        self.closing_balance = closing_balance
+        self.remarks = remarks
 
 
 class Address(object):
@@ -64,8 +87,14 @@ class Customer(object):
         self.customer_id = ("%04d" % global_customer_id)
         global_customer_map[self.customer_id] = self
         print('Customer created successfully! Customer ID: ' + self.customer_id)
+        transactions.append(
+            Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
+                        'Customer created successfully!'))
 
     def delete_customer(self):
+        transactions.append(
+            Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
+                        'Customer deleted successfully!'))
         global_customer_map.pop(self.customer_id)
         print('Sorry to see you go!')
 
@@ -107,8 +136,14 @@ class Account(object):
             self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts_number))
         self.customer.active_accounts[self.account_number] = self
         print('Account created successfully! Account ID: ' + self.account_number)
+        transactions.append(
+            Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
+                        self.get_branch_code(), None, self.balance, self.balance, 'Account created successfully!'))
 
     def delete_account(self):
+        transactions.append(
+            Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
+                        self.get_branch_code(), None, self.balance, 0, 'Account deleted successfully!'))
         self.customer.active_accounts_number -= 1
         self.customer.active_accounts.pop(self.account_number)
         print('Account deleted successfully! Closing Balance: ' + str(self.balance))
@@ -120,6 +155,10 @@ class Account(object):
             print('Amount entered is more than the maximum.\nTransaction aborted!')
         else:
             self.balance += amount
+            transactions.append(
+                Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
+                            self.get_branch_code(), amount, self.balance - amount, self.balance,
+                            str(amount) + ' deposited successfully!'))
 
     def withdraw(self, amount):
         if amount <= 0:
@@ -130,6 +169,10 @@ class Account(object):
             print('Amount entered is more than balance.\nTransaction aborted!')
         else:
             self.balance -= amount
+            transactions.append(
+                Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
+                            self.get_branch_code(), amount, self.balance + amount, self.balance,
+                            str(amount) + ' withdrawn successfully!'))
 
     def get_branch_code(self):
         return self.account_number[4:8]
@@ -147,7 +190,7 @@ def intro():
         print(1 * '\t' + 'Welcome to Bank XXX')
         print(27 * '=')
         print()
-        print('Login time: ', datetime.now().strftime("%H:%M:%S"))
+        print('Login time: ', get_current_time())
         print()
         for i in menu_list:
             print('\t' + i)
@@ -155,7 +198,7 @@ def intro():
         inp = input('Command: ')
         print()
         if inp == '8':
-            print('Goodbye!\nLogout time: ', datetime.now().strftime("%H:%M:%S"))
+            print('Goodbye!\nLogout time: ', get_current_time())
             break
         elif inp == '7':
             about()
