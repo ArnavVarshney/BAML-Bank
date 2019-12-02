@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import sleep
 
 
 def intro():
@@ -21,6 +22,8 @@ def intro():
             break
         elif inp == '1':
             createAccount()
+        elif inp == '6':
+            about()
         else:
             print("Invalid entry!")
 
@@ -35,10 +38,12 @@ def createAccount():
     addressCountry = input("Country: ")
 
 
-def aboutUs():
-    print('Team XXX')
-    print('Members:')
-    print('\t1. Arnav\n\t2. Pradyumn\n\t3. Aditi\n\t4. Mihir\n\t5. Shishir\n')
+def about():
+    str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav\n\t\t2. Pradyumn\n\t\t3. Aditi\n\t\t4. Mihir\n\t\t5. Shishir\n\n'
+    for char in str:
+        sleep(0.1)
+        print(char, end='', flush=True)
+    sleep(1)
     intro()
 
 
