@@ -126,7 +126,7 @@ class Account(object):
         elif amount > self.max_transaction_amount:
             print('Amount entered is more than the maximum.\nTransaction aborted!')
         elif amount > self.balance:
-            print('Amount entered is more than balance.\nTransaction aborted')
+            print('Amount entered is more than balance.\nTransaction aborted!')
         else:
             self.balance -= amount
 
@@ -136,7 +136,7 @@ class Account(object):
 
 def intro():
     menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
-                 '5. Deposit/Withdraw',
+                 '5. Transact',
                  '6. Generate Report',
                  '7. About Us', '8. Exit']
     inp = ''
@@ -181,7 +181,7 @@ def intro():
             else:
                 print('Customer does not exist!')
         elif inp == '5':
-            print('\t\t1. Deposit\n\t\t2. Withdraw')
+            print('\t\t1. Deposit\n\t\t2. Withdraw\n\t\t3. Account to Account transfer\n')
             ch = input('Command: ')
             if ch == '1':
                 bal = input('Amount to Deposit: ')
@@ -194,7 +194,7 @@ def intro():
                         print('Account does not exist!')
                 else:
                     print('Customer does not exist!')
-            else:
+            elif ch == '2':
                 bal = input('Amount to Withdraw: ')
                 customer_id = input('Enter Customer ID: ')
                 if customer_id in global_customer_map:
@@ -203,6 +203,20 @@ def intro():
                         global_customer_map[customer_id].active_accounts[account_id].withdraw(bal)
                     else:
                         print('Account does not exist!')
+                else:
+                    print('Customer does not exist!')
+            else:
+                customer_id = input('Enter Customer ID: ')
+                if customer_id in global_customer_map:
+                    account_id1 = input('Account to Withdraw from: ')
+                    account_id2 = input('Account to Deposit to: ')
+                    if account_id1 not in global_customer_map[customer_id].active_accounts or account_id2 not in \
+                            global_customer_map[customer_id].active_accounts:
+                        print('Accounts not found!')
+                    else:
+                        transfer_amount = input('Amount to transfer: ')
+                        global_customer_map[customer_id].active_accounts[account_id1].withdraw(transfer_amount)
+                        global_customer_map[customer_id].active_accounts[account_id2].deposit(transfer_amount)
                 else:
                     print('Customer does not exist!')
         else:
