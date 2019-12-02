@@ -2,6 +2,17 @@ from datetime import datetime
 from time import sleep
 
 
+class Address(object):
+    def __init__(self, zip_code, street_name, city, state, country, landmark, building):
+        self.zip_code = zip_code
+        self.street_name = street_name
+        self.city = city
+        self.state = state
+        self.country = country
+        self.landmark = landmark
+        self.building = building
+
+
 def intro():
     menu_list = ['1. Open Account', '2. Close Account', '3. Modify Account', '4. Deposit/Withdraw',
                  '5. Generate Report',
