@@ -1,19 +1,28 @@
+from datetime import datetime
+
+
 def intro():
-    ch = ''
+    menu_list = ['1. Open Account', '2. Close Account', '3. Modify Account', '4. Deposit/Withdraw',
+                 '5. Generate Report',
+                 '6. About Us', '7. Exit']
+    inp = ''
     while True:
-        print('\t  Welcome to XXX')
-        print('\t\tMAIN MENU')
-        print('1. Create Account')
-        print('#. About')
-        print('*. Exit')
-        ch = input('Enter your choice: ')
-        if ch == '#':
-            aboutUs()
-        elif ch == 1:
-            createAccount()
-        elif ch == '*':
-            print("Goodbye!")
+        print(27 * '=')
+        print(1 * '\t' + 'Welcome to Bank XXX')
+        print(27 * '=')
+        print()
+        for i in menu_list:
+            print('\t' + i)
+        print()
+        inp = input('Command: ')
+        print()
+        if inp == '7':
+            print('Goodbye!\nLogout time: ', datetime.now().strftime("%H:%M:%S"))
             break
+        elif inp == '1':
+            createAccount()
+        else:
+            print("Invalid entry!")
 
 
 def createAccount():
