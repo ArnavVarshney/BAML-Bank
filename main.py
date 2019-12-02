@@ -89,6 +89,7 @@ class Account(object):
             if ch.upper() == 'Y':
                 existing_customer_id = input('Existing Customer ID: ')
                 if existing_customer_id in global_customer_map:
+                    print('Customer found. Adding account to customer ID #' + existing_customer_id)
                     self.customer = global_customer_map[existing_customer_id]
                     self.customer.active_accounts_number += 1
                     break
