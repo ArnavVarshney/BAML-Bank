@@ -30,6 +30,14 @@ def get_current_time():
     return datetime.now().strftime("%H:%M:%S")
 
 
+def get_customer_id(account_number):
+    """
+        Returns:
+        string: customer_id of the account, substring[0:4]
+    """
+    return account_number[0:4]
+
+
 def pause():
     """
     Function to pause program execution. Gives user time to interpret the output
@@ -168,7 +176,7 @@ class Customer(object):
         """
         active_accounts = ''
         for i in self.active_accounts:
-            active_accounts += (self.active_accounts[i].account_number + '\n')
+            active_accounts += ('\n' + '\t' + self.active_accounts[i].account_number)
         return str(
             'Customer ID: ' + self.customer_id + '\n' + 'Full Name: ' + self.first_name + ' ' + self.last_name + '\n' + str(
                 self.address) + '\n' + str(
@@ -204,6 +212,9 @@ class Customer(object):
         global_transactions.append(
             Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
                         'Customer deleted successfully!'))
+        # Delete individual accounts
+        for i in self.active_accounts:
+            self.active_accounts[i].delete_account()
         global_customer_map.pop(self.customer_id)
         print('Sorry to see you go!')
 
@@ -246,7 +257,7 @@ class Account(object):
                     break
                 else:
                     print('Customer ID does not exist. Recheck ID or register as a new customer.')
-            else:
+            elif ch.upper() == 'N':
                 # For new customers, creates a new customer then adds a new account to the customer.active_accounts dictionary
                 self.customer = Customer()
                 self.customer.input_customer()
@@ -273,7 +284,7 @@ class Account(object):
                         self.get_branch_code(), None, self.balance, 0, 'Account deleted successfully!'))
         self.customer.active_accounts_number -= 1
         self.customer.active_accounts.pop(self.account_number)
-        print('Account deleted successfully! Closing Balance: ' + str(self.balance))
+        print('Account ' + str(self.account_number) + ' deleted successfully! Closing Balance: ' + str(self.balance))
 
     def deposit(self, amount):
         """
@@ -324,6 +335,7 @@ class Account(object):
 
 def intro():
     # TODO: Add options to view customer/account details
+    # TODO: Add option to modify customer/account details
     main_menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
                       '5. Transact',
                       '6. Generate Report',
@@ -332,7 +344,8 @@ def intro():
 
     # TODO: Refine log by date (bisect module)
     report_menu_list = ['1. View all transactions', '2. View transactions by Branch',
-                        '3. View transactions by Customer', '4. View transactions by Account']
+                        '3. View transactions by Customer', '4. View transactions by Account',
+                        '5. Generate Customer Report', '6. Generate Account Report']
     while True:
         print()
         print(27 * '=')
@@ -349,18 +362,22 @@ def intro():
             break
         elif inp == '7':
             about()
+            pause()
         elif inp == '1':
             c = Customer()
             c.input_customer()
+            pause()
         elif inp == '2':
             customer_id = input('Customer ID: ')
             if customer_id in global_customer_map:
                 global_customer_map[customer_id].delete_customer()
             else:
                 print('Customer does not exist!')
+            pause()
         elif inp == '3':
             a = Account()
             a.input_account()
+            pause()
         elif inp == '4':
             customer_id = input('Customer ID: ')
             if customer_id in global_customer_map:
@@ -371,6 +388,7 @@ def intro():
                     print('Account does not exist!')
             else:
                 print('Customer does not exist!')
+            pause()
         elif inp == '5':
             for i in transact_menu_list:
                 print('\t\t' + i)
@@ -399,19 +417,18 @@ def intro():
                 else:
                     print('Customer does not exist!')
             else:
-                customer_id = input('Customer ID: ')
-                if customer_id in global_customer_map:
-                    account_id1 = input('Account to Withdraw from: ')
-                    account_id2 = input('Account to Deposit to: ')
-                    if account_id1 not in global_customer_map[customer_id].active_accounts or account_id2 not in \
-                            global_customer_map[customer_id].active_accounts:
-                        print('Accounts not found!')
-                    else:
-                        transfer_amount = input('Amount to transfer: ')
-                        global_customer_map[customer_id].active_accounts[account_id1].withdraw(transfer_amount)
-                        global_customer_map[customer_id].active_accounts[account_id2].deposit(transfer_amount)
+                account_id1 = input('Account to Withdraw from: ')
+                customer_id1 = get_customer_id(account_id1)
+                account_id2 = input('Account to Deposit to: ')
+                customer_id2 = get_customer_id(account_id2)
+                if account_id1 not in global_customer_map[customer_id1].active_accounts or account_id2 not in \
+                        global_customer_map[customer_id2].active_accounts:
+                    print('Account(s) not found!')
                 else:
-                    print('Customer does not exist!')
+                    transfer_amount = input('Amount to transfer: ')
+                    global_customer_map[customer_id1].active_accounts[account_id1].withdraw(transfer_amount)
+                    global_customer_map[customer_id2].active_accounts[account_id2].deposit(transfer_amount)
+            pause()
         elif inp == '6':
             # TODO: Give heading to outputted values
             for i in report_menu_list:
@@ -422,10 +439,8 @@ def intro():
                 if len(global_transactions) > 0:
                     for i in global_transactions:
                         print(i)
-                    pause()
                 else:
                     print('No transactions found!')
-                    pause()
             elif ch == '2':
                 branch_code = input('Branch code: ')
                 ls = list(filter(lambda x: x.branch == branch_code, global_transactions))
@@ -450,20 +465,40 @@ def intro():
                 else:
                     for i in ls:
                         print(i)
+            elif ch == '5':
+                customer_id = input('Customer ID: ')
+                if customer_id in global_customer_map:
+                    print(global_customer_map[customer_id])
+                else:
+                    print('Customer does not exist!')
+            elif ch == '6':
+                customer_id = input('Customer ID: ')
+                if customer_id in global_customer_map:
+                    account_number = input('Account Number: ')
+                    if account_number in global_customer_map[customer_id].active_accounts:
+                        print(global_customer_map[customer_id].active_accounts[account_number])
+                    else:
+                        print('Account does not exist!')
+                else:
+                    print('Customer does not exist!')
             else:
                 print("Invalid entry!")
+            pause()
         else:
             print("Invalid entry!")
+            pause()
 
 
 def about():
+    """
+    Prints the team info with a not-so-typewriter effect
+    """
     about_str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n'
     for char in about_str:
         sleep(0.1)
         print(char, end='', flush=True)
-    sleep(5)
-    intro()
 
 
+# How do I document this? xD
 if __name__ == "__main__":
     intro()
