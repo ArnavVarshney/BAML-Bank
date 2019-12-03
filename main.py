@@ -278,8 +278,11 @@ def intro():
             print()
             ch = input('Command: ')
             if ch == '1':
-                for i in global_transactions:
-                    print(i)
+                if len(global_transactions) > 0:
+                    for i in global_transactions:
+                        print(i)
+                else:
+                    print('No transactions found!')
             elif ch == '2':
                 branch_code = input('Branch code: ')
                 ls = list(filter(lambda x: x.branch == branch_code, global_transactions))
