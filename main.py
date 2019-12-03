@@ -1,17 +1,38 @@
-from datetime import datetime
-from time import sleep
+# TODO: Pause program execution at appropriate points
+# TODO: Possibly add file IO to save current state
+# TODO: Possibly add user-side to the bank
+# Imported modules:
+import os
+from datetime import datetime  # datetime - for getting current system date and time,
+from time import sleep  # sleep - pausing execution for a few seconds
 
-global_customer_id = 0
-global_customer_map = {}
-global_transactions = []
+#  Global variables:
+global_customer_id = 0  # holds currently issued account number
+global_customer_map = {}  # maps customer_id to customer
+global_transactions = []  # global transaction log
 
 
 def get_current_date():
+    """Returns current system date by using the datetime module in DD/MM/YYYY format"""
     return datetime.today().strftime('%d/%m/%Y')
 
 
 def get_current_time():
+    """Returns current system time by using the datetime module in HH:MM:SS format"""
     return datetime.now().strftime("%H:%M:%S")
+
+
+# TODO: Solve cross-platform compatibility issues
+def pause():
+    """Function to pause program execution. Gives user time to interpret the output"""
+    # For UNIX based systems
+    lol = ''
+    print('\nEnter any character to continue: ', end='')
+    while lol == '':
+        lol = input()
+
+    # For Windows systems
+    os.system('PAUSE')
 
 
 class Transaction(object):
@@ -27,6 +48,7 @@ class Transaction(object):
         self.closing_balance = closing_balance
         self.remarks = remarks
 
+    # TODO: Give heading to outputted values
     def __str__(self):
         return str(self.customer_id) + ' | ' + str(
             self.account_number) + ' | ' + self.date + ' | ' + self.time + ' | ' + str(self.branch) + ' | ' + str(
@@ -49,6 +71,7 @@ class Address(object):
             '\n' + 'City: ' + self.city + '\n' + 'State: ' + self.state + '\n' + 'Country: ' + self.country + '\n' +
             'Zip Code: ' + str(self.zip_code))
 
+    # TODO: Add validation rules for inputted values
     def input_address(self):
         self.building = input('Building: ')
         self.street_name = input('Street Name: ')
@@ -80,6 +103,7 @@ class Customer(object):
                 self.phone_number) + '\n' + 'Email ID: ' + self.email + '\n' + 'Active accounts: ' + str(
                 self.active_accounts_number) + '\n' + active_accounts)
 
+    # TODO: Add validation rules for inputted values
     def input_customer(self):
         global global_customer_id
         self.first_name = input('First Name: ')
@@ -118,6 +142,7 @@ class Account(object):
                 self.balance) + '\n' + 'Maximum Transaction Amount' + str(
                 self.max_transaction_amount) + '\n' + 'Branch Code' + str(self.branch_code))
 
+    # TODO: Add validation rules for inputted values
     def input_account(self):
         while True:
             ch = input('Existing customer? (Y/N): ')
@@ -189,6 +214,8 @@ def intro():
                       '6. Generate Report',
                       '7. About Us', '8. Exit']
     transact_menu_list = ['1. Deposit', '2.Withdraw', '3. Account to Account transfer']
+
+    # TODO: Refine log by date (bisect module)
     report_menu_list = ['1. View all transactions', '2. View transactions by Branch',
                         '3. View transactions by Customer', '4. View transactions by Account']
     while True:
@@ -281,8 +308,12 @@ def intro():
                 if len(global_transactions) > 0:
                     for i in global_transactions:
                         print(i)
+                    # os.system('pause') (Windows only)
+                    pause()
                 else:
                     print('No transactions found!')
+                    # os.system('pause') (Windows only)
+                    pause()
             elif ch == '2':
                 branch_code = input('Branch code: ')
                 ls = list(filter(lambda x: x.branch == branch_code, global_transactions))
@@ -314,7 +345,7 @@ def intro():
 
 
 def about():
-    about_str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir\n\n'
+    about_str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n'
     for char in about_str:
         sleep(0.1)
         print(char, end='', flush=True)
