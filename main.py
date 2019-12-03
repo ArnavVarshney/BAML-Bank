@@ -174,7 +174,8 @@ class Customer(object):
                         'Customer deleted successfully!'))
         # Delete individual accounts
         for i in self.active_accounts:
-            self.active_accounts[i].delete_account()
+            self.active_accounts[i].delete_account(False)
+        self.active_accounts.clear()  # Squash a bug where changing dictionary size nukes execution
         global_customer_map.pop(self.customer_id)
         print('Sorry to see you go!')
 
@@ -235,7 +236,7 @@ class Account(object):
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                         self.get_branch_code(), None, self.balance, self.balance, 'Account created successfully!'))
 
-    def delete_account(self):
+    def delete_account(self, pop_from_list):
         """
         Delete function to delete an object of Account class
         """
@@ -244,7 +245,8 @@ class Account(object):
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                         self.get_branch_code(), None, self.balance, 0, 'Account deleted successfully!'))
         self.customer.active_accounts_number -= 1
-        self.customer.active_accounts.pop(self.account_number)
+        if pop_from_list:
+            self.customer.active_accounts.pop(self.account_number)
         print('Account ' + str(self.account_number) + ' deleted successfully! Closing Balance: ' + str(self.balance))
 
     def deposit(self, amount):
