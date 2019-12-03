@@ -1,4 +1,3 @@
-# TODO: Pause program execution at appropriate points. Almost done ig.
 # TODO: Possibly add file IO to save current state
 # TODO: Possibly add user-side to the bank
 # TODO: Add to the already existing shit-loads of documentation
@@ -102,6 +101,32 @@ class Address(object):
         self.country = input('Country: ')
         self.zip_code = input('Zip Code: ')
 
+    def modify_address(self):
+        """
+        Modify function to modify an object of Address class
+        """
+        modify_address_list = ['1. Building', '2. Street', '3. Landmark', '4. City', '5. State', '6. Country',
+                               '7. Zip Code']
+        for i in modify_address_list:
+            print('\t\t' + i)
+        print()
+        ch = input('Command: ')
+        if ch == '1':
+            self.building = input('New Building: ')
+        elif ch == '2':
+            self.street_name = input('New Street Name: ')
+        elif ch == '3':
+            self.landmark = input('New Landmark: ')
+        elif ch == '4':
+            self.city = input('New City: ')
+        elif ch == '5':
+            self.state = input('New State: ')
+        elif ch == '6':
+            self.country = input('New Country: ')
+        # TODO: Add validation rules
+        elif ch == '7':
+            self.zip_code = input('New Zip Code: ')
+
 
 class Customer(object):
     """
@@ -179,6 +204,42 @@ class Customer(object):
         global_customer_map.pop(self.customer_id)
         print('Sorry to see you go!')
 
+    def modify_customer(self):
+        """
+        Modify function to modify an object of Customer class
+        """
+        modify_customer_list = ['1. First Name', '2. Last Name', '3. Address', '4. Phone Number', '5. Email']
+        for i in modify_customer_list:
+            print('\t\t' + i)
+        print()
+        ch = input('Command: ')
+        if ch == '1':
+            self.first_name = input('New First Name: ')
+            global_transactions.append(
+                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
+                            'Customer First Name modified successfully!'))
+        elif ch == '2':
+            self.last_name = input('New Last Name: ')
+            global_transactions.append(
+                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
+                            'Customer Last Name modified successfully!'))
+        elif ch == '3':
+            self.address.modify_address()
+            global_transactions.append(
+                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
+                            'Customer Address modified successfully!'))
+        # TODO: Add validation rules for phone number and email
+        elif ch == '4':
+            self.phone_number = input('New Phone Number: ')
+            global_transactions.append(
+                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
+                            'Customer Phone Number modified successfully!'))
+        elif ch == '5':
+            self.email = input('New Email: ')
+            global_transactions.append(
+                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
+                            'Customer Email modified successfully!'))
+
 
 class Account(object):
     def __init__(self):
@@ -248,6 +309,22 @@ class Account(object):
         if pop_from_list:
             self.customer.active_accounts.pop(self.account_number)
         print('Account ' + str(self.account_number) + ' deleted successfully! Closing Balance: ' + str(self.balance))
+
+    def modify_account(self):
+        """
+        Modify function to modify an object of Account class
+        """
+        modify_account_list = ['1. Modify Maximum Transaction Amount']
+        for i in modify_account_list:
+            print('\t\t' + i)
+        print()
+        ch = input('Command: ')
+        if ch == '1':
+            self.max_transaction_amount = input('New Maximum Transaction Amount: ')
+            global_transactions.append(
+                Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
+                            self.get_branch_code(), 0, self.balance, self.balance,
+                            'Maximum Transaction Amount modified successfully!'))
 
     def deposit(self, amount):
         """
@@ -349,9 +426,20 @@ def create_customer():
     c.input_customer()
 
 
+def modify_customer():
+    """
+    Menu entry 2: Modify Customer
+    """
+    customer_id = input('Customer ID: ')
+    if customer_id in global_customer_map:
+        global_customer_map[customer_id].modify_customer()
+    else:
+        print('Customer does not exist!')
+
+
 def delete_customer():
     """
-    Menu entry 2: Delete Customer
+    Menu entry 3: Delete Customer
     """
     customer_id = input('Customer ID: ')
     if customer_id in global_customer_map:
@@ -362,15 +450,30 @@ def delete_customer():
 
 def open_account():
     """
-    Menu entry 3: Open Account
+    Menu entry 4: Open Account
     """
     a = Account()
     a.input_account()
 
 
+def modify_account():
+    """
+    Menu entry 5: Modify Account
+    """
+    customer_id = input('Customer ID: ')
+    if customer_id in global_customer_map:
+        account_id = input('Account ID: ')
+        if account_id in global_customer_map[customer_id].active_accounts:
+            global_customer_map[customer_id].active_accounts[account_id].modify_account()
+        else:
+            print('Account does not exist!')
+    else:
+        print('Customer does not exist!')
+
+
 def close_account():
     """
-    Menu entry 4: Close Account
+    Menu entry 6: Close Account
     """
     customer_id = input('Customer ID: ')
     if customer_id in global_customer_map:
@@ -385,7 +488,7 @@ def close_account():
 
 def transact():
     """
-    Menu entry 5: Transact
+    Menu entry 7: Transact
     """
     transact_menu_list = ['1. Deposit', '2. Withdraw', '3. Account to Account transfer']
     for i in transact_menu_list:
@@ -430,7 +533,7 @@ def transact():
 
 def generate_report():
     """
-    Menu entry 6: Generate Report
+    Menu entry 8: Generate Report
     """
     # TODO: Give heading to outputted values
     # TODO: Refine log by date (bisect module)
@@ -493,7 +596,7 @@ def generate_report():
 
 def about():
     """
-    Menu entry 7: About Us
+    Menu entry 9: About Us
     Prints the team info with a not-so-typewriter-ish effect
     """
     about_str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t' \
@@ -509,8 +612,9 @@ def intro():
     """
     # TODO: Add options to view customer/account details
     # TODO: Add option to modify customer/account details
-    main_menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
-                      '5. Transact', '6. Generate Report', '7. About Us', '8. Exit']
+    main_menu_list = ['1. Create Customer', '2. Modify Account', '3. Delete Customer', '4. Open Account',
+                      '5. Modify Account', '6. Close Account', '7. Transact', '8. Generate Report', '9. About Us',
+                      '10. Exit']
     print('\nLogin time: ' + get_current_time() + '\n')
     while True:
         print()
@@ -525,20 +629,24 @@ def intro():
         if inp == '1':
             create_customer()
         elif inp == '2':
-            delete_customer()
+            modify_customer()
         elif inp == '3':
-            open_account()
+            delete_customer()
         elif inp == '4':
-            close_account()
+            open_account()
         elif inp == '5':
-            transact()
+            modify_account()
         elif inp == '6':
-            generate_report()
+            close_account()
+        elif inp == '7':
+            transact()
         elif inp == '8':
+            generate_report()
+        elif inp == '9':
+            about()
+        elif inp == '10':
             print('Goodbye!\nLogout time: ', get_current_time())
             break
-        elif inp == '7':
-            about()
         else:
             print("Invalid entry!")
         # Pause before printing the menu again
