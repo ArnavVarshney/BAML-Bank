@@ -14,17 +14,25 @@ global_transactions = []  # global transaction log
 
 
 def get_current_date():
-    """Returns current system date by using the datetime module in DD/MM/YYYY format"""
+    """
+        Returns:
+        string: current system date from the datetime module in DD/MM/YYYY format
+    """
     return datetime.today().strftime('%d/%m/%Y')
 
 
 def get_current_time():
-    """Returns current system time by using the datetime module in HH:MM:SS format"""
+    """
+        Returns:
+        string: current system time from the datetime module in HH:MM:SS format
+    """
     return datetime.now().strftime("%H:%M:%S")
 
 
 def pause():
-    """Function to pause program execution. Gives user time to interpret the output"""
+    """
+    Function to pause program execution. Gives user time to interpret the output
+    """
     if platform.system() == 'Linux':
         # For UNIX based systems
         lol = ''
@@ -37,20 +45,25 @@ def pause():
 
 
 class Transaction(object):
-    """Transaction class: Maintains a structure for all transactions going into log
+    """
+    Transaction class: Maintains a structure for all transactions going into log
     Parameters:
-        date = date of transaction, retrieved from get_current_date()
-        time = time of transaction, retrieved from get_current_time()
-        customer_id = customer_id of the customer involved
-        account_number = account_number of involved account
-        branch = branch associated to transaction, retrieved from Account.get_branch_code()
-        amount = net amount involved
-        opening_balance = initial balance
-        closing_balance = final_balance
-        remarks = notes for opening/closing of customers/accounts"""
+        date: date of transaction, retrieved from get_current_date()
+        time: time of transaction, retrieved from get_current_time()
+        customer_id: customer_id of the customer involved
+        account_number: account_number of involved account
+        branch: branch associated to transaction, retrieved from Account.get_branch_code()
+        amount: net amount involved
+        opening_balance: initial balance
+        closing_balance: final_balance
+        remarks: notes for opening/closing of customers/accounts
+    """
 
     def __init__(self, customer_id, account_number, date, time, branch, amount, opening_balance, closing_balance,
                  remarks):
+        """
+        Initialisation function for Transaction class
+        """
         self.date = date
         self.time = time
         self.customer_id = customer_id
@@ -62,13 +75,32 @@ class Transaction(object):
         self.remarks = remarks
 
     def __str__(self):
+        """
+        Returns:
+        string: printable string for an object of Customer class
+        """
         return str(self.customer_id) + ' | ' + str(
             self.account_number) + ' | ' + self.date + ' | ' + self.time + ' | ' + str(self.branch) + ' | ' + str(
             self.amount) + ' | ' + str(self.opening_balance) + ' | ' + str(self.closing_balance) + ' | ' + self.remarks
 
 
 class Address(object):
+    """
+    Address class: Maintains a structure for all addresses
+    Parameters:
+        building: Address line 1
+        street_name: Address line 2
+        landmark: Address line 3
+        city: city of the address
+        state: state of the address
+        country: country of the address
+        zip_code: postal code of the address
+    """
+
     def __init__(self):
+        """
+        Initialisation function for Address class
+        """
         self.zip_code = 0
         self.street_name = ''
         self.city = ''
@@ -78,6 +110,10 @@ class Address(object):
         self.building = ''
 
     def __str__(self):
+        """
+        Returns:
+        string: printable string for an object of Address class
+        """
         return str(
             'Building: ' + self.building + '\n' + 'Street: ' + self.street_name + '\n' + 'Landmark: ' + self.landmark +
             '\n' + 'City: ' + self.city + '\n' + 'State: ' + self.state + '\n' + 'Country: ' + self.country + '\n' +
@@ -85,6 +121,9 @@ class Address(object):
 
     # TODO: Add validation rules for inputted values
     def input_address(self):
+        """
+        Input function to take values from the user and assign it to an object of Address class
+        """
         self.building = input('Building: ')
         self.street_name = input('Street Name: ')
         self.landmark = input('Landmark: ')
@@ -95,7 +134,23 @@ class Address(object):
 
 
 class Customer(object):
+    """
+    Customer class: Maintains a structure for all customers
+    Parameters:
+        first_name: first name of customer
+        last_name: last name of customer
+        address: object of the Address class
+        phone_number: phone number of the customer
+        email: email of the customer
+        active_accounts_number: number of currently active accounts assigned to the customer
+        customer_id: automatically incremented number, taken from global_customer_id
+        active_accounts: dictionary mapping account_ids to objects from the Account class
+    """
+
     def __init__(self):
+        """
+        Initialisation function for Customer class
+        """
         self.first_name = ''
         self.last_name = ''
         self.address = ''
@@ -106,9 +161,13 @@ class Customer(object):
         self.active_accounts = {}
 
     def __str__(self):
+        """
+        Returns:
+        string: printable string for an object of Customer class
+        """
         active_accounts = ''
         for i in self.active_accounts:
-            active_accounts += (i + '\n')
+            active_accounts += (self.active_accounts[i].account_number + '\n')
         return str(
             'Customer ID: ' + self.customer_id + '\n' + 'Full Name: ' + self.first_name + ' ' + self.last_name + '\n' + str(
                 self.address) + '\n' + str(
@@ -117,6 +176,9 @@ class Customer(object):
 
     # TODO: Add validation rules for inputted values
     def input_customer(self):
+        """
+        Input function to take values from the user and assign it to an object of Customer class
+        """
         global global_customer_id
         self.first_name = input('First Name: ')
         self.last_name = input('Last Name: ')
@@ -128,11 +190,16 @@ class Customer(object):
         self.customer_id = ("%04d" % global_customer_id)
         global_customer_map[self.customer_id] = self
         print('Customer created successfully! Customer ID: ' + self.customer_id)
+        # Add creation of customer to transactions log
         global_transactions.append(
             Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
                         'Customer created successfully!'))
 
     def delete_customer(self):
+        """
+        Delete function to delete an object of Customer class
+        """
+        # Add deletion of customer to transactions log
         global_transactions.append(
             Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
                         'Customer deleted successfully!'))
@@ -142,6 +209,9 @@ class Customer(object):
 
 class Account(object):
     def __init__(self):
+        """
+        Initialisation function for Account class
+        """
         self.account_number = ''
         self.balance = 0
         self.customer = Customer()
@@ -149,6 +219,10 @@ class Account(object):
         self.branch_code = 0
 
     def __str__(self):
+        """
+        Returns:
+        string: printable string for an object of Account class
+        """
         return str(
             'Account Number: ' + self.account_number + '\n' + 'Customer ID: ' + self.customer.customer_id + '\n' + 'Balance' + str(
                 self.balance) + '\n' + 'Maximum Transaction Amount' + str(
@@ -156,8 +230,12 @@ class Account(object):
 
     # TODO: Add validation rules for inputted values
     def input_account(self):
+        """
+        Input function to take values from the user and assign it to an object of Account class
+        """
         while True:
             ch = input('Existing customer? (Y/N): ')
+            # For existing customers, adds a new account to the customer.active_accounts dictionary
             if ch.upper() == 'Y':
                 existing_customer_id = input('Existing Customer ID: ')
                 if existing_customer_id in global_customer_map:
@@ -168,6 +246,7 @@ class Account(object):
                 else:
                     print('Customer ID does not exist. Recheck ID or register as a new customer.')
             else:
+                # For new customers, creates a new customer then adds a new account to the customer.active_accounts dictionary
                 self.customer = Customer()
                 self.customer.input_customer()
                 break
@@ -178,11 +257,16 @@ class Account(object):
             self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts_number))
         self.customer.active_accounts[self.account_number] = self
         print('Account created successfully! Account ID: ' + self.account_number)
+        # Add creation of account to transactions log
         global_transactions.append(
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                         self.get_branch_code(), None, self.balance, self.balance, 'Account created successfully!'))
 
     def delete_account(self):
+        """
+        Delete function to delete an object of Account class
+        """
+        # Add deletion of account to transactions log
         global_transactions.append(
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                         self.get_branch_code(), None, self.balance, 0, 'Account deleted successfully!'))
@@ -191,36 +275,54 @@ class Account(object):
         print('Account deleted successfully! Closing Balance: ' + str(self.balance))
 
     def deposit(self, amount):
+        """
+        Deposit function to deposit money into account
+        """
         if amount <= 0:
+            # Validation rule: Amount is negative
             print('Invalid amount. Please enter positive values.\nTransaction aborted!')
         elif amount > self.max_transaction_amount:
+            # Validation rule: Amount is more than maximum set by the customer
             print('Amount entered is more than the maximum.\nTransaction aborted!')
         else:
             self.balance += amount
+            # Add deposit transaction to transactions log
             global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), amount, self.balance - amount, self.balance,
                             str(amount) + ' deposited successfully!'))
 
     def withdraw(self, amount):
+        """
+        Withdraw function to withdraw money from account
+        """
         if amount <= 0:
+            # Validation rule: Amount is negative
             print('Invalid amount. Please enter positive values.\nTransaction aborted!')
         elif amount > self.max_transaction_amount:
+            # Validation rule: Amount is more than maximum set by the customer
             print('Amount entered is more than the maximum.\nTransaction aborted!')
         elif amount > self.balance:
+            # Validation rule: Amount is more than current balance
             print('Amount entered is more than balance.\nTransaction aborted!')
         else:
             self.balance -= amount
+            # Add withdrawal transaction to transactions log
             global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), amount, self.balance + amount, self.balance,
                             str(amount) + ' withdrawn successfully!'))
 
     def get_branch_code(self):
+        """
+        Returns:
+        string: branch_code of the account, substring[4:8]
+        """
         return self.account_number[4:8]
 
 
 def intro():
+    # TODO: Add options to view customer/account details
     main_menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
                       '5. Transact',
                       '6. Generate Report',
@@ -235,9 +337,7 @@ def intro():
         print(27 * '=')
         print(1 * '\t' + 'Welcome to Bank XXX')
         print(27 * '=')
-        print()
-        print('Login time: ', get_current_time())
-        print()
+        print('\nLogin time: ' + get_current_time() + '\n')
         for i in main_menu_list:
             print('\t' + i)
         print()
@@ -321,11 +421,9 @@ def intro():
                 if len(global_transactions) > 0:
                     for i in global_transactions:
                         print(i)
-                    # os.system('pause') (Windows only)
                     pause()
                 else:
                     print('No transactions found!')
-                    # os.system('pause') (Windows only)
                     pause()
             elif ch == '2':
                 branch_code = input('Branch code: ')
