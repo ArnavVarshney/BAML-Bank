@@ -1,4 +1,4 @@
-# TODO: Pause program execution at appropriate points
+# TODO: Pause program execution at appropriate points. Almost done ig.
 # TODO: Possibly add file IO to save current state
 # TODO: Possibly add user-side to the bank
 # TODO: Add to the already existing shit-loads of documentation
@@ -334,6 +334,9 @@ class Account(object):
 
 
 def intro():
+    """
+    A very short function. Isn't it?
+    """
     # TODO: Add options to view customer/account details
     # TODO: Add option to modify customer/account details
     main_menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
@@ -491,7 +494,7 @@ def intro():
 
 def about():
     """
-    Prints the team info with a not-so-typewriter effect
+    Prints the team info with a not-so-typewriter-ish effect
     """
     about_str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n'
     for char in about_str:
