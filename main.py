@@ -14,45 +14,6 @@ global_customer_map = {}  # maps customer_id to customer
 global_transactions = []  # global transaction log
 
 
-def get_current_date():
-    """
-        Returns:
-        string: current system date from the datetime module in DD/MM/YYYY format
-    """
-    return datetime.today().strftime('%d/%m/%Y')
-
-
-def get_current_time():
-    """
-        Returns:
-        string: current system time from the datetime module in HH:MM:SS format
-    """
-    return datetime.now().strftime("%H:%M:%S")
-
-
-def get_customer_id(account_number):
-    """
-        Returns:
-        string: customer_id of the account, substring[0:4]
-    """
-    return account_number[0:4]
-
-
-def pause():
-    """
-    Function to pause program execution. Gives user time to interpret the output
-    """
-    if platform.system() == 'Linux':
-        # For UNIX based systems
-        lol = ''
-        print('\nEnter any character to continue: ', end='')
-        while lol == '':
-            lol = input()
-    elif platform.system() == 'Windows':
-        # For Windows systems
-        os.system('PAUSE')
-
-
 class Transaction(object):
     """
     Transaction class: Maintains a structure for all transactions going into log
@@ -333,167 +294,204 @@ class Account(object):
         return self.account_number[4:8]
 
 
-def intro():
-    """
-    A very short function. Isn't it?
-    """
-    # TODO: Add options to view customer/account details
-    # TODO: Add option to modify customer/account details
-    main_menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
-                      '5. Transact',
-                      '6. Generate Report',
-                      '7. About Us', '8. Exit']
-    transact_menu_list = ['1. Deposit', '2.Withdraw', '3. Account to Account transfer']
+# Utility Functions
 
+
+def get_current_date():
+    """
+        Returns:
+        string: current system date from the datetime module in DD/MM/YYYY format
+    """
+    return datetime.today().strftime('%d/%m/%Y')
+
+
+def get_current_time():
+    """
+        Returns:
+        string: current system time from the datetime module in HH:MM:SS format
+    """
+    return datetime.now().strftime("%H:%M:%S")
+
+
+def get_customer_id(account_number):
+    """
+        Returns:
+        string: customer_id of the account, substring[0:4]
+    """
+    return account_number[0:4]
+
+
+def pause():
+    """
+    Function to pause program execution. Gives user time to interpret the output
+    """
+    if platform.system() == 'Linux':
+        # For UNIX based systems
+        lol = ''
+        print('\nEnter any character to continue: ', end='')
+        while lol == '':
+            lol = input()
+    elif platform.system() == 'Windows':
+        # For Windows systems
+        os.system('PAUSE')
+
+
+# Menu functions
+
+
+def create_customer():
+    """
+    Menu entry 1: Create Customer
+    """
+    c = Customer()
+    c.input_customer()
+
+
+def delete_customer():
+    """
+    Menu entry 2: Delete Customer
+    """
+    customer_id = input('Customer ID: ')
+    if customer_id in global_customer_map:
+        global_customer_map[customer_id].delete_customer()
+    else:
+        print('Customer does not exist!')
+
+
+def open_account():
+    """
+    Menu entry 3: Open Account
+    """
+    a = Account()
+    a.input_account()
+
+
+def close_account():
+    """
+    Menu entry 4: Close Account
+    """
+    customer_id = input('Customer ID: ')
+    if customer_id in global_customer_map:
+        account_id = input('Account ID: ')
+        if account_id in global_customer_map[customer_id].active_accounts:
+            global_customer_map[customer_id].active_accounts[account_id].delete_account()
+        else:
+            print('Account does not exist!')
+    else:
+        print('Customer does not exist!')
+
+
+def transact():
+    """
+    Menu entry 5: Transact
+    """
+    transact_menu_list = ['1. Deposit', '2.Withdraw', '3. Account to Account transfer']
+    for i in transact_menu_list:
+        print('\t\t' + i)
+    print()
+    ch = input('Command: ')
+    if ch == '1':
+        bal = input('Amount to Deposit: ')
+        customer_id = input('Customer ID: ')
+        if customer_id in global_customer_map:
+            account_id = input('Account ID: ')
+            if account_id in global_customer_map[customer_id].active_accounts:
+                global_customer_map[customer_id].active_accounts[account_id].deposit(bal)
+            else:
+                print('Account does not exist!')
+        else:
+            print('Customer does not exist!')
+    elif ch == '2':
+        bal = input('Amount to Withdraw: ')
+        customer_id = input('Customer ID: ')
+        if customer_id in global_customer_map:
+            account_id = input('Account ID: ')
+            if account_id in global_customer_map[customer_id].active_accounts:
+                global_customer_map[customer_id].active_accounts[account_id].withdraw(bal)
+            else:
+                print('Account does not exist!')
+        else:
+            print('Customer does not exist!')
+    else:
+        account_id1 = input('Account to Withdraw from: ')
+        customer_id1 = get_customer_id(account_id1)
+        account_id2 = input('Account to Deposit to: ')
+        customer_id2 = get_customer_id(account_id2)
+        if account_id1 not in global_customer_map[customer_id1].active_accounts or account_id2 not in \
+                global_customer_map[customer_id2].active_accounts:
+            print('Account(s) not found!')
+        else:
+            transfer_amount = input('Amount to transfer: ')
+            global_customer_map[customer_id1].active_accounts[account_id1].withdraw(transfer_amount)
+            global_customer_map[customer_id2].active_accounts[account_id2].deposit(transfer_amount)
+
+
+def generate_report():
+    """
+    Menu entry 6: Generate Report
+    """
+    # TODO: Give heading to outputted values
     # TODO: Refine log by date (bisect module)
     report_menu_list = ['1. View all transactions', '2. View transactions by Branch',
                         '3. View transactions by Customer', '4. View transactions by Account',
                         '5. Generate Customer Report', '6. Generate Account Report']
-    while True:
-        print()
-        print(27 * '=')
-        print(1 * '\t' + 'Welcome to Bank XXX')
-        print(27 * '=')
-        print('\nLogin time: ' + get_current_time() + '\n')
-        for i in main_menu_list:
-            print('\t' + i)
-        print()
-        inp = input('Command: ')
-        print()
-        if inp == '8':
-            print('Goodbye!\nLogout time: ', get_current_time())
-            break
-        elif inp == '7':
-            about()
-            pause()
-        elif inp == '1':
-            c = Customer()
-            c.input_customer()
-            pause()
-        elif inp == '2':
-            customer_id = input('Customer ID: ')
-            if customer_id in global_customer_map:
-                global_customer_map[customer_id].delete_customer()
-            else:
-                print('Customer does not exist!')
-            pause()
-        elif inp == '3':
-            a = Account()
-            a.input_account()
-            pause()
-        elif inp == '4':
-            customer_id = input('Customer ID: ')
-            if customer_id in global_customer_map:
-                account_id = input('Account ID: ')
-                if account_id in global_customer_map[customer_id].active_accounts:
-                    global_customer_map[customer_id].active_accounts[account_id].delete_account()
-                else:
-                    print('Account does not exist!')
-            else:
-                print('Customer does not exist!')
-            pause()
-        elif inp == '5':
-            for i in transact_menu_list:
-                print('\t\t' + i)
-            print()
-            ch = input('Command: ')
-            if ch == '1':
-                bal = input('Amount to Deposit: ')
-                customer_id = input('Customer ID: ')
-                if customer_id in global_customer_map:
-                    account_id = input('Account ID: ')
-                    if account_id in global_customer_map[customer_id].active_accounts:
-                        global_customer_map[customer_id].active_accounts[account_id].deposit(bal)
-                    else:
-                        print('Account does not exist!')
-                else:
-                    print('Customer does not exist!')
-            elif ch == '2':
-                bal = input('Amount to Withdraw: ')
-                customer_id = input('Customer ID: ')
-                if customer_id in global_customer_map:
-                    account_id = input('Account ID: ')
-                    if account_id in global_customer_map[customer_id].active_accounts:
-                        global_customer_map[customer_id].active_accounts[account_id].withdraw(bal)
-                    else:
-                        print('Account does not exist!')
-                else:
-                    print('Customer does not exist!')
-            else:
-                account_id1 = input('Account to Withdraw from: ')
-                customer_id1 = get_customer_id(account_id1)
-                account_id2 = input('Account to Deposit to: ')
-                customer_id2 = get_customer_id(account_id2)
-                if account_id1 not in global_customer_map[customer_id1].active_accounts or account_id2 not in \
-                        global_customer_map[customer_id2].active_accounts:
-                    print('Account(s) not found!')
-                else:
-                    transfer_amount = input('Amount to transfer: ')
-                    global_customer_map[customer_id1].active_accounts[account_id1].withdraw(transfer_amount)
-                    global_customer_map[customer_id2].active_accounts[account_id2].deposit(transfer_amount)
-            pause()
-        elif inp == '6':
-            # TODO: Give heading to outputted values
-            for i in report_menu_list:
-                print('\t\t' + i)
-            print()
-            ch = input('Command: ')
-            if ch == '1':
-                if len(global_transactions) > 0:
-                    for i in global_transactions:
-                        print(i)
-                else:
-                    print('No transactions found!')
-            elif ch == '2':
-                branch_code = input('Branch code: ')
-                ls = list(filter(lambda x: x.branch == branch_code, global_transactions))
-                if len(ls) == 0:
-                    print('No transactions found!')
-                else:
-                    for i in ls:
-                        print(i)
-            elif ch == '3':
-                customer_id = input('Customer ID: ')
-                ls = list(filter(lambda x: x.customer_id == customer_id, global_transactions))
-                if len(ls) == 0:
-                    print('No transactions found!')
-                else:
-                    for i in ls:
-                        print(i)
-            elif ch == '4':
-                account_number = input('Account Number: ')
-                ls = list(filter(lambda x: x.account_number == account_number, global_transactions))
-                if len(ls) == 0:
-                    print('No transactions found!')
-                else:
-                    for i in ls:
-                        print(i)
-            elif ch == '5':
-                customer_id = input('Customer ID: ')
-                if customer_id in global_customer_map:
-                    print(global_customer_map[customer_id])
-                else:
-                    print('Customer does not exist!')
-            elif ch == '6':
-                customer_id = input('Customer ID: ')
-                if customer_id in global_customer_map:
-                    account_number = input('Account Number: ')
-                    if account_number in global_customer_map[customer_id].active_accounts:
-                        print(global_customer_map[customer_id].active_accounts[account_number])
-                    else:
-                        print('Account does not exist!')
-                else:
-                    print('Customer does not exist!')
-            else:
-                print("Invalid entry!")
-            pause()
+    for i in report_menu_list:
+        print('\t\t' + i)
+    print()
+    ch = input('Command: ')
+    if ch == '1':
+        if len(global_transactions) > 0:
+            for i in global_transactions:
+                print(i)
         else:
-            print("Invalid entry!")
-            pause()
+            print('No transactions found!')
+    elif ch == '2':
+        branch_code = input('Branch code: ')
+        ls = list(filter(lambda x: x.branch == branch_code, global_transactions))
+        if len(ls) == 0:
+            print('No transactions found!')
+        else:
+            for i in ls:
+                print(i)
+    elif ch == '3':
+        customer_id = input('Customer ID: ')
+        ls = list(filter(lambda x: x.customer_id == customer_id, global_transactions))
+        if len(ls) == 0:
+            print('No transactions found!')
+        else:
+            for i in ls:
+                print(i)
+    elif ch == '4':
+        account_number = input('Account Number: ')
+        ls = list(filter(lambda x: x.account_number == account_number, global_transactions))
+        if len(ls) == 0:
+            print('No transactions found!')
+        else:
+            for i in ls:
+                print(i)
+    elif ch == '5':
+        customer_id = input('Customer ID: ')
+        if customer_id in global_customer_map:
+            print(global_customer_map[customer_id])
+        else:
+            print('Customer does not exist!')
+    elif ch == '6':
+        customer_id = input('Customer ID: ')
+        if customer_id in global_customer_map:
+            account_number = input('Account Number: ')
+            if account_number in global_customer_map[customer_id].active_accounts:
+                print(global_customer_map[customer_id].active_accounts[account_number])
+            else:
+                print('Account does not exist!')
+        else:
+            print('Customer does not exist!')
+    else:
+        print("Invalid entry!")
 
 
 def about():
     """
+    Menu entry 7: About Us
     Prints the team info with a not-so-typewriter-ish effect
     """
     about_str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t' \
@@ -501,6 +499,48 @@ def about():
     for char in about_str:
         sleep(0.1)
         print(char, end='', flush=True)
+
+
+def intro():
+    """
+    A very short function. Isn't it?
+    """
+    # TODO: Add options to view customer/account details
+    # TODO: Add option to modify customer/account details
+    main_menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
+                      '5. Transact', '6. Generate Report', '7. About Us', '8. Exit']
+    print('\nLogin time: ' + get_current_time() + '\n')
+    while True:
+        print()
+        print(27 * '=')
+        print(1 * '\t' + 'Welcome to Bank XXX')
+        print(27 * '=')
+        for i in main_menu_list:
+            print('\t' + i)
+        print()
+        inp = input('Command: ')
+        print()
+        if inp == '1':
+            create_customer()
+        elif inp == '2':
+            delete_customer()
+        elif inp == '3':
+            open_account()
+        elif inp == '4':
+            close_account()
+        elif inp == '5':
+            transact()
+        elif inp == '6':
+            generate_report()
+        elif inp == '8':
+            print('Goodbye!\nLogout time: ', get_current_time())
+            break
+        elif inp == '7':
+            about()
+        else:
+            print("Invalid entry!")
+        # Pause before printing the menu again
+        pause()
 
 
 # How do I document this? xD
