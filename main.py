@@ -3,7 +3,7 @@ from time import sleep
 
 global_customer_id = 0
 global_customer_map = {}
-transactions = []
+global_transactions = []
 
 
 def get_current_date():
@@ -92,12 +92,12 @@ class Customer(object):
         self.customer_id = ("%04d" % global_customer_id)
         global_customer_map[self.customer_id] = self
         print('Customer created successfully! Customer ID: ' + self.customer_id)
-        transactions.append(
+        global_transactions.append(
             Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
                         'Customer created successfully!'))
 
     def delete_customer(self):
-        transactions.append(
+        global_transactions.append(
             Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
                         'Customer deleted successfully!'))
         global_customer_map.pop(self.customer_id)
@@ -141,12 +141,12 @@ class Account(object):
             self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts_number))
         self.customer.active_accounts[self.account_number] = self
         print('Account created successfully! Account ID: ' + self.account_number)
-        transactions.append(
+        global_transactions.append(
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                         self.get_branch_code(), None, self.balance, self.balance, 'Account created successfully!'))
 
     def delete_account(self):
-        transactions.append(
+        global_transactions.append(
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                         self.get_branch_code(), None, self.balance, 0, 'Account deleted successfully!'))
         self.customer.active_accounts_number -= 1
@@ -160,7 +160,7 @@ class Account(object):
             print('Amount entered is more than the maximum.\nTransaction aborted!')
         else:
             self.balance += amount
-            transactions.append(
+            global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), amount, self.balance - amount, self.balance,
                             str(amount) + ' deposited successfully!'))
@@ -174,7 +174,7 @@ class Account(object):
             print('Amount entered is more than balance.\nTransaction aborted!')
         else:
             self.balance -= amount
-            transactions.append(
+            global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), amount, self.balance + amount, self.balance,
                             str(amount) + ' withdrawn successfully!'))
@@ -184,11 +184,13 @@ class Account(object):
 
 
 def intro():
-    menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
-                 '5. Transact',
-                 '6. Generate Report',
-                 '7. About Us', '8. Exit']
-    inp = ''
+    main_menu_list = ['1. Create Customer', '2. Delete Customer', '3. Open Account', '4. Close Account',
+                      '5. Transact',
+                      '6. Generate Report',
+                      '7. About Us', '8. Exit']
+    transact_menu_list = ['1. Deposit', '2.Withdraw', '3. Account to Account transfer']
+    report_menu_list = ['1. View all transactions', '2. View transactions by Branch',
+                        '3. View transactions by Customer', '4. View transactions by Account']
     while True:
         print()
         print(27 * '=')
@@ -197,7 +199,7 @@ def intro():
         print()
         print('Login time: ', get_current_time())
         print()
-        for i in menu_list:
+        for i in main_menu_list:
             print('\t' + i)
         print()
         inp = input('Command: ')
@@ -211,7 +213,7 @@ def intro():
             c = Customer()
             c.input_customer()
         elif inp == '2':
-            customer_id = input('Enter Customer ID: ')
+            customer_id = input('Customer ID: ')
             if customer_id in global_customer_map:
                 global_customer_map[customer_id].delete_customer()
             else:
@@ -220,9 +222,9 @@ def intro():
             a = Account()
             a.input_account()
         elif inp == '4':
-            customer_id = input('Enter Customer ID: ')
+            customer_id = input('Customer ID: ')
             if customer_id in global_customer_map:
-                account_id = input('Enter Account ID: ')
+                account_id = input('Account ID: ')
                 if account_id in global_customer_map[customer_id].active_accounts:
                     global_customer_map[customer_id].active_accounts[account_id].delete_account()
                 else:
@@ -230,13 +232,14 @@ def intro():
             else:
                 print('Customer does not exist!')
         elif inp == '5':
-            print('\t\t1. Deposit\n\t\t2. Withdraw\n\t\t3. Account to Account transfer\n')
+            for i in transact_menu_list:
+                print('\t\t' + i + '\n')
             ch = input('Command: ')
             if ch == '1':
                 bal = input('Amount to Deposit: ')
-                customer_id = input('Enter Customer ID: ')
+                customer_id = input('Customer ID: ')
                 if customer_id in global_customer_map:
-                    account_id = input('Enter Account ID: ')
+                    account_id = input('Account ID: ')
                     if account_id in global_customer_map[customer_id].active_accounts:
                         global_customer_map[customer_id].active_accounts[account_id].deposit(bal)
                     else:
@@ -245,9 +248,9 @@ def intro():
                     print('Customer does not exist!')
             elif ch == '2':
                 bal = input('Amount to Withdraw: ')
-                customer_id = input('Enter Customer ID: ')
+                customer_id = input('Customer ID: ')
                 if customer_id in global_customer_map:
-                    account_id = input('Enter Account ID: ')
+                    account_id = input('Account ID: ')
                     if account_id in global_customer_map[customer_id].active_accounts:
                         global_customer_map[customer_id].active_accounts[account_id].withdraw(bal)
                     else:
@@ -255,7 +258,7 @@ def intro():
                 else:
                     print('Customer does not exist!')
             else:
-                customer_id = input('Enter Customer ID: ')
+                customer_id = input('Customer ID: ')
                 if customer_id in global_customer_map:
                     account_id1 = input('Account to Withdraw from: ')
                     account_id2 = input('Account to Deposit to: ')
@@ -269,8 +272,38 @@ def intro():
                 else:
                     print('Customer does not exist!')
         elif inp == '6':
-            for i in transactions:
-                print(i)
+            for i in report_menu_list:
+                print('\t\t' + i + '\n')
+            ch = input('Command: ')
+            if ch == '1':
+                for i in global_transactions:
+                    print(i)
+            elif ch == '2':
+                branch_code = input('Branch code: ')
+                ls = list(filter(lambda x: x.branch == branch_code, global_transactions))
+                if len(ls) == 0:
+                    print('No transactions found!')
+                else:
+                    for i in ls:
+                        print(i)
+            elif ch == '3':
+                customer_id = input('Customer ID: ')
+                ls = list(filter(lambda x: x.customer_id == customer_id, global_transactions))
+                if len(ls) == 0:
+                    print('No transactions found!')
+                else:
+                    for i in ls:
+                        print(i)
+            elif ch == '4':
+                account_number = input('Account Number: ')
+                ls = list(filter(lambda x: x.account_number == account_number, global_transactions))
+                if len(ls) == 0:
+                    print('No transactions found!')
+                else:
+                    for i in ls:
+                        print(i)
+            else:
+                print("Invalid entry!")
         else:
             print("Invalid entry!")
 
