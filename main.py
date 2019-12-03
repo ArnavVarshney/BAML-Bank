@@ -251,7 +251,7 @@ class Account(object):
         """
         Deposit function to deposit money into account
         """
-        if amount <= 0:
+        if int(amount) <= 0:
             # Validation rule: Amount is negative
             print('Invalid amount. Please enter positive values.\nTransaction aborted!')
         elif amount > self.max_transaction_amount:
@@ -262,14 +262,14 @@ class Account(object):
             # Add deposit transaction to transactions log
             global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
-                            self.get_branch_code(), amount, self.balance - amount, self.balance,
+                            self.get_branch_code(), amount, str(int(self.balance) - int(amount)), self.balance,
                             str(amount) + ' deposited successfully!'))
 
     def withdraw(self, amount):
         """
         Withdraw function to withdraw money from account
         """
-        if amount <= 0:
+        if int(amount) <= 0:
             # Validation rule: Amount is negative
             print('Invalid amount. Please enter positive values.\nTransaction aborted!')
         elif amount > self.max_transaction_amount:
@@ -283,7 +283,7 @@ class Account(object):
             # Add withdrawal transaction to transactions log
             global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
-                            self.get_branch_code(), amount, self.balance + amount, self.balance,
+                            self.get_branch_code(), amount, str(int(self.balance) + int(amount)), str(self.balance),
                             str(amount) + ' withdrawn successfully!'))
 
     def get_branch_code(self):
@@ -385,7 +385,7 @@ def transact():
     """
     Menu entry 5: Transact
     """
-    transact_menu_list = ['1. Deposit', '2.Withdraw', '3. Account to Account transfer']
+    transact_menu_list = ['1. Deposit', '2. Withdraw', '3. Account to Account transfer']
     for i in transact_menu_list:
         print('\t\t' + i)
     print()
