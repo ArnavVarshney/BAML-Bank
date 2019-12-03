@@ -1,6 +1,7 @@
 # TODO: Pause program execution at appropriate points
 # TODO: Possibly add file IO to save current state
 # TODO: Possibly add user-side to the bank
+# TODO: Add to the already existing shit-loads of documentation
 # Imported modules:
 import os  # os - for providing PAUSE functionality
 import platform  # platform - for determining the execution platform
