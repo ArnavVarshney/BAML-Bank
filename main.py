@@ -178,10 +178,9 @@ class Customer(object):
         for i in self.active_accounts:
             active_accounts += ('\n' + '\t' + self.active_accounts[i].account_number)
         return str(
-            'Customer ID: ' + self.customer_id + '\n' + 'Full Name: ' + self.first_name + ' ' + self.last_name + '\n' + str(
-                self.address) + '\n' + str(
-                self.phone_number) + '\n' + 'Email ID: ' + self.email + '\n' + 'Active accounts: ' + str(
-                self.active_accounts_number) + '\n' + active_accounts)
+            'Customer ID: ' + self.customer_id + '\n' + 'Full Name: ' + self.first_name + ' ' + self.last_name + '\n'
+            + str(self.address) + '\n' + str(self.phone_number) + '\n' + 'Email ID: ' + self.email + '\n' +
+            'Active accounts: ' + str(self.active_accounts_number) + '\n' + active_accounts)
 
     # TODO: Add validation rules for inputted values
     def input_customer(self):
@@ -236,9 +235,9 @@ class Account(object):
         string: printable string for an object of Account class
         """
         return str(
-            'Account Number: ' + self.account_number + '\n' + 'Customer ID: ' + self.customer.customer_id + '\n' + 'Balance' + str(
-                self.balance) + '\n' + 'Maximum Transaction Amount' + str(
-                self.max_transaction_amount) + '\n' + 'Branch Code' + str(self.branch_code))
+            'Account Number: ' + self.account_number + '\n' + 'Customer ID: ' + self.customer.customer_id + '\n' +
+            'Balance' + str(self.balance) + '\n' + 'Maximum Transaction Amount' + str(self.max_transaction_amount) +
+            '\n' + 'Branch Code' + str(self.branch_code))
 
     # TODO: Add validation rules for inputted values
     def input_account(self):
@@ -258,7 +257,8 @@ class Account(object):
                 else:
                     print('Customer ID does not exist. Recheck ID or register as a new customer.')
             elif ch.upper() == 'N':
-                # For new customers, creates a new customer then adds a new account to the customer.active_accounts dictionary
+                # For new customers, creates a new customer then adds a new account to the customer.active_accounts
+                # dictionary
                 self.customer = Customer()
                 self.customer.input_customer()
                 break
@@ -496,7 +496,8 @@ def about():
     """
     Prints the team info with a not-so-typewriter-ish effect
     """
-    about_str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n'
+    about_str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t' \
+                '4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n'
     for char in about_str:
         sleep(0.1)
         print(char, end='', flush=True)
