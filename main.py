@@ -233,7 +233,8 @@ def intro():
                 print('Customer does not exist!')
         elif inp == '5':
             for i in transact_menu_list:
-                print('\t\t' + i + '\n')
+                print('\t\t' + i)
+            print()
             ch = input('Command: ')
             if ch == '1':
                 bal = input('Amount to Deposit: ')
@@ -273,7 +274,8 @@ def intro():
                     print('Customer does not exist!')
         elif inp == '6':
             for i in report_menu_list:
-                print('\t\t' + i + '\n')
+                print('\t\t' + i)
+            print()
             ch = input('Command: ')
             if ch == '1':
                 for i in global_transactions:
