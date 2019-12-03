@@ -2,7 +2,8 @@
 # TODO: Possibly add file IO to save current state
 # TODO: Possibly add user-side to the bank
 # Imported modules:
-import os
+import os  # os - for providing PAUSE functionality
+import platform  # platform - for determining the execution platform
 from datetime import datetime  # datetime - for getting current system date and time,
 from time import sleep  # sleep - pausing execution for a few seconds
 
@@ -22,20 +23,32 @@ def get_current_time():
     return datetime.now().strftime("%H:%M:%S")
 
 
-# TODO: Solve cross-platform compatibility issues
 def pause():
     """Function to pause program execution. Gives user time to interpret the output"""
-    # For UNIX based systems
-    lol = ''
-    print('\nEnter any character to continue: ', end='')
-    while lol == '':
-        lol = input()
-
-    # For Windows systems
-    os.system('PAUSE')
+    if platform.system() == 'Linux':
+        # For UNIX based systems
+        lol = ''
+        print('\nEnter any character to continue: ', end='')
+        while lol == '':
+            lol = input()
+    elif platform.system() == 'Windows':
+        # For Windows systems
+        os.system('PAUSE')
 
 
 class Transaction(object):
+    """Transaction class: Maintains a structure for all transactions going into log
+    Parameters:
+        date = date of transaction, retrieved from get_current_date()
+        time = time of transaction, retrieved from get_current_time()
+        customer_id = customer_id of the customer involved
+        account_number = account_number of involved account
+        branch = branch associated to transaction, retrieved from Account.get_branch_code()
+        amount = net amount involved
+        opening_balance = initial balance
+        closing_balance = final_balance
+        remarks = notes for opening/closing of customers/accounts"""
+
     def __init__(self, customer_id, account_number, date, time, branch, amount, opening_balance, closing_balance,
                  remarks):
         self.date = date
@@ -48,7 +61,6 @@ class Transaction(object):
         self.closing_balance = closing_balance
         self.remarks = remarks
 
-    # TODO: Give heading to outputted values
     def __str__(self):
         return str(self.customer_id) + ' | ' + str(
             self.account_number) + ' | ' + self.date + ' | ' + self.time + ' | ' + str(self.branch) + ' | ' + str(
@@ -300,6 +312,7 @@ def intro():
                 else:
                     print('Customer does not exist!')
         elif inp == '6':
+            # TODO: Give heading to outputted values
             for i in report_menu_list:
                 print('\t\t' + i)
             print()
