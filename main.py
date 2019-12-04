@@ -6,7 +6,7 @@
 import os  # os - for providing PAUSE functionality
 import platform  # platform - for determining the execution platform
 from datetime import datetime  # datetime - for getting current system date and time,
-from time import sleep  # sleep - pausing execution for a few seconds
+from time import sleep  # sleep - pausing execution until interrupted by keyboard input (Windows)
 
 #  Global variables:
 global_customer_id = 0  # holds currently issued account number
@@ -583,6 +583,10 @@ def transact():
 
 
 def print_report(ls):
+    """
+    Utility function for generate_report
+    :param ls: list containing items to be printed
+    """
     report_headings = ['Customer ID', 'Account', 'Date', 'Time', 'Branch', 'Amount', 'Opening Balance',
                        'Closing  Balance', 'Remarks']
     print(168 * '-')
