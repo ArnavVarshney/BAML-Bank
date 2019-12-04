@@ -48,8 +48,15 @@ class Transaction(object):
         :return printable string for an object of Customer class
         :rtype str
         """
-        return self.customer_id + ' | ' + self.account_number + ' | ' + self.date + ' | ' + self.time + ' | ' + self.branch + ' | ' + str(
-            self.amount) + ' | ' + str(self.opening_balance) + ' | ' + str(self.closing_balance) + ' | ' + self.remarks
+        return '| {:^13s} | {:^12} | {:^12} | {:^10} | {:^8} | {:^10s} | {:^17s} | {:^18s} | {:^40s} |'.format(
+            self.customer_id,
+            self.account_number,
+            self.date, self.time,
+            self.branch,
+            str(self.amount),
+            str(self.opening_balance),
+            str(self.closing_balance),
+            self.remarks)
 
 
 class Address(object):
@@ -296,7 +303,6 @@ class Account(object):
             'Balance' + str(self.balance) + '\n' + 'Maximum Transaction Amount' + str(self.max_transaction_amount) +
             '\n' + 'Branch Code' + self.branch_code)
 
-    # TODO: Add validation rules for inputted values
     def input_account(self):
         """
         Input function to take values from the user and assign it to an object of Account class
@@ -412,8 +418,8 @@ class Account(object):
 
     def get_branch_code(self):
         """
-        Returns:
-        string: branch_code of the account, substring[4:8]
+        :return branch_code of the account, substring[4:8]
+        :rtype str
         """
         return self.account_number[4:8]
 
@@ -423,24 +429,24 @@ class Account(object):
 
 def get_current_date():
     """
-        Returns:
-        string: current system date from the datetime module in DD/MM/YYYY format
+        :return current system date from the datetime module in DD/MM/YYYY format
+        :rtype str
     """
     return datetime.today().strftime('%d/%m/%Y')
 
 
 def get_current_time():
     """
-        Returns:
-        string: current system time from the datetime module in HH:MM:SS format
+        :return current system time from the datetime module in HH:MM:SS format
+        :rtype str
     """
     return datetime.now().strftime("%H:%M:%S")
 
 
 def get_customer_id(account_number):
     """
-        Returns:
-        string: customer_id of the account, substring[0:4]
+        :return customer_id of the account, substring[0:4]
+        :rtype str
     """
     return account_number[0:4]
 
@@ -576,11 +582,33 @@ def transact():
             global_customer_map[customer_id2].active_accounts[account_id2].deposit(transfer_amount)
 
 
+def print_report(ls):
+    report_headings = ['Customer ID', 'Account', 'Date', 'Time', 'Branch', 'Amount', 'Opening Balance',
+                       'Closing  Balance', 'Remarks']
+    print(168 * '-')
+    print('| {:^13s} | {:^12} | {:^12} | {:^10} | {:^8} | {:^10s} | {:^17s} | {:^18s} | {:^40s} |'.format(
+        report_headings[0],
+        report_headings[1],
+        report_headings[2],
+        report_headings[3],
+        report_headings[4],
+        report_headings[5],
+        report_headings[6],
+        report_headings[7],
+        report_headings[8]))
+    print(168 * '-')
+    if len(ls) == 0:
+        print('No transactions found!')
+    else:
+        for i in ls:
+            print(i)
+            print(168 * '-')
+
+
 def generate_report():
     """
     Menu entry 8: Generate Report
     """
-    # TODO: Give heading to outputted values
     # TODO: Refine log by date (bisect module)
     report_menu_list = ['1. View all transactions', '2. View transactions by Branch',
                         '3. View transactions by Customer', '4. View transactions by Account',
@@ -590,35 +618,19 @@ def generate_report():
     print()
     ch = input('Command: ')
     if ch == '1':
-        if len(global_transactions) > 0:
-            for i in global_transactions:
-                print(i)
-        else:
-            print('No transactions found!')
+        print_report(global_transactions)
     elif ch == '2':
         branch_code = input('Branch code: ')
         ls = list(filter(lambda x: x.branch == branch_code, global_transactions))
-        if len(ls) == 0:
-            print('No transactions found!')
-        else:
-            for i in ls:
-                print(i)
+        print_report(ls)
     elif ch == '3':
         customer_id = input('Customer ID: ')
         ls = list(filter(lambda x: x.customer_id == customer_id, global_transactions))
-        if len(ls) == 0:
-            print('No transactions found!')
-        else:
-            for i in ls:
-                print(i)
+        print_report(ls)
     elif ch == '4':
         account_number = input('Account Number: ')
         ls = list(filter(lambda x: x.account_number == account_number, global_transactions))
-        if len(ls) == 0:
-            print('No transactions found!')
-        else:
-            for i in ls:
-                print(i)
+        print_report(ls)
     elif ch == '5':
         customer_id = input('Customer ID: ')
         if customer_id in global_customer_map:
@@ -653,7 +665,7 @@ def about():
 
 def intro():
     """
-    Intro function: Prints the main menu and forwards to respective functions
+    Prints the main menu and forwards to respective functions
     """
     main_menu_list = ['1. Create Customer', '2. Modify Account', '3. Delete Customer', '4. Open Account',
                       '5. Modify Account', '6. Close Account', '7. Transact', '8. Generate Report', '9. About Us',
