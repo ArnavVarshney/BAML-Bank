@@ -1,6 +1,7 @@
 # TODO: Possibly add file IO to save current state
 # TODO: Possibly add user-side to the bank
 # TODO: Add to the already existing shit-loads of documentation
+# TODO: Possibly add a branch class with all its attributes
 # Imported modules:
 import os  # os - for providing PAUSE functionality
 import platform  # platform - for determining the execution platform
@@ -15,17 +16,16 @@ global_transactions = []  # global transaction log
 
 class Transaction(object):
     """
-    Transaction class: Maintains a structure for all transactions going into log
-    Parameters:
-        date: date of transaction, retrieved from get_current_date()
-        time: time of transaction, retrieved from get_current_time()
-        customer_id: customer_id of the customer involved
-        account_number: account_number of involved account
-        branch: branch associated to transaction, retrieved from Account.get_branch_code()
-        amount: net amount involved
-        opening_balance: initial balance
-        closing_balance: final_balance
-        remarks: notes for opening/closing of customers/accounts
+    Maintains a structure for all transactions going into log
+    :param str date: date of transaction, retrieved from get_current_date()
+    :param str time: time of transaction, retrieved from get_current_time()
+    :param str customer_id: customer_id of the customer involved
+    :param str account_number: account_number of involved account
+    :param str branch: branch associated to transaction, retrieved from Account.get_branch_code()
+    :param int amount: net amount involved
+    :param int opening_balance: initial balance
+    :param int closing_balance: final_balance
+    :param str remarks: notes for opening/closing of customers/accounts
     """
 
     def __init__(self, customer_id, account_number, date, time, branch, amount, opening_balance, closing_balance,
@@ -45,33 +45,33 @@ class Transaction(object):
 
     def __str__(self):
         """
-        Returns:
-        string: printable string for an object of Customer class
+        :return printable string for an object of Customer class
+        :rtype str
         """
-        return str(self.customer_id) + ' | ' + str(
-            self.account_number) + ' | ' + self.date + ' | ' + self.time + ' | ' + str(self.branch) + ' | ' + str(
+        return self.customer_id + ' | ' + self.account_number + ' | ' + self.date + ' | ' + self.time + ' | ' + self.branch + ' | ' + str(
             self.amount) + ' | ' + str(self.opening_balance) + ' | ' + str(self.closing_balance) + ' | ' + self.remarks
 
 
 class Address(object):
     """
-    Address class: Maintains a structure for all addresses
-    Parameters:
-        building: Address line 1
-        street_name: Address line 2
-        landmark: Address line 3
-        city: city of the address
-        state: state of the address
-        country: country of the address
-        zip_code: postal code of the address
+    Maintains a structure for all addresses
+    :param str building: address line 1
+    :param str street_name: address line 2
+    :param str locality: address line 3
+    :param str landmark: landmark
+    :param str city: city of the address
+    :param str state: state of the address
+    :param str country: country of the address
+    :param str zip_code: postal code of the address
     """
 
     def __init__(self):
         """
         Initialisation function for Address class
         """
-        self.zip_code = 0
+        self.zip_code = ''
         self.street_name = ''
+        self.locality = ''
         self.city = ''
         self.state = ''
         self.country = ''
@@ -80,26 +80,31 @@ class Address(object):
 
     def __str__(self):
         """
-        Returns:
-        string: printable string for an object of Address class
+        :return printable string for an object of Address class
+        :rtype str
         """
         return str(
-            'Building: ' + self.building + '\n' + 'Street: ' + self.street_name + '\n' + 'Landmark: ' + self.landmark +
-            '\n' + 'City: ' + self.city + '\n' + 'State: ' + self.state + '\n' + 'Country: ' + self.country + '\n' +
-            'Zip Code: ' + str(self.zip_code))
+            'Building: ' + self.building + '\n' + 'Street: ' + self.street_name + '\n' + 'Locality: ' + self.locality +
+            '\n' + 'Landmark: ' + self.landmark + '\n' + 'City: ' + self.city + '\n' + 'State: ' + self.state + '\n' +
+            'Country: ' + self.country + '\n' + 'Zip Code: ' + self.zip_code)
 
-    # TODO: Add validation rules for inputted values
     def input_address(self):
         """
         Input function to take values from the user and assign it to an object of Address class
         """
         self.building = input('Building: ')
         self.street_name = input('Street Name: ')
+        self.locality = input('Locality: ')
         self.landmark = input('Landmark: ')
         self.city = input('City: ')
         self.state = input('State: ')
         self.country = input('Country: ')
-        self.zip_code = input('Zip Code: ')
+        while True:
+            self.zip_code = input('Zip Code: ')
+            if self.zip_code.isnumeric() and len(self.zip_code) == 6:
+                break
+            else:
+                print('Invalid Zip Code')
 
     def modify_address(self):
         """
@@ -123,23 +128,26 @@ class Address(object):
             self.state = input('New State: ')
         elif ch == '6':
             self.country = input('New Country: ')
-        # TODO: Add validation rules
         elif ch == '7':
-            self.zip_code = input('New Zip Code: ')
+            while True:
+                self.zip_code = input('New Zip Code: ')
+                if self.zip_code.isnumeric() and len(self.zip_code) == 6:
+                    break
+                else:
+                    print('Invalid Zip Code')
 
 
 class Customer(object):
     """
-    Customer class: Maintains a structure for all customers
-    Parameters:
-        first_name: first name of customer
-        last_name: last name of customer
-        address: object of the Address class
-        phone_number: phone number of the customer
-        email: email of the customer
-        active_accounts_number: number of currently active accounts assigned to the customer
-        customer_id: automatically incremented number, taken from global_customer_id
-        active_accounts: dictionary mapping account_ids to objects from the Account class
+    Maintains a structure for all customers
+    :param str first_name: first name of customer
+    :param str last_name: last name of customer
+    :param Address address: object of the Address class
+    :param str phone_number: phone number of the customer
+    :param str email: email of the customer
+    :param int active_accounts_number: number of currently active accounts assigned to the customer
+    :param str customer_id: automatically incremented number, taken from global_customer_id
+    :param dict active_accounts: dictionary mapping account_ids to objects from the Account class
     """
 
     def __init__(self):
@@ -148,8 +156,8 @@ class Customer(object):
         """
         self.first_name = ''
         self.last_name = ''
-        self.address = ''
-        self.phone_number = 0
+        self.address = Address()
+        self.phone_number = ''
         self.email = ''
         self.active_accounts_number = 0
         self.customer_id = ''
@@ -157,8 +165,8 @@ class Customer(object):
 
     def __str__(self):
         """
-        Returns:
-        string: printable string for an object of Customer class
+        :return string for an object of Customer class
+        :rtype str
         """
         active_accounts = ''
         for i in self.active_accounts:
@@ -168,7 +176,6 @@ class Customer(object):
             + str(self.address) + '\n' + str(self.phone_number) + '\n' + 'Email ID: ' + self.email + '\n' +
             'Active accounts: ' + str(self.active_accounts_number) + '\n' + active_accounts)
 
-    # TODO: Add validation rules for inputted values
     def input_customer(self):
         """
         Input function to take values from the user and assign it to an object of Customer class
@@ -176,10 +183,19 @@ class Customer(object):
         global global_customer_id
         self.first_name = input('First Name: ')
         self.last_name = input('Last Name: ')
-        self.address = Address()
         self.address.input_address()
-        self.phone_number = input('Phone Number: ')
-        self.email = input('Email: ')
+        while True:
+            self.phone_number = input('Phone Number: ')
+            if self.phone_number.isnumeric() and len(self.phone_number) == 10:
+                break
+            else:
+                print('Invalid Phone Number')
+        while True:
+            self.email = input('Email: ')
+            if self.email.__contains__('@'):
+                break
+            else:
+                print('Invalid Email ID')
         global_customer_id += 1
         self.customer_id = ("%04d" % global_customer_id)
         global_customer_map[self.customer_id] = self
@@ -200,9 +216,9 @@ class Customer(object):
         # Delete individual accounts
         for i in self.active_accounts:
             self.active_accounts[i].delete_account(False)
-        self.active_accounts.clear()  # Squash a bug where changing dictionary size nukes execution
+        self.active_accounts.clear()
         global_customer_map.pop(self.customer_id)
-        print('Sorry to see you go!')
+        print('Customer deleted successfully!')
 
     def modify_customer(self):
         """
@@ -228,20 +244,38 @@ class Customer(object):
             global_transactions.append(
                 Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
                             'Customer Address modified successfully!'))
-        # TODO: Add validation rules for phone number and email
         elif ch == '4':
-            self.phone_number = input('New Phone Number: ')
+            while True:
+                self.phone_number = input('New Phone Number: ')
+                if self.phone_number.isnumeric() and len(self.phone_number) == 10:
+                    break
+                else:
+                    print('Invalid Phone Number')
             global_transactions.append(
                 Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
                             'Customer Phone Number modified successfully!'))
         elif ch == '5':
-            self.email = input('New Email: ')
+            while True:
+                self.email = input('Email: ')
+                if self.email.__contains__('@'):
+                    break
+                else:
+                    print('Invalid Email ID')
             global_transactions.append(
                 Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
                             'Customer Email modified successfully!'))
 
 
 class Account(object):
+    """
+    Maintains a structure for all accounts
+    :param str account_number: account_number of account
+    :param int balance: starting balance of account
+    :param Customer customer: associated customer
+    :param int max_transaction amount: maximum transaction amount allowed
+    :param str branch_code: branch associated with account
+    """
+
     def __init__(self):
         """
         Initialisation function for Account class
@@ -250,17 +284,17 @@ class Account(object):
         self.balance = 0
         self.customer = Customer()
         self.max_transaction_amount = 0
-        self.branch_code = 0
+        self.branch_code = ''
 
     def __str__(self):
         """
-        Returns:
-        string: printable string for an object of Account class
+        :return printable string for an object of Account class
+        :rtype str
         """
         return str(
             'Account Number: ' + self.account_number + '\n' + 'Customer ID: ' + self.customer.customer_id + '\n' +
             'Balance' + str(self.balance) + '\n' + 'Maximum Transaction Amount' + str(self.max_transaction_amount) +
-            '\n' + 'Branch Code' + str(self.branch_code))
+            '\n' + 'Branch Code' + self.branch_code)
 
     # TODO: Add validation rules for inputted values
     def input_account(self):
@@ -284,9 +318,20 @@ class Account(object):
                 # dictionary
                 self.customer = Customer()
                 self.customer.input_customer()
+                self.customer.active_accounts_number += 1
                 break
-        self.max_transaction_amount = input('Maximum Transaction Amount: ')
-        self.balance = input('Initial Balance: ')
+        while True:
+            try:
+                self.max_transaction_amount = int(input('Maximum Transaction Amount: '))
+                break
+            except ValueError:
+                print('Invalid Value')
+        while True:
+            try:
+                self.balance = int(input('Initial Balance: '))
+                break
+            except ValueError:
+                print('Invalid Value')
         branch_code = input('Branch Code: ')
         self.account_number = str(
             self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts_number))
@@ -608,12 +653,12 @@ def about():
 
 def intro():
     """
-    Intro fuction: Prints the main menu and forwards to respective functions
+    Intro function: Prints the main menu and forwards to respective functions
     """
     main_menu_list = ['1. Create Customer', '2. Modify Account', '3. Delete Customer', '4. Open Account',
                       '5. Modify Account', '6. Close Account', '7. Transact', '8. Generate Report', '9. About Us',
                       '10. Exit']
-    print('\nLogin time: ' + get_current_time() + '\n')
+    print('\nLogin time: ' + get_current_time())
     while True:
         print()
         print(27 * '=')
