@@ -608,10 +608,8 @@ def about():
 
 def intro():
     """
-    A very short function. Isn't it?
+    Intro fuction: Prints the main menu and forwards to respective functions
     """
-    # TODO: Add options to view customer/account details
-    # TODO: Add option to modify customer/account details
     main_menu_list = ['1. Create Customer', '2. Modify Account', '3. Delete Customer', '4. Open Account',
                       '5. Modify Account', '6. Close Account', '7. Transact', '8. Generate Report', '9. About Us',
                       '10. Exit']
