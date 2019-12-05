@@ -1,6 +1,4 @@
-# TODO: Possibly add file IO to save current state
 # TODO: Possibly add user-side to the bank
-# TODO: Add to the already existing shit-loads of documentation
 # TODO: Possibly add a branch class with all its attributes
 # Imported modules:
 import os  # os - for providing PAUSE functionality
@@ -17,15 +15,15 @@ global_transactions = []  # global transaction log
 class Transaction(object):
     """
     Maintains a structure for all transactions going into log
-    :param str/NoneType date: date of transaction, retrieved from get_current_date()
-    :param str/NoneType time: time of transaction, retrieved from get_current_time()
-    :param str/NoneType customer_id: customer_id of the customer involved
-    :param str/NoneType account_number: account_number of involved account
-    :param str/NoneType branch: branch associated to transaction, retrieved from Account.get_branch_code()
-    :param int/NoneType amount: net amount involved
-    :param int/NoneType opening_balance: initial balance
-    :param int/NoneType closing_balance: final_balance
-    :param str/NoneType remarks: notes for opening/closing of customers/accounts
+    :param str date: date of transaction, retrieved from get_current_date()
+    :param str time: time of transaction, retrieved from get_current_time()
+    :param str customer_id: customer_id of the customer involved
+    :param str account_number: account_number of involved account
+    :param str branch: branch associated to transaction, retrieved from Account.get_branch_code()
+    :param int amount: net amount involved
+    :param int opening_balance: initial balance
+    :param int closing_balance: final_balance
+    :param str remarks: notes for opening/closing of customers/accounts
     """
 
     def __init__(self, customer_id, account_number, date, time, branch, amount, opening_balance, closing_balance,
@@ -210,8 +208,8 @@ class Customer(object):
         print('Customer created successfully! Customer ID: ' + self.customer_id)
         # Add creation of customer to transactions log
         global_transactions.append(
-            Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
-                        'Customer created successfully!'))
+            Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
+                        'Customer ' + self.customer_id + ' created successfully!'))
 
     def delete_customer(self):
         """
@@ -219,8 +217,8 @@ class Customer(object):
         """
         # Add deletion of customer to transactions log
         global_transactions.append(
-            Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
-                        'Customer deleted successfully!'))
+            Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
+                        'Customer ' + self.customer_id + ' deleted successfully!'))
         # Delete individual accounts
         for i in self.active_accounts:
             self.active_accounts[i].delete_account(False)
@@ -240,18 +238,18 @@ class Customer(object):
         if ch == '1':
             self.first_name = input('New First Name: ')
             global_transactions.append(
-                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
-                            'Customer First Name modified successfully!'))
+                Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
+                            'First name modified successfully!'))
         elif ch == '2':
             self.last_name = input('New Last Name: ')
             global_transactions.append(
-                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
-                            'Customer Last Name modified successfully!'))
+                Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
+                            'Last name modified successfully!'))
         elif ch == '3':
             self.address.modify_address()
             global_transactions.append(
-                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
-                            'Customer Address modified successfully!'))
+                Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
+                            'Address modified successfully!'))
         elif ch == '4':
             while True:
                 self.phone_number = input('New Phone Number: ')
@@ -260,8 +258,8 @@ class Customer(object):
                 else:
                     print('Invalid Phone Number')
             global_transactions.append(
-                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
-                            'Customer Phone Number modified successfully!'))
+                Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
+                            'Phone number modified successfully!'))
         elif ch == '5':
             while True:
                 self.email = input('Email: ')
@@ -270,8 +268,8 @@ class Customer(object):
                 else:
                     print('Invalid Email ID')
             global_transactions.append(
-                Transaction(self.customer_id, None, get_current_date(), get_current_time(), None, None, None, None,
-                            'Customer Email modified successfully!'))
+                Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
+                            'Email modified successfully!'))
 
 
 class Account(object):
@@ -347,7 +345,8 @@ class Account(object):
         # Add creation of account to transactions log
         global_transactions.append(
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
-                        self.get_branch_code(), None, self.balance, self.balance, 'Account created successfully!'))
+                        self.get_branch_code(), 'NA', 0, self.balance,
+                        'Account ' + self.account_number + ' created successfully!'))
 
     def delete_account(self, pop_from_list):
         """
@@ -356,7 +355,8 @@ class Account(object):
         # Add deletion of account to transactions log
         global_transactions.append(
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
-                        self.get_branch_code(), None, self.balance, 0, 'Account deleted successfully!'))
+                        self.get_branch_code(), 'NA', self.balance, 0, 'Account ' + self.account_number +
+                        ' deleted successfully!'))
         self.customer.active_accounts_number -= 1
         if pop_from_list:
             self.customer.active_accounts.pop(self.account_number)
