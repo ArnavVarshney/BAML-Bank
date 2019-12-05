@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a56a030e-2a83-446f-8543-b1a49593965c" name="Default Changelist" comment="Very itsy-bitsy changes.">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BAMLBank" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+    <list default="true" id="a56a030e-2a83-446f-8543-b1a49593965c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BAMLBank" beforeDir="false" afterPath="$PROJECT_DIR$/BAMLBank" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +187,8 @@
       <workItem from="1575529653449" duration="867000" />
       <workItem from="1575530885562" duration="95000" />
       <workItem from="1575532520530" duration="4764000" />
-      <workItem from="1575553669332" duration="514000" />
+      <workItem from="1575553669332" duration="1180000" />
+      <workItem from="1575554883894" duration="801000" />
     </task>
     <task id="LOCAL-00001" summary="Testing VCS with PyCharm">
       <created>1574867948660</created>
@@ -226,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575536217377</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="New files + Working on a database version of the bank">
+      <created>1575554227417</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1575554227417</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,7 +262,8 @@
     <MESSAGE value="Added Branch class and Utility class" />
     <MESSAGE value="Changed documentation, __init__ functions to include params" />
     <MESSAGE value="Very itsy-bitsy changes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Very itsy-bitsy changes." />
+    <MESSAGE value="New files + Working on a database version of the bank" />
+    <option name="LAST_COMMIT_MESSAGE" value="New files + Working on a database version of the bank" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -270,10 +277,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="421" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.768@0.0.1366.768" timestamp="1575541532729" />
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1575554077660">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1575554225991">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1575554077660" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1575554225991" />
     <state x="363" y="191" key="DUMP_DIALOG_DIMENSION_KEY" timestamp="1575540621184">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -282,30 +289,34 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="463" y="138" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1575541523933" />
-    <state width="1323" height="192" key="GridCell.Tab.0.bottom" timestamp="1575554174455">
+    <state x="521" y="285" width="347" height="198" key="Github.CreateGistDialog" timestamp="1575554846699">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1575554174455" />
-    <state width="1323" height="192" key="GridCell.Tab.0.center" timestamp="1575554174452">
+    <state x="521" y="285" width="347" height="198" key="Github.CreateGistDialog/0.0.1366.768@0.0.1366.768" timestamp="1575554846699" />
+    <state width="1323" height="192" key="GridCell.Tab.0.bottom" timestamp="1575555684356">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1575554174452" />
-    <state width="1323" height="192" key="GridCell.Tab.0.left" timestamp="1575554174449">
+    <state width="1323" height="192" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1575555684356" />
+    <state width="1323" height="192" key="GridCell.Tab.0.center" timestamp="1575555684356">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1575554174449" />
-    <state width="1323" height="192" key="GridCell.Tab.0.right" timestamp="1575554174455">
+    <state width="1323" height="192" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1575555684356" />
+    <state width="1323" height="192" key="GridCell.Tab.0.left" timestamp="1575555684356">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1575554174455" />
+    <state width="1323" height="192" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1575555684356" />
+    <state width="1323" height="192" key="GridCell.Tab.0.right" timestamp="1575555684356">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1575555684356" />
     <state width="196" height="457" key="HiddenNamespacesPopup" timestamp="1575541489073">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1366.768@0.0.1366.768" timestamp="1575541489073" />
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1575536218767">
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1575554229429">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1575536218767" />
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1575554229429" />
     <state x="279" y="0" key="com.intellij.database.run.actions.ShowCsvFormatsAction" timestamp="1575540704536">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -313,6 +324,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/BAMLBank$Python_BAML_Bank.coverage" NAME="Python BAML Bank Coverage Results" MODIFIED="1575535927668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/BAMLBank$Python_BAML_Bank_Database.coverage" NAME="Python BAML Bank Database Coverage Results" MODIFIED="1575554174424" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/BAMLBank$Python_BAML_Bank_Database.coverage" NAME="Python BAML Bank Database Coverage Results" MODIFIED="1575555660438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
