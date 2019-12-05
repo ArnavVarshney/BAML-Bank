@@ -17,15 +17,15 @@ global_transactions = []  # global transaction log
 class Transaction(object):
     """
     Maintains a structure for all transactions going into log
-    :param str date: date of transaction, retrieved from get_current_date()
-    :param str time: time of transaction, retrieved from get_current_time()
-    :param str customer_id: customer_id of the customer involved
-    :param str account_number: account_number of involved account
-    :param str branch: branch associated to transaction, retrieved from Account.get_branch_code()
-    :param int amount: net amount involved
-    :param int opening_balance: initial balance
-    :param int closing_balance: final_balance
-    :param str remarks: notes for opening/closing of customers/accounts
+    :param str/NoneType date: date of transaction, retrieved from get_current_date()
+    :param str/NoneType time: time of transaction, retrieved from get_current_time()
+    :param str/NoneType customer_id: customer_id of the customer involved
+    :param str/NoneType account_number: account_number of involved account
+    :param str/NoneType branch: branch associated to transaction, retrieved from Account.get_branch_code()
+    :param int/NoneType amount: net amount involved
+    :param int/NoneType opening_balance: initial balance
+    :param int/NoneType closing_balance: final_balance
+    :param str/NoneType remarks: notes for opening/closing of customers/accounts
     """
 
     def __init__(self, customer_id, account_number, date, time, branch, amount, opening_balance, closing_balance,
@@ -49,10 +49,10 @@ class Transaction(object):
         :rtype str
         """
         return '| {:^13s} | {:^12} | {:^12} | {:^10} | {:^8} | {:^10s} | {:^17s} | {:^18s} | {:^40s} |'.format(
-            self.customer_id,
-            self.account_number,
-            self.date, self.time,
-            self.branch,
+            str(self.customer_id),
+            str(self.account_number),
+            str(self.date), str(self.time),
+            str(self.branch),
             str(self.amount),
             str(self.opening_balance),
             str(self.closing_balance),
@@ -72,18 +72,18 @@ class Address(object):
     :param str zip_code: postal code of the address
     """
 
-    def __init__(self):
+    def __init__(self, zip_code, street_name, locality, state, country, landmark, building, city):
         """
         Initialisation function for Address class
         """
-        self.zip_code = ''
-        self.street_name = ''
-        self.locality = ''
-        self.city = ''
-        self.state = ''
-        self.country = ''
-        self.landmark = ''
-        self.building = ''
+        self.zip_code = zip_code
+        self.street_name = street_name
+        self.locality = locality
+        self.city = city
+        self.state = state
+        self.country = country
+        self.landmark = landmark
+        self.building = building
 
     def __str__(self):
         """
@@ -157,18 +157,19 @@ class Customer(object):
     :param dict active_accounts: dictionary mapping account_ids to objects from the Account class
     """
 
-    def __init__(self):
+    def __init__(self, first_name, last_name, address, phone_number, email, active_accounts_number, customer_id,
+                 active_accounts):
         """
         Initialisation function for Customer class
         """
-        self.first_name = ''
-        self.last_name = ''
-        self.address = Address()
-        self.phone_number = ''
-        self.email = ''
-        self.active_accounts_number = 0
-        self.customer_id = ''
-        self.active_accounts = {}
+        self.first_name = first_name
+        self.last_name = last_name
+        self.address = address
+        self.phone_number = phone_number
+        self.email = email
+        self.active_accounts_number = active_accounts_number
+        self.customer_id = customer_id
+        self.active_accounts = active_accounts
 
     def __str__(self):
         """
@@ -279,19 +280,19 @@ class Account(object):
     :param str account_number: account_number of account
     :param int balance: starting balance of account
     :param Customer customer: associated customer
-    :param int max_transaction amount: maximum transaction amount allowed
+    :param int max_transaction_amount: maximum transaction amount allowed
     :param str branch_code: branch associated with account
     """
 
-    def __init__(self):
+    def __init__(self, account_number, balance, customer, max_transaction_amount, branch_code):
         """
         Initialisation function for Account class
         """
-        self.account_number = ''
-        self.balance = 0
-        self.customer = Customer()
-        self.max_transaction_amount = 0
-        self.branch_code = ''
+        self.account_number = account_number
+        self.balance = balance
+        self.customer = customer
+        self.max_transaction_amount = max_transaction_amount
+        self.branch_code = branch_code
 
     def __str__(self):
         """
@@ -322,7 +323,7 @@ class Account(object):
             elif ch.upper() == 'N':
                 # For new customers, creates a new customer then adds a new account to the customer.active_accounts
                 # dictionary
-                self.customer = Customer()
+                self.customer = Customer('', '', Address('', '', '', '', '', '', '', ''), '', '', 0, '', {})
                 self.customer.input_customer()
                 self.customer.active_accounts_number += 1
                 break
@@ -371,7 +372,12 @@ class Account(object):
         print()
         ch = input('Command: ')
         if ch == '1':
-            self.max_transaction_amount = input('New Maximum Transaction Amount: ')
+            while True:
+                try:
+                    self.max_transaction_amount = int(input('New Maximum Transaction Amount: '))
+                    break
+                except ValueError:
+                    print('Invalid Value')
             global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), 0, self.balance, self.balance,
@@ -473,7 +479,7 @@ def create_customer():
     """
     Menu entry 1: Create Customer
     """
-    c = Customer()
+    c = Customer('', '', Address('', '', '', '', '', '', '', ''), '', '', 0, '', {})
     c.input_customer()
 
 
@@ -503,7 +509,7 @@ def open_account():
     """
     Menu entry 4: Open Account
     """
-    a = Account()
+    a = Account('', 0, Customer('', '', Address('', '', '', '', '', '', '', ''), '', '', 0, '', {}), 0, '')
     a.input_account()
 
 
