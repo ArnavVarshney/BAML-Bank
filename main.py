@@ -116,7 +116,7 @@ class Address(object):
         Modify function to modify an object of Address class
         """
         modify_address_list = ['1. Building', '2. Street', '3. Landmark', '4. City', '5. State', '6. Country',
-                               '7. Zip Code']
+                               '7. Zip Code', '8. Re-enter Address']
         for i in modify_address_list:
             print('\t\t' + i)
         print()
@@ -140,6 +140,8 @@ class Address(object):
                     break
                 else:
                     print('Invalid Zip Code')
+        elif ch == '8':
+            self.input_address()
 
 
 class Customer(object):
