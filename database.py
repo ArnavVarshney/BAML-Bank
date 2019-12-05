@@ -1,6 +1,7 @@
 import sqlite3  # sqlite3 - provides functionality to deal with SQL database
 
 connection = sqlite3.connect("BAMLBank")
+# noinspection SpellCheckingInspection
 crsr = connection.cursor()
 
 
