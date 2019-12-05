@@ -435,24 +435,24 @@ class Account(object):
 
 def get_current_date():
     """
-        :return current system date from the datetime module in DD/MM/YYYY format
-        :rtype str
+    :return current system date from the datetime module in DD/MM/YYYY format
+    :rtype str
     """
     return datetime.today().strftime('%d/%m/%Y')
 
 
 def get_current_time():
     """
-        :return current system time from the datetime module in HH:MM:SS format
-        :rtype str
+    :return current system time from the datetime module in HH:MM:SS format
+    :rtype str
     """
     return datetime.now().strftime("%H:%M:%S")
 
 
 def get_customer_id(account_number):
     """
-        :return customer_id of the account, substring[0:4]
-        :rtype str
+    :return customer_id of the account, substring[0:4]
+    :rtype str
     """
     return account_number[0:4]
 
