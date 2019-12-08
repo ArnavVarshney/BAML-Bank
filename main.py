@@ -1,4 +1,3 @@
-# TODO: Possibly add a branch class with all its attributes
 # Imported modules:
 import os  # os - for providing PAUSE functionality
 import platform  # platform - for determining the execution platform
@@ -8,7 +7,18 @@ from time import sleep  # sleep - pausing execution until interrupted by keyboar
 #  Global variables:
 global_customer_id = 0  # holds currently issued account number
 global_customer_map = {}  # maps customer_id to customer
+global_branches = {}  # maps branch_code to branch
 global_transactions = []  # global transaction log
+
+
+class Branch(object):
+    def __init__(self, branch_code, branch_name, address):
+        self.branch_code = branch_code
+        self.branch_name = branch_name
+        self.address = address
+
+    def __str__(self):
+        return 'Branch Name: ' + self.branch_name + '\n' + 'Branch Code: ' + self.branch_code + '\n' + str(self.address)
 
 
 class Transaction(object):
@@ -677,9 +687,24 @@ def generate_report():
         print("Invalid entry!")
 
 
+def create_branch():
+    branch_name = input('Branch Name: ')
+    branch_code = input('Branch Code: ')
+    address = Address('', '', '', '', '', '', '', '')
+    address.input_address()
+    b = Branch(branch_code, branch_name, address)
+    global_branches[b.branch_code] = b
+    print('Branch created successfully!')
+
+
+def view_branches():
+    for i in global_branches:
+        print(global_branches[i])
+
+
 def about():
     """
-    Menu entry 9: About Us
+    Menu entry 11: About Us
     Prints the team info with a not-so-typewriter-ish effect
     """
     about_str = 'Team XXX *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t' \
@@ -694,8 +719,8 @@ def intro():
     Prints the main menu and forwards to respective functions
     """
     main_menu_list = ['1. Create Customer', '2. Modify Account', '3. Delete Customer', '4. Open Account',
-                      '5. Modify Account', '6. Close Account', '7. Transact', '8. Generate Report', '9. About Us',
-                      '10. Exit']
+                      '5. Modify Account', '6. Close Account', '7. Transact', '8. Generate Report', '9. Add Branch',
+                      '10. View Branches', '11. About Us', '12. Exit']
     print('\nLogin time: ' + get_current_time())
     while True:
         print()
@@ -724,8 +749,12 @@ def intro():
         elif inp == '8':
             generate_report()
         elif inp == '9':
-            about()
+            create_branch()
         elif inp == '10':
+            view_branches()
+        elif inp == '11':
+            about()
+        elif inp == '12':
             print('Goodbye!\nLogout time: ', get_current_time())
             break
         else:

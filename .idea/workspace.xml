@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a56a030e-2a83-446f-8543-b1a49593965c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/BAMLBank.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BAMLBank.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +191,7 @@
       <workItem from="1575554883894" duration="2487000" />
       <workItem from="1575568428937" duration="1631000" />
       <workItem from="1575733112752" duration="3319000" />
-      <workItem from="1575790029246" duration="678000" />
+      <workItem from="1575790029246" duration="4124000" />
     </task>
     <task id="LOCAL-00001" summary="Testing VCS with PyCharm">
       <created>1574867948660</created>
@@ -266,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575557278935</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Finished main.py. Branch class (optional) is left">
+      <created>1575792033522</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1575792033522</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,7 +305,8 @@
     <MESSAGE value="Trim database.py. Minor changes in main.py" />
     <MESSAGE value="Ezy peezy lemon squeezy" />
     <MESSAGE value="Made address.modify_address() more complex, bcuz who listens to pylint?" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made address.modify_address() more complex, bcuz who listens to pylint?" />
+    <MESSAGE value="Finished main.py. Branch class (optional) is left" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished main.py. Branch class (optional) is left" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -323,10 +328,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="445" y="264" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.768@0.0.1366.768" timestamp="1575557051533" />
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1575557277524">
+    <state x="423" y="0" key="CommitChangelistDialog2" timestamp="1575792026324">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1575557277524" />
+    <state x="423" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1575792026324" />
     <state x="363" y="191" key="DUMP_DIALOG_DIMENSION_KEY" timestamp="1575540621184">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -359,10 +364,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1366.768@0.0.1366.768" timestamp="1575541489073" />
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1575557282937">
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1575792044926">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1575557282937" />
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1575792044926" />
     <state x="279" y="0" key="com.intellij.database.run.actions.ShowCsvFormatsAction" timestamp="1575540704536">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
