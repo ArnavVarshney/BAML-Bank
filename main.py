@@ -1,4 +1,3 @@
-# TODO: Possibly add user-side to the bank
 # TODO: Possibly add a branch class with all its attributes
 # Imported modules:
 import os  # os - for providing PAUSE functionality
@@ -621,7 +620,6 @@ def generate_report():
     """
     Menu entry 8: Generate Report
     """
-    # TODO: Refine log by date (bisect module)
     report_menu_list = ['1. View all transactions', '2. View transactions by Branch',
                         '3. View transactions by Customer', '4. View transactions by Account',
                         '5. Generate Customer Report', '6. Generate Account Report']
@@ -633,15 +631,31 @@ def generate_report():
         print_report(global_transactions)
     elif ch == '2':
         branch_code = input('Branch code: ')
-        ls = list(filter(lambda x: x.branch == branch_code, global_transactions))
+        lower_bound = input('Date From (DD/MM/YYYY): ')
+        upper_bound = input('Date To (DD/MM/YYYY): ')
+        d1 = datetime.strptime(lower_bound, '%d/%m/%y')
+        d2 = datetime.strptime(upper_bound, '%d/%m/%y')
+        ls = list(filter(lambda x: x.branch == branch_code and (d1 <= datetime.strptime(x.date, '%d/%m/%y') <= d2),
+                         global_transactions))
         print_report(ls)
     elif ch == '3':
         customer_id = input('Customer ID: ')
-        ls = list(filter(lambda x: x.customer_id == customer_id, global_transactions))
+        lower_bound = input('Date From (DD/MM/YYYY): ')
+        upper_bound = input('Date To (DD/MM/YYYY): ')
+        d1 = datetime.strptime(lower_bound, '%d/%m/%y')
+        d2 = datetime.strptime(upper_bound, '%d/%m/%y')
+        ls = list(filter(lambda x: x.customer_id == customer_id and (d1 <= datetime.strptime(x.date, '%d/%m/%y') <= d2),
+                         global_transactions))
         print_report(ls)
     elif ch == '4':
         account_number = input('Account Number: ')
-        ls = list(filter(lambda x: x.account_number == account_number, global_transactions))
+        lower_bound = input('Date From (DD/MM/YYYY): ')
+        upper_bound = input('Date To (DD/MM/YYYY): ')
+        d1 = datetime.strptime(lower_bound, '%d/%m/%y')
+        d2 = datetime.strptime(upper_bound, '%d/%m/%y')
+        ls = list(
+            filter(lambda x: x.account_number == account_number and (d1 <= datetime.strptime(x.date, '%d/%m/%y') <= d2),
+                   global_transactions))
         print_report(ls)
     elif ch == '5':
         customer_id = input('Customer ID: ')

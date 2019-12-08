@@ -9,11 +9,11 @@ def sql_setup():
     """
     Sets up all the required databases/tables/connections required during execution
     """
-    transaction_log_table_command = """CREATE TABLE transaction_log(customer_id varchar(4), account_number varchar(10), 
+    create_transaction_log = """CREATE TABLE transaction_log(customer_id varchar(4), account_number varchar(10), 
     date varchar(10), time varchar(8), branch varchar(4), amount int, opening_balance int, closing_balance int, 
     remarks varchar(255))"""
     try:
-        crsr.execute(transaction_log_table_command)
+        crsr.execute(create_transaction_log)
     except sqlite3.OperationalError:
         print('Table transaction_log could not be created')
 
