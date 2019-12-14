@@ -2,6 +2,12 @@ import os  # os - for providing PAUSE functionality
 import platform  # platform - for determining the execution platform
 from datetime import datetime  # datetime - for getting current system date and time
 
+#  Global variables:
+global_customer_id = '0001'  # holds currently issued account number
+global_customer_map = {}  # maps customer_id to customer
+global_branches = {}  # maps branch_code to branch
+global_transactions = []  # global transaction log
+
 
 # Utility Functions
 
@@ -42,3 +48,15 @@ def pause():
     elif platform.system() == 'Windows':
         # For Windows systems
         os.system('PAUSE')
+
+
+def clear_console():
+    """
+    Function to clear console window.
+    """
+    if platform.system() == 'Linux':
+        # For UNIX based systems
+        os.system('clear')
+    elif platform.system() == 'Windows':
+        # For Windows systems
+        os.system('cls')

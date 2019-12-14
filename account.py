@@ -1,8 +1,7 @@
-import main
 from address import Address
 from customer import Customer
 from transaction import Transaction
-from utility import get_current_date, get_current_time
+from utility import get_current_date, get_current_time, global_customer_map, global_transactions
 
 
 class Account(object):
@@ -31,7 +30,9 @@ class Account(object):
         :rtype str
         """
         return str(
-            f'Account Number: {self.account_number}\nCustomer ID: {self.customer.customer_id}\nBalance{str(self.balance)}\nMaximum Transaction Amount{str(self.max_transaction_amount)}\nBranch Code{self.branch_code}')
+            f'Account Number: {self.account_number}\nCustomer ID: {self.customer.customer_id}\nBalance'
+            f'{str(self.balance)}\nMaximum Transaction Amount{str(self.max_transaction_amount)}\nBranch Code'
+            f'{self.branch_code}')
 
     def input_account(self):
         """
@@ -42,9 +43,9 @@ class Account(object):
             # For existing customers, adds a new account to the customer.active_accounts dictionary
             if ch.upper() == 'Y':
                 existing_customer_id = input('Existing Customer ID: ')
-                if existing_customer_id in main.global_customer_map:
+                if existing_customer_id in global_customer_map:
                     print(f'Customer found. Adding account to customer ID #{existing_customer_id}')
-                    self.customer = main.global_customer_map[existing_customer_id]
+                    self.customer = global_customer_map[existing_customer_id]
                     self.customer.active_accounts_number += 1
                     break
                 else:
@@ -74,7 +75,7 @@ class Account(object):
         self.customer.active_accounts[self.account_number] = self
         print(f'Account created successfully! Account ID: {self.account_number}')
         # Add creation of account to transactions log
-        main.global_transactions.append(
+        global_transactions.append(
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                         self.get_branch_code(), 'NA', 0, self.balance,
                         f'Account {self.account_number} created successfully!'))
@@ -84,7 +85,7 @@ class Account(object):
         Delete function to delete an object of Account class
         """
         # Add deletion of account to transactions log
-        main.global_transactions.append(
+        global_transactions.append(
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                         self.get_branch_code(), 'NA', self.balance, 0,
                         f'Account {self.account_number} deleted successfully!'))
@@ -109,7 +110,7 @@ class Account(object):
                     break
                 except ValueError:
                     print('Invalid Value')
-            main.global_transactions.append(
+            global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), 0, self.balance, self.balance,
                             'Maximum Transaction Amount modified successfully!'))
@@ -127,7 +128,7 @@ class Account(object):
         else:
             self.balance += amount
             # Add deposit transaction to transactions log
-            main.global_transactions.append(
+            global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), amount, str(int(self.balance) - int(amount)), self.balance,
                             f'{str(amount)} deposited successfully!'))
@@ -148,7 +149,7 @@ class Account(object):
         else:
             self.balance -= amount
             # Add withdrawal transaction to transactions log
-            main.global_transactions.append(
+            global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), amount, str(int(self.balance) + int(amount)), str(self.balance),
                             f'{str(amount)} withdrawn successfully!'))

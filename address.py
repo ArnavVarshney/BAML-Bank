@@ -30,7 +30,9 @@ class Address(object):
         :rtype str
         """
         return str(
-            f'Building: {self.building}\nStreet: {self.street_name}\nLocality: {self.locality}\nLandmark: {self.landmark}\nCity: {self.city}\nState: {self.state}\nCountry: {self.country}\nZip Code: {self.zip_code}')
+            f'Building: {self.building}\nStreet: {self.street_name}\nLocality: {self.locality}\nLandmark:'
+            f' {self.landmark}\nCity: {self.city}\nState: {self.state}\nCountry: {self.country}\nZip Code: '
+            f'{self.zip_code}')
 
     def input_address(self):
         """

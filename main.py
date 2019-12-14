@@ -1,10 +1,5 @@
-#  Global variables:
-
-global_customer_id = 1  # holds currently issued account number
-global_customer_map = {}  # maps customer_id to customer
-global_branches = {}  # maps branch_code to branch
-global_transactions = []  # global transaction log
-
+# TODO: Fix view branch output
+# TODO: Fix report menu output
 
 # Menu functions
 
@@ -14,14 +9,7 @@ def create_customer():
     Menu entry 1: Create Customer
     """
     c = Customer('', '', Address('', '', '', '', '', '', '', ''), '', '', 0, '', {})
-    if c.input_customer():
-        # Add creation of customer to transactions log
-        global global_customer_id
-        global_customer_id += 1
-        global_customer_map[c.customer_id] = c
-        global_transactions.append(
-            Transaction(c.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
-                        f'Customer {c.customer_id} created successfully!'))
+    c.input_customer()
 
 
 def modify_customer():
@@ -246,6 +234,20 @@ def about():
         print(char, end='', flush=True)
 
 
+def print_name():
+    """
+    Beauty Mode: On
+    """
+    print('$$$$$$$\\                      $$\\             $$\\   $$\\ $$\\   $$\\ $$\\   $$\\ ')
+    print('$$  __$$\\                     $$ |            $$ |  $$ |$$ |  $$ |$$ |  $$ |')
+    print('$$ |  $$ | $$$$$$\\  $$$$$$$\\  $$ |  $$\\       \\$$\\ $$  |\\$$\\ $$  |\\$$\\ $$  |')
+    print('$$$$$$$\\ | \\____$$\\ $$  __$$\\ $$ | $$  |       \\$$$$  /  \\$$$$  /  \\$$$$  /')
+    print('$$  __$$\\  $$$$$$$ |$$ |  $$ |$$$$$$  /        $$  $$<   $$  $$<   $$  $$< ')
+    print('$$ |  $$ |$$  __$$ |$$ |  $$ |$$  _$$<        $$  /\\$$\\ $$  /\\$$\\ $$  /$$\\')
+    print('$$$$$$$  |\\$$$$$$$ |$$ |  $$ |$$ | \\$$\\       $$ /  $$ |$$ /  $$ |$$ /  $$ |')
+    print('\\_______/  \\_______|\\__|  \\__|\\__|  \\__|      \\__|  \\__|\\__|  \\__|\\__|  \\__|')
+
+
 def intro():
     """
     Prints the main menu and forwards to respective functions
@@ -253,11 +255,13 @@ def intro():
     main_menu_list = ['1. Create Customer', '2. Modify Customer', '3. Delete Customer', '4. Open Account',
                       '5. Modify Account', '6. Close Account', '7. Transact', '8. Generate Report', '9. Add Branch',
                       '10. View Branches', '11. About Us', '12. Exit']
-    print('Login time: ' + get_current_time())
+    login_time = get_current_time()
     while True:
+        clear_console()
+        print_name()
         print()
-        print(27 * '=')
-        print(1 * '\t' + 'Welcome to Bank XXX')
+        print('Login time: ' + login_time)
+        print()
         print(27 * '=')
         print()
         for i in main_menu_list:
@@ -301,11 +305,13 @@ if __name__ == "__main__":
     # Imported modules:
     from datetime import datetime  # datetime - for getting current system date and time
     from time import sleep  # sleep - pausing execution until interrupted by keyboard input (Windows)
+
+    # Imported files:
     from account import Account
     from address import Address
     from branch import Branch
     from customer import Customer
-    from transaction import Transaction
-    from utility import get_customer_id, get_current_time, pause, get_current_date
+    from utility import get_customer_id, get_current_time, pause, global_customer_map, global_transactions, \
+        global_branches, clear_console
 
     intro()

@@ -1,6 +1,6 @@
-import main
+import utility
 from transaction import Transaction
-from utility import get_current_date, get_current_time
+from utility import get_current_date, get_current_time, global_customer_map, global_transactions
 
 
 class Customer(object):
@@ -39,7 +39,9 @@ class Customer(object):
         for i in self.active_accounts:
             active_accounts += ('\n' + '\t' + self.active_accounts[i].account_number)
         return str(
-            f'Customer ID: {self.customer_id}\nFull Name: {self.first_name} {self.last_name}\n{str(self.address)}\n{str(self.phone_number)}\nEmail ID: {self.email}\nActive accounts: {str(self.active_accounts_number)}\n{active_accounts}')
+            f'Customer ID: {self.customer_id}\nFull Name: {self.first_name} {self.last_name}\n{str(self.address)}\n'
+            f'{str(self.phone_number)}\nEmail ID: {self.email}\nActive accounts: {str(self.active_accounts_number)}\n'
+            f'{active_accounts}')
 
     def input_customer(self):
         """
@@ -60,16 +62,22 @@ class Customer(object):
                 break
             else:
                 print('Invalid Email ID')
-        self.customer_id = f"{main.global_customer_id:04d}"
+        self.customer_id = utility.global_customer_id
+        utility.global_customer_id = str(int(utility.global_customer_id) + 1)
+        utility.global_customer_id = '0' * (4 - len(utility.global_customer_id)) + utility.global_customer_id
+        global_customer_map[self.customer_id] = self
+        # Add creation of customer to transactions log
+        global_transactions.append(
+            Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
+                        f'Customer {self.customer_id} created successfully!'))
         print(f'Customer created successfully! Customer ID: {self.customer_id}')
-        return True
 
     def delete_customer(self):
         """
         Delete function to delete an object of Customer class
         """
         # Add deletion of customer to transactions log
-        main.global_transactions.append(
+        global_transactions.append(
             Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                         f'Customer {self.customer_id} deleted successfully!'))
         # Delete individual accounts
@@ -91,17 +99,17 @@ class Customer(object):
         ch = input('Command: ')
         if ch == '1':
             self.first_name = input('New First Name: ')
-            main.global_transactions.append(
+            global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'First name modified successfully!'))
         elif ch == '2':
             self.last_name = input('New Last Name: ')
-            main.global_transactions.append(
+            global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Last name modified successfully!'))
         elif ch == '3':
             self.address.modify_address()
-            main.global_transactions.append(
+            global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Address modified successfully!'))
         elif ch == '4':
@@ -111,7 +119,7 @@ class Customer(object):
                     break
                 else:
                     print('Invalid Phone Number')
-            main.global_transactions.append(
+            global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Phone number modified successfully!'))
         elif ch == '5':
@@ -121,6 +129,6 @@ class Customer(object):
                     break
                 else:
                     print('Invalid Email ID')
-            main.global_transactions.append(
+            global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Email modified successfully!'))
