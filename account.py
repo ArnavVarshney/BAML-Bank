@@ -100,7 +100,7 @@ class Account(object):
         """
         modify_account_list = ['1. Modify Maximum Transaction Amount']
         for i in modify_account_list:
-            print('\t\t' + i)
+            print('\t' + i)
         print()
         ch = input('Command: ')
         if ch == '1':

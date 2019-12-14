@@ -1,4 +1,3 @@
-# TODO: Fix view branch output
 # TODO: Fix report menu output
 
 # Menu functions
@@ -80,7 +79,7 @@ def transact():
     """
     transact_menu_list = ['1. Deposit', '2. Withdraw', '3. Account to Account transfer']
     for i in transact_menu_list:
-        print('\t\t' + i)
+        print('\t' + i)
     print()
     ch = input('Command: ')
     if ch == '1':
@@ -154,7 +153,7 @@ def generate_report():
                         '3. View transactions by Customer', '4. View transactions by Account',
                         '5. Generate Customer Report', '6. Generate Account Report']
     for i in report_menu_list:
-        print('\t\t' + i)
+        print('\t' + i)
     print()
     ch = input('Command: ')
     if ch == '1':
@@ -218,8 +217,12 @@ def create_branch():
 
 
 def view_branches():
-    for i in global_branches:
-        print(global_branches[i])
+    print('All branches:')
+    if len(global_branches) > 0:
+        for i in global_branches:
+            print(global_branches[i])
+    else:
+        print('No branches found!')
 
 
 def about():

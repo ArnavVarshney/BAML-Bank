@@ -94,7 +94,7 @@ class Customer(object):
         modify_customer_list = ['1. First Name', '2. Last Name', '3. Address', '4. Phone Number', '5. Email']
         print('\n\tWhich parameter do you want to modify?')
         for i in modify_customer_list:
-            print('\t\t' + i)
+            print('\t' + i)
         print()
         ch = input('Command: ')
         if ch == '1':

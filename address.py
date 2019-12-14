@@ -59,7 +59,7 @@ class Address(object):
         modify_address_list = ['1. Building', '2. Street', '3. Landmark', '4. City', '5. State', '6. Country',
                                '7. Zip Code', '8. Re-enter Address']
         for i in modify_address_list:
-            print('\t\t' + i)
+            print('\t' + i)
         print()
         ch = input('Command: ')
         if ch == '1':
