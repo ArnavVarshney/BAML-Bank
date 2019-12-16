@@ -1,10 +1,9 @@
-# TODO: Add branch code validation
 # TODO: Add SMS service
 
 from address import Address
 from customer import Customer
 from transaction import Transaction
-from utility import get_current_date, get_current_time, global_customer_map, global_transactions
+from utility import get_current_date, get_current_time, global_customer_map, global_transactions, global_branches
 
 
 class Account(object):
@@ -72,7 +71,12 @@ class Account(object):
                 break
             except ValueError:
                 print('\nInvalid Value\n')
-        branch_code = input('Branch Code: ')
+        while True:
+            branch_code = input('Branch Code: ')
+            if branch_code in global_branches:
+                break
+            else:
+                print('\nInvalid Branch Code\n')
         self.account_number = str(
             self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts_number))
         self.customer.active_accounts[self.account_number] = self

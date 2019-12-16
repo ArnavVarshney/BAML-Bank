@@ -35,10 +35,12 @@ def open_account():
     """
     Menu entry 4: Open Account
     """
-    a = Account('', 0,
-                Customer('', '', Address('', '', '', '', '', '', '', ''), '', '', 0, '', {}),
-                0, '')
-    a.input_account()
+    if len(global_branches) > 0:
+        a = Account('', 0,
+                    Customer('', '', Address('', '', '', '', '', '', '', ''), '', '', 0, '', {}), 0, '')
+        a.input_account()
+    else:
+        print('No branches found! Use Command 9 to add branches.')
 
 
 def modify_account():
