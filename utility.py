@@ -1,6 +1,7 @@
 import os  # os - for providing PAUSE functionality
 import platform  # platform - for determining the execution platform
 from datetime import datetime  # datetime - for getting current system date and time
+from random import randint  # randint - for generating OTP
 
 from twilio.rest import Client
 
@@ -72,3 +73,8 @@ def send_message(msg, to_number):
     client = Client(account_sid, auth_token)
     message = client.messages.create(body=msg, from_='+14154834260', to=to_number)
     print(message.sid)
+
+
+def generate_otp(to_number):
+    otp = randint(10000, 99999)
+    send_message(f'Greetings from Bank XXX!\n Your OTP is: {otp}', to_number)

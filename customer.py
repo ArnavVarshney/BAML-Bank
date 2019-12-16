@@ -1,6 +1,6 @@
 import utility
 from transaction import Transaction
-from utility import get_current_date, get_current_time, global_customer_map, global_transactions
+from utility import get_current_date, get_current_time, global_customer_map, global_transactions, generate_otp
 
 
 class Customer(object):
@@ -51,9 +51,18 @@ class Customer(object):
         self.last_name = input('Last Name: ')
         self.address.input_address()
         while True:
+            flag = False
             self.phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
             if self.phone_number.isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
-                break
+                otp = generate_otp(self.phone_number)
+                i = 0
+                while i in range(3):
+                    otp_input = input(f'OTP sent on {self.phone_number}: ')
+                    if otp_input == otp:
+                        flag = True
+                        break
+                if flag:
+                    break
             else:
                 print('\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
         while True:
@@ -71,6 +80,9 @@ class Customer(object):
             Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                         f'Customer {self.customer_id} created successfully!'))
         print(f'Customer created successfully! Customer ID: {self.customer_id}')
+        utility.send_message(
+            f'Greetings {self.first_name} {self.last_name}!\nWelcome to Bank XXX!\nYour Customer ID {self.customer_id}',
+            self.phone_number)
 
     def delete_customer(self):
         """
@@ -114,9 +126,18 @@ class Customer(object):
                             'Address modified successfully!'))
         elif ch == '4':
             while True:
+                flag = False
                 self.phone_number = input('New Phone Number (+<Country Code><Phone Number>): ')
                 if self.phone_number.isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
-                    break
+                    otp = generate_otp(self.phone_number)
+                    i = 0
+                    while i in range(3):
+                        otp_input = input(f'OTP sent on {self.phone_number}: ')
+                        if otp_input == otp:
+                            flag = True
+                            break
+                    if flag:
+                        break
                 else:
                     print('\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
             global_transactions.append(
