@@ -51,11 +51,11 @@ class Customer(object):
         self.last_name = input('Last Name: ')
         self.address.input_address()
         while True:
-            self.phone_number = input('Phone Number: ')
-            if self.phone_number.isnumeric() and len(self.phone_number) == 10:
+            self.phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
+            if self.phone_number.isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
                 break
             else:
-                print('\nInvalid Phone Number\n')
+                print('\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
         while True:
             self.email = input('Email: ')
             if self.email.__contains__('@'):
@@ -114,11 +114,11 @@ class Customer(object):
                             'Address modified successfully!'))
         elif ch == '4':
             while True:
-                self.phone_number = input('New Phone Number: ')
-                if self.phone_number.isnumeric() and len(self.phone_number) == 10:
+                self.phone_number = input('New Phone Number (+<Country Code><Phone Number>): ')
+                if self.phone_number.isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
                     break
                 else:
-                    print('\nInvalid Phone Number\n')
+                    print('\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
             global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Phone number modified successfully!'))
