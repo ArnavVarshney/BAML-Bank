@@ -83,3 +83,5 @@ class Address(object):
                     print('\nInvalid Zip Code\n')
         elif ch == '8':
             self.input_address()
+        else:
+            print('Invalid entry!')

@@ -1,6 +1,7 @@
 import utility
 from transaction import Transaction
-from utility import get_current_date, get_current_time, global_customer_map, global_transactions, generate_otp
+from utility import get_current_date, get_current_time, global_customer_map, global_transactions, generate_otp, \
+    send_message
 
 
 class Customer(object):
@@ -80,9 +81,9 @@ class Customer(object):
             Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                         f'Customer {self.customer_id} created successfully!'))
         print(f'Customer created successfully! Customer ID: {self.customer_id}')
-        utility.send_message(
-            f'Greetings {self.first_name} {self.last_name}!\nWelcome to Bank XXX!\nYour Customer ID {self.customer_id}',
-            self.phone_number)
+        send_message(
+            f'Greetings from Bank XXX!\nWelcome {self.first_name} {self.last_name}!\nYour Customer ID '
+            f'{self.customer_id}.', self.phone_number)
 
     def delete_customer(self):
         """
@@ -97,7 +98,9 @@ class Customer(object):
             self.active_accounts[i].delete_account(False)
         self.active_accounts.clear()
         print('Customer deleted successfully!')
-        return True
+        send_message(
+            f'Greetings from Bank XXX!\nYour Customer ID {self.customer_id} has been deleted.\nSorry to see you go!',
+            self.phone_number)
 
     def modify_customer(self):
         """
@@ -114,16 +117,25 @@ class Customer(object):
             global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'First name modified successfully!'))
+            send_message(
+                f'Greetings from Bank XXX!\nYour Customer ID {self.customer_id}.\nYour account has been modified '
+                f'successfully.', self.phone_number)
         elif ch == '2':
             self.last_name = input('New Last Name: ')
             global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Last name modified successfully!'))
+            send_message(
+                f'Greetings from Bank XXX!\nYour Customer ID {self.customer_id}.\nYour account has been modified '
+                f'successfully.', self.phone_number)
         elif ch == '3':
             self.address.modify_address()
             global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Address modified successfully!'))
+            send_message(
+                f'Greetings from Bank XXX!\nYour Customer ID {self.customer_id}.\nYour account has been modified '
+                f'successfully.', self.phone_number)
         elif ch == '4':
             while True:
                 flag = False
@@ -143,6 +155,9 @@ class Customer(object):
             global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Phone number modified successfully!'))
+            send_message(
+                f'Greetings from Bank XXX!\nYour Customer ID {self.customer_id}.\nYour account has been modified '
+                f'successfully.', self.phone_number)
         elif ch == '5':
             while True:
                 self.email = input('Email: ')
@@ -153,3 +168,8 @@ class Customer(object):
             global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Email modified successfully!'))
+            send_message(
+                f'Greetings from Bank XXX!\nYour Customer ID {self.customer_id}.\nYour account has been modified '
+                f'successfully.', self.phone_number)
+        else:
+            print('Invalid entry!')

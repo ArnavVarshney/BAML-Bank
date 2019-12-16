@@ -1,9 +1,8 @@
-# TODO: Add SMS service
-
 from address import Address
 from customer import Customer
 from transaction import Transaction
-from utility import get_current_date, get_current_time, global_customer_map, global_transactions, global_branches
+from utility import get_current_date, get_current_time, global_customer_map, global_transactions, global_branches, \
+    send_message
 
 
 class Account(object):
@@ -86,6 +85,10 @@ class Account(object):
             Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                         self.get_branch_code(), 'NA', 0, self.balance,
                         f'Account {self.account_number} created successfully!'))
+        send_message(
+            f'Greetings from Bank XXX!\nYour Customer ID {self.customer.customer_id}\nYour Account Number '
+            f'{self.account_number}.\nBalance {self.balance}\nYour account has been created successfully.',
+            self.customer.phone_number)
 
     def delete_account(self, pop_from_list):
         """
@@ -100,6 +103,9 @@ class Account(object):
         if pop_from_list:
             self.customer.active_accounts.pop(self.account_number)
         print(f'Account {str(self.account_number)} deleted successfully! Closing Balance: {str(self.balance)}')
+        send_message(
+            f'Greetings from Bank XXX!\nYour Customer ID {self.customer.customer_id}\nYour Account Number '
+            f'{self.account_number}.\nYour account has been deleted successfully.', self.customer.phone_number)
 
     def modify_account(self):
         """
@@ -121,6 +127,9 @@ class Account(object):
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), 0, self.balance, self.balance,
                             'Maximum Transaction Amount modified successfully!'))
+            send_message(
+                f'Greetings from Bank XXX!\nYour Customer ID {self.customer.customer_id}\nYour Account Number '
+                f'{self.account_number}.\nYour account has been modified successfully.', self.customer.phone_number)
 
     def deposit(self, amount):
         """
@@ -139,6 +148,10 @@ class Account(object):
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), amount, str(int(self.balance) - int(amount)), self.balance,
                             f'{str(amount)} deposited successfully!'))
+            send_message(
+                f'Greetings from Bank XXX!\nYour Customer ID {self.customer.customer_id}.\nYou have deposited '
+                f'{str(amount)} from Account #{self.account_number}\nClosing Balance: {self.balance}',
+                self.customer.phone_number)
 
     def withdraw(self, amount):
         """
@@ -160,6 +173,10 @@ class Account(object):
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), amount, str(int(self.balance) + int(amount)), str(self.balance),
                             f'{str(amount)} withdrawn successfully!'))
+            send_message(
+                f'Greetings from Bank XXX!\nYour Customer ID {self.customer.customer_id}.\nYou have withdrawn '
+                f'{str(amount)} from Account #{self.account_number}\nClosing Balance: {self.balance}',
+                self.customer.phone_number)
 
     def get_branch_code(self):
         """
