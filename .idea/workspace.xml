@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a56a030e-2a83-446f-8543-b1a49593965c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account.py" beforeDir="false" afterPath="$PROJECT_DIR$/account.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +216,7 @@
       <workItem from="1576311678240" duration="14862000" />
       <workItem from="1576337464323" duration="1603000" />
       <workItem from="1576347935754" duration="2896000" />
-      <workItem from="1576486385220" duration="12653000" />
+      <workItem from="1576486385220" duration="13696000" />
     </task>
     <task id="LOCAL-00001" summary="Testing VCS with PyCharm">
       <created>1574867948660</created>
@@ -401,7 +400,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576498911077</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Fix messaging. Switched to WhatsApp">
+      <created>1576501203928</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1576501203928</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -451,7 +457,8 @@
     <MESSAGE value="Add SMS alerts" />
     <MESSAGE value="Fixed Phone Number related bug. Added force exit option (Ctrl + C)" />
     <MESSAGE value="Fix infinite loop for OTP. Narrowed except clause to KeyboardInterrupt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix infinite loop for OTP. Narrowed except clause to KeyboardInterrupt" />
+    <MESSAGE value="Fix messaging. Switched to WhatsApp" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix messaging. Switched to WhatsApp" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -477,10 +484,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="445" y="264" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.768@0.0.1366.768" timestamp="1576329968561" />
-    <state x="535" y="0" key="CommitChangelistDialog2" timestamp="1576498909618">
+    <state x="507" y="0" key="CommitChangelistDialog2" timestamp="1576501202443">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="535" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1576498909618" />
+    <state x="507" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1576501202443" />
     <state x="363" y="191" key="DUMP_DIALOG_DIMENSION_KEY" timestamp="1575540621184">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -533,10 +540,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="466" y="97" key="RollbackChangesDialog/0.0.1366.768@0.0.1366.768" timestamp="1576486945718" />
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1576498912020">
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1576501205388">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1576498912020" />
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1576501205388" />
     <state x="279" y="0" key="com.intellij.database.run.actions.ShowCsvFormatsAction" timestamp="1575540704536">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -545,10 +552,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="494" y="302" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.768@0.0.1366.768" timestamp="1576348321134" />
-    <state x="390" y="25" width="710" height="717" key="find.popup" timestamp="1576498872605">
+    <state x="390" y="25" width="710" height="717" key="find.popup" timestamp="1576501996901">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="390" y="25" width="710" height="717" key="find.popup/0.0.1366.768@0.0.1366.768" timestamp="1576498872605" />
+    <state x="390" y="25" width="710" height="717" key="find.popup/0.0.1366.768@0.0.1366.768" timestamp="1576501996901" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

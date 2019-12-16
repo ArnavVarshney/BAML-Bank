@@ -32,7 +32,7 @@ class Account(object):
         """
         return str(
             f'Account Number: {self.account_number}\nCustomer ID: {self.customer.customer_id}\nBalance'
-            f'{str(self.balance)}\nMaximum Transaction Amount{str(self.max_transaction_amount)}\nBranch Code'
+            f' INR{str(self.balance)}\nMaximum Transaction Amount{str(self.max_transaction_amount)}\nBranch Code'
             f'{self.branch_code}')
 
     def input_account(self):
@@ -87,7 +87,7 @@ class Account(object):
                         f'Account {self.account_number} created successfully!'))
         send_message(
             f'Greetings from Bank XXX!\nYour Customer ID {self.customer.customer_id}\nYour Account Number '
-            f'{self.account_number}.\nBalance {self.balance}\nYour account has been created successfully.',
+            f'{self.account_number}.\nBalance INR{self.balance}\nYour account has been created successfully.',
             self.customer.phone_number)
 
     def delete_account(self, pop_from_list):
@@ -102,7 +102,7 @@ class Account(object):
         self.customer.active_accounts_number -= 1
         if pop_from_list:
             self.customer.active_accounts.pop(self.account_number)
-        print(f'Account {str(self.account_number)} deleted successfully! Closing Balance: {str(self.balance)}')
+        print(f'Account {str(self.account_number)} deleted successfully! Closing Balance: INR{str(self.balance)}')
         send_message(
             f'Greetings from Bank XXX!\nYour Customer ID {self.customer.customer_id}\nYour Account Number '
             f'{self.account_number}.\nYour account has been deleted successfully.', self.customer.phone_number)
@@ -138,11 +138,11 @@ class Account(object):
         if int(amount) <= 0:
             # Validation rule: Amount is negative
             print('Invalid amount. Please enter positive values.\nTransaction aborted!')
-        elif amount > self.max_transaction_amount:
+        elif int(amount) > self.max_transaction_amount:
             # Validation rule: Amount is more than maximum set by the customer
             print('Amount entered is more than the maximum.\nTransaction aborted!')
         else:
-            self.balance += amount
+            self.balance += int(amount)
             # Add deposit transaction to transactions log
             global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
@@ -150,7 +150,7 @@ class Account(object):
                             f'{str(amount)} deposited successfully!'))
             send_message(
                 f'Greetings from Bank XXX!\nYour Customer ID {self.customer.customer_id}.\nYou have deposited '
-                f'{str(amount)} from Account #{self.account_number}\nClosing Balance: {self.balance}',
+                f'{str(amount)} from Account #{self.account_number}\nClosing Balance: INR{self.balance}',
                 self.customer.phone_number)
 
     def withdraw(self, amount):
@@ -160,14 +160,14 @@ class Account(object):
         if int(amount) <= 0:
             # Validation rule: Amount is negative
             print('Invalid amount. Please enter positive values.\nTransaction aborted!')
-        elif amount > self.max_transaction_amount:
+        elif int(amount) > self.max_transaction_amount:
             # Validation rule: Amount is more than maximum set by the customer
             print('Amount entered is more than the maximum.\nTransaction aborted!')
-        elif amount > self.balance:
+        elif int(amount) > self.balance:
             # Validation rule: Amount is more than current balance
             print('Amount entered is more than balance.\nTransaction aborted!')
         else:
-            self.balance -= amount
+            self.balance -= int(amount)
             # Add withdrawal transaction to transactions log
             global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
@@ -175,7 +175,7 @@ class Account(object):
                             f'{str(amount)} withdrawn successfully!'))
             send_message(
                 f'Greetings from Bank XXX!\nYour Customer ID {self.customer.customer_id}.\nYou have withdrawn '
-                f'{str(amount)} from Account #{self.account_number}\nClosing Balance: {self.balance}',
+                f'{str(amount)} from Account #{self.account_number}\nClosing Balance: INR{self.balance}',
                 self.customer.phone_number)
 
     def get_branch_code(self):
