@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a56a030e-2a83-446f-8543-b1a49593965c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/execute.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/varsh.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/varsh.xml" afterDir="false" />
+    <list default="true" id="a56a030e-2a83-446f-8543-b1a49593965c" name="Default Changelist" comment="Fine-tune the code">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/execute.bat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -219,7 +219,7 @@
       <workItem from="1576311678240" duration="14862000" />
       <workItem from="1576337464323" duration="1603000" />
       <workItem from="1576347935754" duration="2896000" />
-      <workItem from="1576486385220" duration="16570000" />
+      <workItem from="1576486385220" duration="18010000" />
     </task>
     <task id="LOCAL-00001" summary="Testing VCS with PyCharm">
       <created>1574867948660</created>
@@ -431,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576509533371</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Fine-tune the code">
+      <created>1576510080905</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1576510080905</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -457,7 +464,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Very itsy-bitsy changes." />
     <MESSAGE value="New files + Working on a database version of the bank" />
     <MESSAGE value="database.py is now a sketch-board for database integration" />
     <MESSAGE value="Trim database.py. Minor changes in main.py" />
@@ -482,7 +488,8 @@
     <MESSAGE value="Transaction bug fix. Add currency prefix to messages" />
     <MESSAGE value="Team SPAAM is here to slay!" />
     <MESSAGE value="Rename main.py to backend.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename main.py to backend.py" />
+    <MESSAGE value="Fine-tune the code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fine-tune the code" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -508,10 +515,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="445" y="264" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.768@0.0.1366.768" timestamp="1576509999362" />
-    <state x="507" y="0" key="CommitChangelistDialog2" timestamp="1576509532039">
+    <state x="507" y="0" key="CommitChangelistDialog2" timestamp="1576511506028">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="507" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1576509532039" />
+    <state x="507" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1576511506028" />
     <state x="363" y="191" key="DUMP_DIALOG_DIMENSION_KEY" timestamp="1575540621184">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -564,18 +571,18 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="466" y="97" key="RollbackChangesDialog/0.0.1366.768@0.0.1366.768" timestamp="1576486945718" />
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1576509534253">
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1576510081625">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1576509534253" />
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1576510081625" />
     <state x="279" y="0" key="com.intellij.database.run.actions.ShowCsvFormatsAction" timestamp="1575540704536">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="279" y="0" key="com.intellij.database.run.actions.ShowCsvFormatsAction/0.0.1366.768@0.0.1366.768" timestamp="1575540704536" />
-    <state x="494" y="302" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576348321134">
+    <state x="494" y="302" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576510974012">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="494" y="302" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.768@0.0.1366.768" timestamp="1576348321134" />
+    <state x="494" y="302" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.768@0.0.1366.768" timestamp="1576510974012" />
     <state x="390" y="25" width="710" height="717" key="find.popup" timestamp="1576501996901">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
