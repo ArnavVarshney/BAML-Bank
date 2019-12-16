@@ -1,5 +1,3 @@
-# TODO: Fix report menu output
-
 # Menu functions
 
 
@@ -104,7 +102,7 @@ def transact():
                 print('Account does not exist!')
         else:
             print('Customer does not exist!')
-    else:
+    elif ch == '3':
         account_id1 = input('Account to Withdraw from: ')
         customer_id1 = get_customer_id(account_id1)
         account_id2 = input('Account to Deposit to: ')
@@ -113,7 +111,7 @@ def transact():
                 global_customer_map[customer_id2].active_accounts:
             print('Account(s) not found!')
         else:
-            transfer_amount = input('Amount to transfer: ')
+            transfer_amount = int(input('Amount to transfer: '))
             global_customer_map[customer_id1].active_accounts[account_id1].withdraw(transfer_amount)
             global_customer_map[customer_id2].active_accounts[account_id2].deposit(transfer_amount)
 
@@ -152,6 +150,7 @@ def generate_report():
     report_menu_list = ['1. View all transactions', '2. View transactions by Branch',
                         '3. View transactions by Customer', '4. View transactions by Account',
                         '5. Generate Customer Report', '6. Generate Account Report']
+    print('Which report do you want to generate?')
     for i in report_menu_list:
         print('\t' + i)
     print()

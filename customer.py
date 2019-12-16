@@ -37,7 +37,7 @@ class Customer(object):
         """
         active_accounts = ''
         for i in self.active_accounts:
-            active_accounts += ('\n' + '\t' + self.active_accounts[i].account_number)
+            active_accounts += ('\t' + self.active_accounts[i].account_number + '\n')
         return str(
             f'Customer ID: {self.customer_id}\nFull Name: {self.first_name} {self.last_name}\n{str(self.address)}\n'
             f'{str(self.phone_number)}\nEmail ID: {self.email}\nActive accounts: {str(self.active_accounts_number)}\n'

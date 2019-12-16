@@ -4,6 +4,8 @@
     <list default="true" id="a56a030e-2a83-446f-8543-b1a49593965c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account.py" beforeDir="false" afterPath="$PROJECT_DIR$/account.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +218,7 @@
       <workItem from="1576311678240" duration="14862000" />
       <workItem from="1576337464323" duration="1603000" />
       <workItem from="1576347935754" duration="2896000" />
-      <workItem from="1576486385220" duration="209000" />
+      <workItem from="1576486385220" duration="2860000" />
     </task>
     <task id="LOCAL-00001" summary="Testing VCS with PyCharm">
       <created>1574867948660</created>
@@ -344,7 +346,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576348964728</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Minor beautification tweaks1">
+      <created>1576486824141</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1576486824141</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -386,7 +395,8 @@
     <MESSAGE value="Declared all global variables in utility.py. Beautified Bank XXX. Sorted out the mess created" />
     <MESSAGE value="Deleted BAMLBank.sqlite" />
     <MESSAGE value="Fixed menu indentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed menu indentation" />
+    <MESSAGE value="Minor beautification tweaks1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor beautification tweaks1" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -412,10 +422,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="445" y="264" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.768@0.0.1366.768" timestamp="1576329968561" />
-    <state x="346" y="0" key="CommitChangelistDialog2" timestamp="1576348963485">
+    <state x="346" y="0" key="CommitChangelistDialog2" timestamp="1576489898971">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="346" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1576348963485" />
+    <state x="346" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1576489898971" />
     <state x="363" y="191" key="DUMP_DIALOG_DIMENSION_KEY" timestamp="1575540621184">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -464,10 +474,14 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1366.768@0.0.1366.768" timestamp="1575541489073" />
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1576348968030">
+    <state x="466" y="97" key="RollbackChangesDialog" timestamp="1576486945718">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1576348968030" />
+    <state x="466" y="97" key="RollbackChangesDialog/0.0.1366.768@0.0.1366.768" timestamp="1576486945718" />
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1576486861131">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1576486861131" />
     <state x="279" y="0" key="com.intellij.database.run.actions.ShowCsvFormatsAction" timestamp="1575540704536">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

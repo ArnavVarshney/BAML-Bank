@@ -1,3 +1,6 @@
+# TODO: Add branch code validation
+# TODO: Add SMS service
+
 from address import Address
 from customer import Customer
 from transaction import Transaction
