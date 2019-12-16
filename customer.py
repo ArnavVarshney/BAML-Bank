@@ -54,7 +54,7 @@ class Customer(object):
         while True:
             flag = False
             self.phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
-            if self.phone_number.isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
+            if self.phone_number[1:].isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
                 otp = generate_otp(self.phone_number)
                 i = 0
                 while i in range(3):
@@ -140,7 +140,7 @@ class Customer(object):
             while True:
                 flag = False
                 self.phone_number = input('New Phone Number (+<Country Code><Phone Number>): ')
-                if self.phone_number.isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
+                if self.phone_number[1:].isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
                     otp = generate_otp(self.phone_number)
                     i = 0
                     while i in range(3):

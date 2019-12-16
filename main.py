@@ -256,52 +256,55 @@ def intro():
     """
     Prints the main menu and forwards to respective functions
     """
-    main_menu_list = ['1. Create Customer', '2. Modify Customer', '3. Delete Customer', '4. Open Account',
-                      '5. Modify Account', '6. Close Account', '7. Transact', '8. Generate Report', '9. Add Branch',
-                      '10. View Branches', '11. About Us', '12. Exit']
-    login_time = get_current_time()
-    while True:
-        clear_console()
-        print_name()
-        print()
-        print('Login time: ' + login_time)
-        print()
-        print(27 * '=')
-        print()
-        for i in main_menu_list:
-            print('\t' + i)
-        print()
-        inp = input('Command: ')
-        print()
-        if inp == '1':
-            create_customer()
-        elif inp == '2':
-            modify_customer()
-        elif inp == '3':
-            delete_customer()
-        elif inp == '4':
-            open_account()
-        elif inp == '5':
-            modify_account()
-        elif inp == '6':
-            close_account()
-        elif inp == '7':
-            transact()
-        elif inp == '8':
-            generate_report()
-        elif inp == '9':
-            create_branch()
-        elif inp == '10':
-            view_branches()
-        elif inp == '11':
-            about()
-        elif inp == '12':
-            print('Goodbye!\nLogout time: ', get_current_time())
-            break
-        else:
-            print("Invalid entry!")
-        # Pause before printing the menu again
-        pause()
+    try:
+        main_menu_list = ['1. Create Customer', '2. Modify Customer', '3. Delete Customer', '4. Open Account',
+                          '5. Modify Account', '6. Close Account', '7. Transact', '8. Generate Report', '9. Add Branch',
+                          '10. View Branches', '11. About Us', '12. Exit', 'Press Ctrl + C to Force Exit']
+        login_time = get_current_time()
+        while True:
+            clear_console()
+            print_name()
+            print()
+            print('Login time: ' + login_time)
+            print()
+            print(27 * '=')
+            print()
+            for i in main_menu_list:
+                print('\t' + i)
+            print()
+            inp = input('Command: ')
+            print()
+            if inp == '1':
+                create_customer()
+            elif inp == '2':
+                modify_customer()
+            elif inp == '3':
+                delete_customer()
+            elif inp == '4':
+                open_account()
+            elif inp == '5':
+                modify_account()
+            elif inp == '6':
+                close_account()
+            elif inp == '7':
+                transact()
+            elif inp == '8':
+                generate_report()
+            elif inp == '9':
+                create_branch()
+            elif inp == '10':
+                view_branches()
+            elif inp == '11':
+                about()
+            elif inp == '12':
+                print('Goodbye!\nLogout time: ', get_current_time())
+                break
+            else:
+                print("Invalid entry!")
+            # Pause before printing the menu again
+            pause()
+    except:
+        print('Exiting!')
 
 
 # How do I document this? xD
