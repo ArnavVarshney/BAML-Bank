@@ -231,8 +231,8 @@ def about():
     Menu entry 11: About Us
     Prints the team info with a not-so-typewriter-ish effect
     """
-    about_str = 'Team SPAAM *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t3. Aditi Prasad\n\t\t' \
-                '4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n'
+    about_str = 'Team SPAAM *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t' \
+                '3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n'
     for char in about_str:
         sleep(0.1)
         print(char, end='', flush=True)
