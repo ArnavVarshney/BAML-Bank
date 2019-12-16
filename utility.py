@@ -71,10 +71,14 @@ def send_message(msg, to_number):
     account_sid = 'ACa506f9dde2c217237c9295cf3b2b37a2'
     auth_token = '99e6e2f5b75ef2a3b9d7c89a53bbcfab'
     client = Client(account_sid, auth_token)
-    message = client.messages.create(body=msg, from_='+14154834260', to=to_number)
-    print(message.sid)
+    message = client.messages.create(
+        from_='whatsapp:+14155238886',
+        body=msg,
+        to='whatsapp:' + to_number
+    )
 
 
 def generate_otp(to_number):
     otp = randint(10000, 99999)
-    send_message(f'Greetings from Bank XXX!\n Your OTP is: {otp}', to_number)
+    send_message(f'Greetings from Bank XXX!\nYour OTP is: {otp}', to_number)
+    return otp

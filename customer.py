@@ -52,17 +52,14 @@ class Customer(object):
         self.last_name = input('Last Name: ')
         self.address.input_address()
         while True:
-            flag = False
             self.phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
             if self.phone_number[1:].isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
                 otp = generate_otp(self.phone_number)
-                i = 0
-                while i in range(3):
+                flag = False
+                while not flag:
                     otp_input = input(f'OTP sent on {self.phone_number}: ')
-                    if otp_input == otp:
+                    if str(otp_input) == str(otp):
                         flag = True
-                        break
-                    i += 1
                 if flag:
                     break
             else:
@@ -139,17 +136,14 @@ class Customer(object):
                 f'successfully.', self.phone_number)
         elif ch == '4':
             while True:
-                flag = False
                 self.phone_number = input('New Phone Number (+<Country Code><Phone Number>): ')
                 if self.phone_number[1:].isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
                     otp = generate_otp(self.phone_number)
-                    i = 0
-                    while i in range(3):
+                    flag = False
+                    while not flag:
                         otp_input = input(f'OTP sent on {self.phone_number}: ')
-                        if otp_input == otp:
+                        if str(otp_input) == str(otp):
                             flag = True
-                            break
-                        i += 1
                     if flag:
                         break
                 else:
