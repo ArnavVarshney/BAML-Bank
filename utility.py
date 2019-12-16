@@ -68,8 +68,8 @@ def clear_console():
 
 
 def send_message(msg, to_number):
-    sid = $account_sid
-    token = $auth_token
+    sid = os.getenv(account_sid)
+    token = os.getenv(auth_token)
     client = Client(sid, token)
     client.messages.create(
         from_='whatsapp:+14155238886',
