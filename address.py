@@ -50,7 +50,7 @@ class Address(object):
             if self.zip_code.isnumeric() and len(self.zip_code) == 6:
                 break
             else:
-                print('Invalid Zip Code')
+                print('\nInvalid Zip Code\n')
 
     def modify_address(self):
         """
@@ -80,6 +80,6 @@ class Address(object):
                 if self.zip_code.isnumeric() and len(self.zip_code) == 6:
                     break
                 else:
-                    print('Invalid Zip Code')
+                    print('\nInvalid Zip Code\n')
         elif ch == '8':
             self.input_address()

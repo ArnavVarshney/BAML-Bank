@@ -55,13 +55,13 @@ class Customer(object):
             if self.phone_number.isnumeric() and len(self.phone_number) == 10:
                 break
             else:
-                print('Invalid Phone Number')
+                print('\nInvalid Phone Number\n')
         while True:
             self.email = input('Email: ')
             if self.email.__contains__('@'):
                 break
             else:
-                print('Invalid Email ID')
+                print('\nInvalid Email ID\n')
         self.customer_id = utility.global_customer_id
         utility.global_customer_id = str(int(utility.global_customer_id) + 1)
         utility.global_customer_id = '0' * (4 - len(utility.global_customer_id)) + utility.global_customer_id
@@ -118,7 +118,7 @@ class Customer(object):
                 if self.phone_number.isnumeric() and len(self.phone_number) == 10:
                     break
                 else:
-                    print('Invalid Phone Number')
+                    print('\nInvalid Phone Number\n')
             global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Phone number modified successfully!'))
@@ -128,7 +128,7 @@ class Customer(object):
                 if self.email.__contains__('@'):
                     break
                 else:
-                    print('Invalid Email ID')
+                    print('\nInvalid Email ID\n')
             global_transactions.append(
                 Transaction(self.customer_id, 'NA', get_current_date(), get_current_time(), 'NA', 'NA', 'NA', 'NA',
                             'Email modified successfully!'))

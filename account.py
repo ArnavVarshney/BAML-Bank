@@ -62,13 +62,13 @@ class Account(object):
                 self.max_transaction_amount = int(input('Maximum Transaction Amount: '))
                 break
             except ValueError:
-                print('Invalid Value')
+                print('\nInvalid Value\n')
         while True:
             try:
                 self.balance = int(input('Initial Balance: '))
                 break
             except ValueError:
-                print('Invalid Value')
+                print('\nInvalid Value\n')
         branch_code = input('Branch Code: ')
         self.account_number = str(
             self.customer.customer_id + branch_code + str("%02d" % self.customer.active_accounts_number))
@@ -109,7 +109,7 @@ class Account(object):
                     self.max_transaction_amount = int(input('New Maximum Transaction Amount: '))
                     break
                 except ValueError:
-                    print('Invalid Value')
+                    print('\nInvalid Value\n')
             global_transactions.append(
                 Transaction(self.customer.customer_id, self.account_number, get_current_date(), get_current_time(),
                             self.get_branch_code(), 0, self.balance, self.balance,
