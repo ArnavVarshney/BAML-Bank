@@ -3,7 +3,7 @@ import platform  # platform - for determining the execution platform
 from datetime import datetime  # datetime - for getting current system date and time
 from random import randint  # randint - for generating OTP
 
-from twilio.rest import Client
+from twilio.rest import Client  # Client - for sending messages
 
 #  Global variables:
 
@@ -71,7 +71,7 @@ def send_message(msg, to_number):
     account_sid = 'ACa506f9dde2c217237c9295cf3b2b37a2'
     auth_token = '99e6e2f5b75ef2a3b9d7c89a53bbcfab'
     client = Client(account_sid, auth_token)
-    message = client.messages.create(
+    client.messages.create(
         from_='whatsapp:+14155238886',
         body=msg,
         to='whatsapp:' + to_number
