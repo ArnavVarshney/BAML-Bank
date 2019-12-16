@@ -303,7 +303,7 @@ def intro():
                 print("Invalid entry!")
             # Pause before printing the menu again
             pause()
-    except:
+    except KeyboardInterrupt:
         print('Exiting!')
 
 

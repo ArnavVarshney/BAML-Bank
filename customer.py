@@ -62,6 +62,7 @@ class Customer(object):
                     if otp_input == otp:
                         flag = True
                         break
+                    i += 1
                 if flag:
                     break
             else:
@@ -148,6 +149,7 @@ class Customer(object):
                         if otp_input == otp:
                             flag = True
                             break
+                        i += 1
                     if flag:
                         break
                 else:
