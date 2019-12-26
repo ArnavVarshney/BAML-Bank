@@ -3,6 +3,8 @@ import platform  # platform - for determining the execution platform
 from datetime import datetime  # datetime - for getting current system date and time
 from random import randint  # randint - for generating OTP
 
+import phonenumbers
+from pyisemail import is_email
 from twilio.rest import Client  # Client - for sending messages
 
 #  Global variables:
@@ -82,3 +84,15 @@ def generate_otp(to_number):
     otp = randint(10000, 99999)
     send_message(f'Greetings from Bank XXX!\nYour OTP is: {otp}', to_number)
     return otp
+
+
+def validate_phone(phone_str):
+    try:
+        phone = phonenumbers.parse(phone_str, None)
+        return phonenumbers.is_valid_number(phone)
+    except phonenumbers.NumberParseException:
+        return False
+
+
+def validate_email(email_str):
+    return is_email(email_str, check_dns=True)

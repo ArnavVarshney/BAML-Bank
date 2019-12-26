@@ -1,7 +1,7 @@
 import utility
 from transaction import Transaction
 from utility import get_current_date, get_current_time, global_customer_map, global_transactions, generate_otp, \
-    send_message
+    send_message, validate_phone, validate_email
 
 
 class Customer(object):
@@ -53,7 +53,7 @@ class Customer(object):
         self.address.input_address()
         while True:
             self.phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
-            if self.phone_number[1:].isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
+            if validate_phone(self.phone_number):
                 otp = generate_otp(self.phone_number)
                 flag = False
                 while not flag:
@@ -66,7 +66,7 @@ class Customer(object):
                 print('\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
         while True:
             self.email = input('Email: ')
-            if self.email.__contains__('@'):
+            if validate_email(self.email):
                 break
             else:
                 print('\nInvalid Email ID\n')
@@ -137,7 +137,7 @@ class Customer(object):
         elif ch == '4':
             while True:
                 self.phone_number = input('New Phone Number (+<Country Code><Phone Number>): ')
-                if self.phone_number[1:].isnumeric() and len(self.phone_number) == 13 and self.phone_number[0] == '+':
+                if validate_phone(self.phone_number):
                     otp = generate_otp(self.phone_number)
                     flag = False
                     while not flag:
@@ -157,7 +157,7 @@ class Customer(object):
         elif ch == '5':
             while True:
                 self.email = input('Email: ')
-                if self.email.__contains__('@'):
+                if validate_email(self.email):
                     break
                 else:
                     print('\nInvalid Email ID\n')
