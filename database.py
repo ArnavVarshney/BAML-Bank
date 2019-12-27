@@ -1,13 +1,12 @@
 import sqlite3  # sqlite3 - provides functionality to deal with SQL database
 
-connection = sqlite3.connect("db.sqlite")
-crsr = connection.cursor()
-
 
 def sql_setup():
     """
     Sets up all the required databases/tables/connections required during execution
     """
+    connection = sqlite3.connect("db.sqlite")
+    crsr = connection.cursor()
     create_transaction_log = """CREATE TABLE transaction_log(customer_id varchar(4), account_number varchar(10), 
     date varchar(10), time varchar(8), branch varchar(4), amount int, opening_balance int, closing_balance int, 
     remarks varchar(255))"""
@@ -26,6 +25,9 @@ def sql_setup():
     street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),
     country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), 
     customer_id varchar(4))"""
-
-connection.commit()
-connection.close()
+    try:
+        crsr.execute(create_customer)
+    except sqlite3.OperationalError:
+        print('Table customer could not be created/already exists')
+    connection.commit()
+    connection.close()
