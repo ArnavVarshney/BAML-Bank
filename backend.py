@@ -1,6 +1,4 @@
 # Menu functions
-
-
 def create_customer():
     """
     Menu entry 1: Create Customer
@@ -310,6 +308,7 @@ if __name__ == "__main__":
     # Imported modules:
     from datetime import datetime  # datetime - for getting current system date and time
     from time import sleep  # sleep - pausing execution until interrupted by keyboard input (Windows)
+    import pathlib
 
     # Imported files:
     from account import Account
@@ -318,5 +317,8 @@ if __name__ == "__main__":
     from customer import Customer
     from utility import get_customer_id, get_current_time, pause, global_customer_map, global_transactions, \
         global_branches, clear_console
+    from database import sql_setup
 
+    if not pathlib.Path('db.sqlite').exists():
+        sql_setup()
     intro()
