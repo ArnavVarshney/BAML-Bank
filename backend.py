@@ -163,28 +163,28 @@ def generate_report():
         branch_code = input('Branch code: ')
         lower_bound = input('Date From (DD/MM/YYYY): ')
         upper_bound = input('Date To (DD/MM/YYYY): ')
-        d1 = datetime.strptime(lower_bound, '%d/%m/%y')
-        d2 = datetime.strptime(upper_bound, '%d/%m/%y')
-        ls = list(filter(lambda x: x.branch == branch_code and (d1 <= datetime.strptime(x.date, '%d/%m/%y') <= d2),
+        d1 = datetime.strptime(lower_bound, '%d/%m/%Y')
+        d2 = datetime.strptime(upper_bound, '%d/%m/%Y')
+        ls = list(filter(lambda x: x.branch == branch_code and (d1 <= datetime.strptime(x.date, '%d/%m/%Y') <= d2),
                          global_transactions))
         print_report(ls)
     elif ch == '3':
         customer_id = input('Customer ID: ')
         lower_bound = input('Date From (DD/MM/YYYY): ')
         upper_bound = input('Date To (DD/MM/YYYY): ')
-        d1 = datetime.strptime(lower_bound, '%d/%m/%y')
-        d2 = datetime.strptime(upper_bound, '%d/%m/%y')
-        ls = list(filter(lambda x: x.customer_id == customer_id and (d1 <= datetime.strptime(x.date, '%d/%m/%y') <= d2),
+        d1 = datetime.strptime(lower_bound, '%d/%m/%Y')
+        d2 = datetime.strptime(upper_bound, '%d/%m/%Y')
+        ls = list(filter(lambda x: x.customer_id == customer_id and (d1 <= datetime.strptime(x.date, '%d/%m/%Y') <= d2),
                          global_transactions))
         print_report(ls)
     elif ch == '4':
         account_number = input('Account Number: ')
         lower_bound = input('Date From (DD/MM/YYYY): ')
         upper_bound = input('Date To (DD/MM/YYYY): ')
-        d1 = datetime.strptime(lower_bound, '%d/%m/%y')
-        d2 = datetime.strptime(upper_bound, '%d/%m/%y')
+        d1 = datetime.strptime(lower_bound, '%d/%m/%Y')
+        d2 = datetime.strptime(upper_bound, '%d/%m/%Y')
         ls = list(
-            filter(lambda x: x.account_number == account_number and (d1 <= datetime.strptime(x.date, '%d/%m/%y') <= d2),
+            filter(lambda x: x.account_number == account_number and (d1 <= datetime.strptime(x.date, '%d/%m/%Y') <= d2),
                    global_transactions))
         print_report(ls)
     elif ch == '5':
