@@ -43,11 +43,19 @@ def sql_setup():
     except sqlite3.OperationalError:
         print('Table customer could not be created')
 
-    create_auth = "CREATE TABLE IF NOT EXISTS auth(user_name varchar(255), password varchar(255), role int)"
+    create_auth = "CREATE TABLE IF NOT EXISTS auth(user_name varchar(255) primary key , password varchar(255), " \
+                  "role int)"
     try:
         crsr.execute(create_auth)
     except sqlite3.OperationalError:
         print('Table auth could not be created')
+
+    add_admin = "INSERT INTO auth VALUES('admin', 'admin', 0)"
+    try:
+        crsr.execute(add_admin)
+    except sqlite3.IntegrityError:
+        pass
+
     connection.commit()
     connection.close()
 

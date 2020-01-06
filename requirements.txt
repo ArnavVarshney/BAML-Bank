@@ -2,3 +2,4 @@ twilio
 phonenumbers
 pyIsEmail
 termcolor
+pyfiglet

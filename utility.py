@@ -2,9 +2,11 @@ import os  # os - for providing PAUSE functionality
 import platform  # platform - for determining the execution platform
 from datetime import datetime  # datetime - for getting current system date and time
 from random import randint  # randint - for generating OTP
+from time import sleep
 
 import phonenumbers
 from pyisemail import is_email
+from termcolor import colored
 from twilio.rest import Client  # Client - for sending messages
 
 #  Global variables:
@@ -96,3 +98,29 @@ def validate_phone(phone_str):
 
 def validate_email(email_str):
     return is_email(email_str, check_dns=True)
+
+
+def print_name():
+    """
+    Beauty Mode: On
+    """
+    color = 'red'
+    print(colored('██████╗  █████╗ ███╗   ██╗██╗  ██╗    ███████╗██████╗  █████╗  █████╗ ███╗   ███╗', color))
+    print(colored('██╔══██╗██╔══██╗████╗  ██║██║ ██╔╝    ██╔════╝██╔══██╗██╔══██╗██╔══██╗████╗ ████║', color))
+    print(colored('██████╔╝███████║██╔██╗ ██║█████╔╝     ███████╗██████╔╝███████║███████║██╔████╔██║', color))
+    print(colored('██╔══██╗██╔══██║██║╚██╗██║██╔═██╗     ╚════██║██╔═══╝ ██╔══██║██╔══██║██║╚██╔╝██║', color))
+    print(colored('██████╔╝██║  ██║██║ ╚████║██║  ██╗    ███████║██║     ██║  ██║██║  ██║██║ ╚═╝ ██║', color))
+    print(colored('╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝', color))
+    print()
+    # print('-' * 81)
+
+
+def about():
+    """
+    Prints the team info with a not-so-typewriter-ish effect
+    """
+    about_str = colored('Team SPAAM *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t' \
+                        '3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n', 'green')
+    for char in about_str:
+        sleep(0.1)
+        print(char, end='', flush=True)

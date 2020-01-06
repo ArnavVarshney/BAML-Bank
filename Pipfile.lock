@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a45747dc4d1fc18986c66f35f879b757d03a99cd78118d25ef394de139cdd0d9"
+            "sha256": "06e50f5f247de78ed3e7b3fd335dea29ca3de109ce3a3bd524991df9742522d6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -119,10 +119,17 @@
         },
         "pycparser": {
             "hashes": [
-                "sha256:493608be1ef06b8a5c398544b3e841220108a492d95f9fa9d3eb41ffa20f4d4a",
                 "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
             ],
             "version": "==2.19"
+        },
+        "pyfiglet": {
+            "hashes": [
+                "sha256:c6c2321755d09267b438ec7b936825a4910fec696292139e664ca8670e103639",
+                "sha256:d555bcea17fbeaf70eaefa48bb119352487e629c9b56f30f383e2c62dd67a01c"
+            ],
+            "index": "pypi",
+            "version": "==0.8.post1"
         },
         "pyisemail": {
             "hashes": [

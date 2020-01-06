@@ -11,6 +11,7 @@ phonenumbers = "*"
 pyisemail = "*"
 termcolor = "*"
 cryptography = "*"
+pyfiglet = "*"
 
 [requires]
 python_version = "3.8"
