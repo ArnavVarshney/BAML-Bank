@@ -1,3 +1,4 @@
 twilio
 phonenumbers
 pyIsEmail
+termcolor

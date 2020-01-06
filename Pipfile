@@ -9,7 +9,8 @@ verify_ssl = true
 twilio = "*"
 phonenumbers = "*"
 pyisemail = "*"
-sqlite3 = "*"
+termcolor = "*"
+cryptography = "*"
 
 [requires]
 python_version = "3.8"

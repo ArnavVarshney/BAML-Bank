@@ -229,8 +229,8 @@ def about():
     Menu entry 11: About Us
     Prints the team info with a not-so-typewriter-ish effect
     """
-    about_str = 'Team SPAAM *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t' \
-                '3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n'
+    about_str = colored('Team SPAAM *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t' \
+                        '3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n', 'blue')
     for char in about_str:
         sleep(0.1)
         print(char, end='', flush=True)
@@ -240,12 +240,12 @@ def print_name():
     """
     Beauty Mode: On
     """
-    print('██████╗  █████╗ ███╗   ██╗██╗  ██╗    ███████╗██████╗  █████╗  █████╗ ███╗   ███╗')
-    print('██╔══██╗██╔══██╗████╗  ██║██║ ██╔╝    ██╔════╝██╔══██╗██╔══██╗██╔══██╗████╗ ████║')
-    print('██████╔╝███████║██╔██╗ ██║█████╔╝     ███████╗██████╔╝███████║███████║██╔████╔██║')
-    print('██╔══██╗██╔══██║██║╚██╗██║██╔═██╗     ╚════██║██╔═══╝ ██╔══██║██╔══██║██║╚██╔╝██║')
-    print('██████╔╝██║  ██║██║ ╚████║██║  ██╗    ███████║██║     ██║  ██║██║  ██║██║ ╚═╝ ██║')
-    print('╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝')
+    print(colored('██████╗  █████╗ ███╗   ██╗██╗  ██╗    ███████╗██████╗  █████╗  █████╗ ███╗   ███╗', 'red'))
+    print(colored('██╔══██╗██╔══██╗████╗  ██║██║ ██╔╝    ██╔════╝██╔══██╗██╔══██╗██╔══██╗████╗ ████║', 'red'))
+    print(colored('██████╔╝███████║██╔██╗ ██║█████╔╝     ███████╗██████╔╝███████║███████║██╔████╔██║', 'red'))
+    print(colored('██╔══██╗██╔══██║██║╚██╗██║██╔═██╗     ╚════██║██╔═══╝ ██╔══██║██╔══██║██║╚██╔╝██║', 'red'))
+    print(colored('██████╔╝██║  ██║██║ ╚████║██║  ██╗    ███████║██║     ██║  ██║██║  ██║██║ ╚═╝ ██║', 'red'))
+    print(colored('╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝', 'red'))
 
 
 def intro():
@@ -318,6 +318,7 @@ if __name__ == "__main__":
     from utility import get_customer_id, get_current_time, pause, global_customer_map, global_transactions, \
         global_branches, clear_console
     from database import sql_setup
+    from termcolor import colored
 
     if not pathlib.Path('db.sqlite').exists():
         sql_setup()
