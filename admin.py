@@ -1,6 +1,7 @@
 from pyfiglet import Figlet
 from termcolor import colored
 
+from database import retrieve_employee
 from utility import clear_console, print_name, get_current_time, pause, about
 
 
@@ -17,9 +18,6 @@ def branches():
 
 
 def intro(username):
-    """
-    Prints the main menu and forwards to respective functions
-    """
     try:
         main_menu = ['1. Employees', '2. Customers', '3. Branches', '4. About Us', '5. Exit',
                      'Press Ctrl + C to Force Exit']
@@ -28,7 +26,7 @@ def intro(username):
             clear_console()
             print_name()
             print(Figlet('small').renderText('Admin Menu'))
-            print(colored('Hello ' + username, 'blue'))
+            print(colored('Hello ' + retrieve_employee(username)[1], 'blue'))
             print('Login time: ' + login_time + '\n')
             print('Choose an option: \n')
             for i in main_menu:
@@ -52,7 +50,6 @@ def intro(username):
                 break
             else:
                 print("Invalid entry!")
-            # Pause before printing the menu again
             pause()
     except KeyboardInterrupt:
-        print('Exiting!')
+        print('\nForce exit encountered!')

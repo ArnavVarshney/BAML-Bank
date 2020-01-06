@@ -43,6 +43,14 @@ def sql_setup():
     except sqlite3.OperationalError:
         print('Table customer could not be created')
 
+    create_employee = (
+        "CREATE TABLE IF NOT EXISTS employee(user_name varchar(255) primary key , first_name varchar(255), "
+        "last_name varchar(255), employee_id varchar(4))")
+    try:
+        crsr.execute(create_employee)
+    except sqlite3.OperationalError:
+        print('Table employee could not be created')
+
     create_auth = "CREATE TABLE IF NOT EXISTS auth(user_name varchar(255) primary key , password varchar(255), " \
                   "role int)"
     try:
@@ -50,9 +58,11 @@ def sql_setup():
     except sqlite3.OperationalError:
         print('Table auth could not be created')
 
-    add_admin = "INSERT INTO auth VALUES('admin', 'admin', 0)"
+    add_admin_auth = "INSERT INTO auth VALUES('admin', 'admin', 0)"
+    add_admin_details = "INSERT INTO employee VALUES('admin', 'admin', 'admin', '9999')"
     try:
-        crsr.execute(add_admin)
+        crsr.execute(add_admin_auth)
+        crsr.execute(add_admin_details)
     except sqlite3.IntegrityError:
         pass
 
@@ -60,12 +70,23 @@ def sql_setup():
     connection.close()
 
 
-def check_auth(user, passw, role):
+def check_auth(user, password, role):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     select_auth = "SELECT * FROM auth WHERE user_name = ? AND password = ? AND role = ?"
-    crsr.execute(select_auth, (user, passw, role,))
+    crsr.execute(select_auth, (user, password, role,))
     rows = crsr.fetchall()
+    connection.close()
     if rows:
         return True
     return False
+
+
+def retrieve_employee(user):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_employee = "SELECT * FROM employee WHERE user_name = ?"
+    crsr.execute(select_employee, (user,))
+    rows = crsr.fetchall()
+    connection.close()
+    return rows[0]
