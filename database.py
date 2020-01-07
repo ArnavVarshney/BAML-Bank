@@ -37,36 +37,21 @@ def sql_setup():
         "CREATE TABLE IF NOT EXISTS customer(first_name varchar(255), last_name varchar(255), building varchar(255), "
         "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),"
         "    country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), "
-        "customer_id varchar(4))")
+        "customer_id varchar(4), user_name varchar(255),password varchar(255))")
     try:
         crsr.execute(create_customer)
     except sqlite3.OperationalError:
         print('Table customer could not be created')
 
     create_employee = (
-        "CREATE TABLE IF NOT EXISTS employee(user_name varchar(255), employee_id INTEGER primary key AUTOINCREMENT, "
-        "first_name varchar(255), last_name varchar(255))")
+        "CREATE TABLE IF NOT EXISTS employee(employee_id INTEGER primary key AUTOINCREMENT, user_name varchar(255), "
+        "password varchar(255), first_name varchar(255), last_name varchar(255), role int)")
     try:
         crsr.execute(create_employee)
     except sqlite3.OperationalError:
         print('Table employee could not be created')
 
-    create_auth = "CREATE TABLE IF NOT EXISTS auth(user_name varchar(255) primary key , password varchar(255), " \
-                  "role int)"
-    try:
-        crsr.execute(create_auth)
-    except sqlite3.OperationalError:
-        print('Table auth could not be created')
-
-    add_admin_auth = "INSERT INTO auth VALUES('admin', 'admin', 0)"
-    add_admin_details = "INSERT INTO employee(user_name, first_name, last_name) VALUES('admin','Arnav','Varshney')"
-
-    try:
-        crsr.execute(add_admin_auth)
-        crsr.execute(add_admin_details)
-    except sqlite3.IntegrityError:
-        pass
-
+    insert_admin()
     connection.commit()
     connection.close()
 
@@ -74,13 +59,30 @@ def sql_setup():
 def check_auth(user, password, role):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    select_auth = "SELECT * FROM auth WHERE user_name = ? AND password = ? AND role = ?"
-    crsr.execute(select_auth, (user, password, role,))
+    if role == '0' or role == '1':
+        select_auth = "SELECT * FROM employee WHERE user_name = ? AND password = ?"
+    else:
+        select_auth = "SELECT * FROM customer WHERE user_name = ? AND password = ?"
+    crsr.execute(select_auth, (user, password,))
     rows = crsr.fetchall()
     connection.close()
     if rows:
         return True
     return False
+
+
+def insert_admin():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    add_admin_details = "INSERT INTO employee(user_name, first_name, last_name, password, role) VALUES('admin','Arnav'," \
+                        "'Varshney', 'admin', 0)"
+    if not retrieve_employee('admin'):
+        try:
+            crsr.execute(add_admin_details)
+        except sqlite3.IntegrityError:
+            pass
+    connection.commit()
+    connection.close()
 
 
 def retrieve_employee(user):
@@ -106,10 +108,10 @@ def retrieve_all_employees():
     return rows
 
 
-def register_employee(user_name, first_name, last_name):
+def register_employee(user_name, first_name, last_name, password, role):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    insert_employee = "INSERT INTO employee(user_name, first_name, last_name) VALUES(?,?,?)"
-    crsr.execute(insert_employee, (user_name, first_name, last_name,))
+    insert_employee = "INSERT INTO employee(user_name, first_name, last_name, password, role) VALUES(?,?,?,?,?)"
+    crsr.execute(insert_employee, (user_name, first_name, last_name, password, role,))
     connection.commit()
     connection.close()

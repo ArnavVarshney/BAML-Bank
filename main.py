@@ -3,16 +3,16 @@ import os
 from pyfiglet import Figlet
 
 import admin
-from authentication import existing_user, new_user
+from authentication import existing_user
 from database import sql_setup
-from utility import print_name, clear_console, pause
+from utility import print_name, clear_console, pause, about
 
 sql_setup()
 os.environ['loggedin'] = ''
 
 
 def intro():
-    main_menu = ['1. Existing User', '2. New User', '3. About Us', '4. Exit']
+    main_menu = ['1. Login', '2. About Us', '3. Exit']
 
     while True:
         clear_console()
@@ -37,8 +37,8 @@ def intro():
                 continue
             break
         elif ch == '2':
-            new_user()
-        elif ch == '4':
+            about()
+        elif ch == '3':
             print('Goodbye!')
             break
         else:
