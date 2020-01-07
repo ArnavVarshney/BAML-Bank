@@ -12,12 +12,10 @@ def existing_user():
     print(Figlet('small').renderText('Login'))
     username = input('Username: ')
     password = getpass.getpass()
-    role = int(input('Role [1. Employee, 2. Customer]: '))
+    role = input('Role [1. Employee, 2. Customer]: ')
     if check_auth(username, password, role):
         print('Logged in successfully!')
         return role, username
-    else:
-        print('Invalid credentials!')
 
 
 def new_user():

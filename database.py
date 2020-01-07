@@ -44,8 +44,8 @@ def sql_setup():
         print('Table customer could not be created')
 
     create_employee = (
-        "CREATE TABLE IF NOT EXISTS employee(user_name varchar(255) primary key , first_name varchar(255), "
-        "last_name varchar(255), employee_id varchar(4))")
+        "CREATE TABLE IF NOT EXISTS employee(user_name varchar(255), employee_id INTEGER primary key AUTOINCREMENT, "
+        "first_name varchar(255), last_name varchar(255))")
     try:
         crsr.execute(create_employee)
     except sqlite3.OperationalError:
@@ -59,7 +59,8 @@ def sql_setup():
         print('Table auth could not be created')
 
     add_admin_auth = "INSERT INTO auth VALUES('admin', 'admin', 0)"
-    add_admin_details = "INSERT INTO employee VALUES('admin', 'admin', 'admin', '9999')"
+    add_admin_details = "INSERT INTO employee(user_name, first_name, last_name) VALUES('admin','Arnav','Varshney')"
+
     try:
         crsr.execute(add_admin_auth)
         crsr.execute(add_admin_details)
@@ -89,4 +90,26 @@ def retrieve_employee(user):
     crsr.execute(select_employee, (user,))
     rows = crsr.fetchall()
     connection.close()
-    return rows[0]
+    if len(rows) != 0:
+        return rows[0]
+    else:
+        return False
+
+
+def retrieve_all_employees():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_all_employees = "SELECT * FROM employee"
+    crsr.execute(select_all_employees)
+    rows = crsr.fetchall()
+    connection.close()
+    return rows
+
+
+def register_employee(user_name, first_name, last_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    insert_employee = "INSERT INTO employee(user_name, first_name, last_name) VALUES(?,?,?)"
+    crsr.execute(insert_employee, (user_name, first_name, last_name,))
+    connection.commit()
+    connection.close()
