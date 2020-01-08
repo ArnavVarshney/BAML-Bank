@@ -9,14 +9,6 @@ from pyisemail import is_email
 from termcolor import colored
 from twilio.rest import Client  # Client - for sending messages
 
-#  Global variables:
-
-
-global_customer_id = '0001'  # holds currently issued account number
-global_customer_map = {}  # maps customer_id to customer
-global_branches = {}  # maps branch_code to branch
-global_transactions = []  # global transaction log
-
 
 # Utility Functions
 

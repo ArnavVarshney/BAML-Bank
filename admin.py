@@ -4,7 +4,7 @@ from pyfiglet import Figlet
 from termcolor import colored
 
 import main
-from database import retrieve_employee, retrieve_all_employees, register_employee
+from database import retrieve_employee, retrieve_all_employees, register_employee, delete_employee, make_admin
 from utility import clear_console, print_name, get_current_time, pause, about
 
 
@@ -72,16 +72,31 @@ def employees():
             print_name()
             print(Figlet('small').renderText('Modify Employee'))
             print('Choose an option: \n')
-            modify_employee_list = ['1. Delete Employee', '2. Edit Employee Info', '#. Return to Previous Menu']
+            modify_employee_list = ['1. Delete Employee', '2. Promote Employee', '#. Return to Previous Menu']
             for i in modify_employee_list:
                 print('\t' + i)
             print()
             inp1 = input('Command: ')
             if inp1 == '1':
-                employee_user_name = input('Employee Username: ')
-                # if retrieve_employee(employee_user_name):
-
-
+                while True:
+                    employee_user_name = input('Employee Username: ')
+                    if retrieve_employee(employee_user_name):
+                        ch = input('Confirm? (Y/N): ')
+                        if ch == 'Y':
+                            delete_employee(employee_user_name)
+                        break
+                    else:
+                        print('Employee Not Found!')
+            elif inp1 == '2':
+                while True:
+                    employee_user_name = input('Employee Username: ')
+                    if retrieve_employee(employee_user_name):
+                        ch = input('Confirm? (Y/N): ')
+                        if ch == 'Y':
+                            make_admin(employee_user_name)
+                        break
+                    else:
+                        print('Employee Not Found!')
 
         elif inp == '#':
             break
@@ -118,7 +133,6 @@ def intro():
             print()
             if inp == '1':
                 employees()
-                # TODO: Implement Employees
             elif inp == '2':
                 customers()
                 # TODO: Implement Customers
@@ -129,7 +143,6 @@ def intro():
                 about()
             elif inp == '5':
                 print('Logged out!')
-                pause()
                 main.intro()
             elif inp == '6':
                 print('Goodbye!\nLogout time: ', get_current_time())

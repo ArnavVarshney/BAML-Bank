@@ -115,3 +115,21 @@ def register_employee(user_name, first_name, last_name, password, role):
     crsr.execute(insert_employee, (user_name, first_name, last_name, password, role,))
     connection.commit()
     connection.close()
+
+
+def delete_employee(user_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    delete_employee_ = "DELETE FROM employee WHERE user_name = ?"
+    crsr.execute(delete_employee_, (user_name,))
+    connection.commit()
+    connection.close()
+
+
+def make_admin(user_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    make_admi = "UPDATE employee SET role = 0 WHERE user_name = ?"
+    crsr.execute(make_admi, (user_name,))
+    connection.commit()
+    connection.close()
