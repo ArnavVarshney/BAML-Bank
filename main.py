@@ -10,10 +10,8 @@ from utility import print_name, clear_console, pause, about
 sql_setup()
 os.environ['loggedin'] = ''
 
-
 def intro():
     main_menu = ['1. Login', '2. About Us', '3. Exit']
-
     while True:
         clear_console()
         print_name()
@@ -44,7 +42,6 @@ def intro():
         else:
             print('Invalid Input!')
         pause()
-
 
 if __name__ == '__main__':
     intro()

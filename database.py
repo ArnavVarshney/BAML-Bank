@@ -1,5 +1,6 @@
 import sqlite3  # sqlite3 - provides functionality to deal with SQL database
 
+import random
 
 def connect(db_file):
     try:
@@ -37,7 +38,7 @@ def sql_setup():
         "CREATE TABLE IF NOT EXISTS customer(first_name varchar(255), last_name varchar(255), building varchar(255), "
         "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),"
         "    country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), "
-        "customer_id varchar(4), user_name varchar(255),password varchar(255))")
+        "customer_id varchar(6), user_name varchar(255),password varchar(255))")
     try:
         crsr.execute(create_customer)
     except sqlite3.OperationalError:
@@ -133,3 +134,56 @@ def make_admin(user_name):
     crsr.execute(make_admi, (user_name,))
     connection.commit()
     connection.close()
+
+
+def retrieve_customer(user):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_customer = "SELECT * FROM customer WHERE user_name = ?"
+    crsr.execute(select_customer, (user,))
+    rows = crsr.fetchall()
+    connection.close()
+    if len(rows) != 0:
+        return rows[0]
+    else:
+        return False
+
+
+def retrieve_all_customers():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_all_customers = "SELECT * FROM customer"
+    crsr.execute(select_all_customers)
+    rows = crsr.fetchall()
+    connection.close()
+    return rows
+
+
+def register_customer(first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    insert_employee = "INSERT INTO customer(first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+    crsr.execute(insert_employee, (first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password))
+    connection.commit()
+    connection.close()
+
+
+def delete_customer(user_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    delete_customer_ = "DELETE FROM customer WHERE user_name = ?"
+    crsr.execute(delete_customer_, (user_name,))
+    connection.commit()
+    connection.close()
+
+def id_customer():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    while True:
+        number = random.randint(100000, 999999)
+        tem = (number,)
+        crsr.execute('SELECT * FROM customer WHERE customer_id = ?', tem)
+        if crsr.fetchone() is None:
+            return number
+        else:
+            continue

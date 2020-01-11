@@ -56,12 +56,13 @@ def clear_console():
     Function to clear console window.
     """
     if platform.system() == 'Linux':
-        # For UNIX based systems
+        # For UNIX based systemszzzz
         os.system('clear')
     elif platform.system() == 'Windows':
         # For Windows systems
         os.system('cls')
-
+    else:
+        os.system('clear')
 
 def send_message(msg, to_number):
     sid = os.getenv('account_sid')
