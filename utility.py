@@ -40,7 +40,7 @@ def pause():
     """
     Function to pause program execution. Gives user time to interpret the output
     """
-    if platform.system() == 'Linux':
+    if platform.system() == 'nt':
         # For UNIX based systems
         lol = ''
         print('\nEnter any character to continue: ', end='')
@@ -104,14 +104,13 @@ def print_name():
     print(colored('██████╔╝██║  ██║██║ ╚████║██║  ██╗    ███████║██║     ██║  ██║██║  ██║██║ ╚═╝ ██║', color))
     print(colored('╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝', color))
     print()
-    # print('-' * 81)
 
 
 def about():
     """
     Prints the team info with a not-so-typewriter-ish effect
     """
-    about_str = colored('Team SPAAM *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t' \
+    about_str = colored('Team SPAAM *dab*\n\tMembers:\n\t\t1. Arnav Varshney\n\t\t2. Pradyumn Mishra\n\t\t'
                         '3. Aditi Prasad\n\t\t4. Mihir Ghonge\n\t\t5. Shishir Balasubramanian\n\n', 'green')
     for char in about_str:
         sleep(0.1)

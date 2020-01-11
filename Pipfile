@@ -12,6 +12,7 @@ pyisemail = "*"
 termcolor = "*"
 cryptography = "*"
 pyfiglet = "*"
+core = "*"
 
 [requires]
 python_version = "3.8"
