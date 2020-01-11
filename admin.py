@@ -200,8 +200,18 @@ def customers():
 
 
 def branches():
-    branches_list = []
-
+    branches_list = ['1. View All Customers', '2. Register New Customer', '3. Modify Customer',
+                      '#. Return to Previous Menu']
+    while True:
+        clear_console()
+        print_name()
+        print(Figlet('small').renderText('Customers'))
+        print('Choose an option: \n')
+        for i in branches_list:
+            print('\t' + i)
+        print()
+        inp = input('Command: ')
+        if inp == '1':
 
 def intro():
     username = os.getenv('loggedin')
