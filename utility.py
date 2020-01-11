@@ -61,6 +61,9 @@ def clear_console():
     elif platform.system() == 'Windows':
         # For Windows systems
         os.system('cls')
+    else:
+        import subprocess as sp
+        tmp = sp.call('cls', shell=True)
 
 
 def send_message(msg, to_number):
