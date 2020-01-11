@@ -28,7 +28,7 @@ def sql_setup():
     create_branch = (
         "CREATE TABLE IF NOT EXISTS branch(branch_code varchar(4), branch_name varchar(255), building varchar(255), "
         "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255), "
-        "country varchar(255), zip_code varchar(6), customer_id varchar(6), balance varchar(9))")
+        "country varchar(255), zip_code varchar(6), customer_id varchar(6))")
     try:
         crsr.execute(create_branch)
     except sqlite3.OperationalError:
@@ -38,7 +38,7 @@ def sql_setup():
         "CREATE TABLE IF NOT EXISTS customer(first_name varchar(255), last_name varchar(255), building varchar(255), "
         "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),"
         "    country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), "
-        "customer_id varchar(6), user_name varchar(255),password varchar(255))")
+        "customer_id varchar(6), user_name varchar(255),password varchar(255),balance varchar(9))")
     try:
         crsr.execute(create_customer)
     except sqlite3.OperationalError:
@@ -162,8 +162,8 @@ def retrieve_all_customers():
 def register_customer(first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    insert_employee = "INSERT INTO customer(first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-    crsr.execute(insert_employee, (first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password))
+    insert_customer = "INSERT INTO customer(first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+    crsr.execute(insert_customer, (first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password))
     connection.commit()
     connection.close()
 
@@ -187,6 +187,84 @@ def id_customer():
             return number
         else:
             continue
+def retrieve_branch(branch_code):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_branch = "SELECT * FROM branch WHERE branch_code = ?"
+    crsr.execute(select_branch, (branch_code,))
+    rows = crsr.fetchall()
+    connection.close()
+    if len(rows) != 0:
+        return rows[0]
+    else:
+        return False
+
+
+def retrieve_all_branches():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_all_branches = "SELECT * FROM branch"
+    crsr.execute(select_all_branches)
+    rows = crsr.fetchall()
+    connection.close()
+    return rows
+
+
+def register_branch(branch_code , branch_name , building , street_name , locality , landmark , city , state , country , zip_code):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    insert_branch = "INSERT INTO branch(branch_code , branch_name , building , street_name , locality , landmark , city , state , country , zip_code) VALUES(?,?,?,?,?,?,?,?,?,?)"
+    crsr.execute(insert_branch, (branch_code , branch_name , building , street_name , locality , landmark , city , state , country , zip_code))
+    connection.commit()
+    connection.close()
+
+
+def delete_branch(user_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    delete_branch_ = "DELETE FROM branch WHERE branch_name = ?"
+    crsr.execute(delete_branch_, (user_name,))
+    connection.commit()
+    connection.close()
+
+def id_branch():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    while True:
+        number = random.randint(100000, 999999)
+        tem = (number,)
+        crsr.execute('SELECT * FROM branch WHERE branch_code = ?', tem)
+        if crsr.fetchone() is None:
+            return number
+        else:
+            continue
+
+def retrieve_accounts(branch_code):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_accounts = "SELECT * FROM transaction_log WHERE branch = ?"
+    crsr.execute(select_accounts,(branch_code,))
+    rows = crsr.fetchall()
+    connection.close()
+    return rows
+
+def add_customer(customer_id, branch_code):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute('UPDATE transaction_log SET branch = ? WHERE customer_id = ?',
+        (branch_code, customer_id))
+    connection.commit()
+    connection.close()
+
+
+def remove_customer(customer_id):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    delete_branch_ = "DELETE FROM transaction_log WHERE customer_id = ?"
+    crsr.execute(delete_branch_, (customer_id,))
+    connection.commit()
+    connection.close()
+
 
 def deltable():
     connection = connect('db.sqlite')
