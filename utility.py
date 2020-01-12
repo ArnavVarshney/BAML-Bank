@@ -55,7 +55,7 @@ def clear_console():
     """
     Function to clear console window.
     """
-    if platform.system() == 'Linux':
+    if platform.system() == 'nt':
         # For UNIX based systems
         os.system('clear')
     elif platform.system() == 'Windows':
