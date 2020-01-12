@@ -17,7 +17,7 @@ def sql_setup():
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     create_transaction_log = (
-        "CREATE TABLE IF NOT EXISTS transaction_log(customer_id varchar(4), account_number int,"
+        "CREATE TABLE IF NOT EXISTS transaction_log(customer_id varchar(4), account_number varchar(10),"
         "    date varchar(10), time varchar(8), branch varchar(4), credit int,debit int, opening_balance int, "
         "closing_balance int, remarks varchar(255), first_name varchar(20), last_name varchar(20))")
     try:
@@ -38,7 +38,7 @@ def sql_setup():
         "CREATE TABLE IF NOT EXISTS customer(first_name varchar(255), last_name varchar(255), building varchar(255), "
         "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),"
         "country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), "
-        "customer_id varchar(6), user_name varchar(255),password varchar(255),balance int, branch varchar(6))")
+        "customer_id varchar(6), user_name varchar(255),password varchar(255),balance , branch varchar(6))")
     try:
         crsr.execute(create_customer)
     except sqlite3.OperationalError:
@@ -277,14 +277,13 @@ def retrieve_all_accounts():
 def add_customer(customer_id, branch_code,num):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute('UPDATE transaction_log SET branch = ? ,account_number = ?  WHERE customer_id = ?',
-                (branch_code, num, customer_id))
-    connection.commit()
+    crsr.execute('UPDATE transaction_log SET branch = ? ,account_number =?  WHERE customer_id = ?',
+        (branch_code, num, customer_id))
     crsr.execute('UPDATE customer SET branch = ? WHERE customer_id = ?',
-                (branch_code, customer_id))
-    print("Your Account Number: " + str(num))
+        (branch_code, customer_id))
     connection.commit()
     connection.close()
+    print("Your Account Number: " + str(num))
 
 
 def remove_customer(customer_id):
@@ -292,7 +291,6 @@ def remove_customer(customer_id):
     crsr = connection.cursor()
     delete_branch_ = "DELETE FROM transaction_log WHERE customer_id = ?"
     crsr.execute(delete_branch_, (customer_id,))
-    crsr.execute("DELETE FROM transaction_log WHERE customer_id = ?", customer_id)
     connection.commit()
     connection.close()
 
@@ -309,66 +307,15 @@ def id_account():
             continue
 
 
-def deposit(deposit, user_name, user):
+def deposit(deposit,user_name):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute ('SELECT * FROM customer WHERE user_name = ?', user_name)
-    temp = crsr.fetchone()
-    temp = temp[15]
+    temp = crsr.execute ('SELECT balance FROM customer WHERE user_name = ?', user_name)
     if temp is None:
         crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
-                     (deposit, user))
+                     (deposit, user_name))
     else:
-        temp = temp + deposit
-        crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
-                     (temp , user))
-    connection.commit()
-    connection.close()
-
-
-def transact(transact, user_name, user):
-    connection = connect('db.sqlite')
-    crsr = connection.cursor()
-    crsr.execute ('SELECT * FROM customer WHERE user_name = ?', user_name)
-    temp = crsr.fetchone()
-    temp = temp[15]
-    if temp is None or temp < transact:
-        print("You do not have enough funds to complete your transaction")
-    else:
-        temp = temp - transact
-        crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
-                     (temp , user))
-    connection.commit()
-    connection.close()
-
-
-def transfer(transfer, user_1, user_2):
-    connection = connect('db.sqlite')
-    crsr = connection.cursor()
-    crsr.execute ('SELECT * FROM customer WHERE user_name = ?', user_1)
-    temp = crsr.fetchone()
-    temp = temp[15]
-    if temp is None or temp < transfer:
-        print("You do not have enough funds to complete your transfer")
-    else:
-        crsr.execute('SELECT branch FROM customer WHERE customer_id = ?', user_2)
-        if crsr.fetchone() is not None:
-            crsr.execute('SELECT user_name FROM customer WHERE customer_id = ?', user_2)
-            temp_1 = crsr.fetchone()
-            deposit(temp, (temp_1,), temp_1)
-        else:
-            print("User does not exist")
-    connection.commit()
-    connection.close()
-
-
-def view_balance(user_name):
-    connection = connect('db.sqlite')
-    crsr = connection.cursor()
-    crsr.execute('SELECT balance FROM customer WHERE user_name = ?', (user_name,))
-    temp = crsr.fetchone()
-    return temp[0]
-
+        print(temp)
 
 def deltable():
     connection = connect('db.sqlite')
@@ -378,5 +325,3 @@ def deltable():
     crsr.execute("DROP TABLE transaction_log")
     crsr.execute("DROP TABLE branch")
     connection.commit()
-
-

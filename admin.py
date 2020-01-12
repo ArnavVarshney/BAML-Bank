@@ -117,18 +117,18 @@ def customers():
         print()
         inp = input('Command: ')
         if inp == '1':
+            print(
+                103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^10s} |'.format(
+                    'Customer ID',
+                    'Username',
+                    'Password',
+                    'First Name',
+                    'Last Name',
+                    'Phone Number',
+                    'Email ID',
+                    'Branch'))
             all_customers = retrieve_all_customers()
             if all_customers:
-                print(
-                    103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^10s} |'.format(
-                        'Customer ID',
-                        'Username',
-                        'Password',
-                        'First Name',
-                        'Last Name',
-                        'Phone Number',
-                        'Email ID',
-                        'Branch'))
                 for i in all_customers:
                     print(
                         103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^10s} |'.format(
@@ -137,6 +137,7 @@ def customers():
                             i[1],
                             str(i[10]), i[11], str(i[16])))
                 print(103 * '-')
+                pause()
             else:
                 print('No registered customers found!')
             break
@@ -148,6 +149,7 @@ def customers():
                 user_name = input('Username: ')
                 if retrieve_customer(user_name):
                     print('\nUsername already in use!\n')
+                    pause()
                 else:
                     break
             first_name = input('First Name: ')
@@ -172,6 +174,7 @@ def customers():
                     break
             register_customer(first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password)
             print('Customer registered successfully!\nCustomer ID: ' + str(retrieve_customer(user_name)[12]))
+            pause()
             break
         elif inp == '3':
             clear_console()
@@ -213,20 +216,20 @@ def branches():
         print()
         inp = input('Command: ')
         if inp == '1':
+            print(
+                198 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} |'.format(
+                    'Branch Code',
+                    'Branch Name',
+                    'Building',
+                    'Street Name',
+                    'Locality',
+                    'Landmark',
+                    'City',
+                    'State',
+                    'Country',
+                    'Zip Code'))
             all_branches = retrieve_all_branches()
             if all_branches:
-                print(
-                    198 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} |'.format(
-                        'Branch Code',
-                        'Branch Name',
-                        'Building',
-                        'Street Name',
-                        'Locality',
-                        'Landmark',
-                        'City',
-                        'State',
-                        'Country',
-                        'Zip Code'))
                 for i in all_branches:
                     print(
                         198 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} |'.format(
@@ -236,8 +239,10 @@ def branches():
                             i[6], i[7],
                             i[8],str(i[9])))
                 print(198 * '-')
+                pause()
             else:
                 print('No registered branches found!')
+                pause()
             break
 
         elif inp == '2':
@@ -256,6 +261,7 @@ def branches():
             zip_code = input('Zip Code: ')
             register_branch(branch_code , branch_name , building , street_name , locality , landmark , city , state , country , zip_code)
             print('Branch registered successfully!\nBranch Code: ' + str(branch_code))
+            pause()
             break
 
         elif inp == '3':
@@ -278,7 +284,7 @@ def branches():
                         100 * '-' + '\n' + '| {:^15s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} |'.format(
                             str(i[4]), str(i[0]),
                             i[10], i[11],
-                            str(i[1])))
+                            str(i[2])))
                 print(100 * '-')
                 branch_code = input('Branch Code: ')
                 result = retrieve_branch(branch_code)
@@ -293,7 +299,6 @@ def branches():
                         crsr = connection.cursor()
                         select_customer = "SELECT * FROM customer WHERE customer_id = ?"
                         crsr.execute(select_customer, (customer_id,))
-                        connection.close()
                         if result:
                             num = id_account()
                             add_customer(customer_id,branch_code,num)
@@ -307,6 +312,7 @@ def branches():
                         break
                     else:
                         print('Invalid entry!')
+                        pause()
                         break
                 else:
                     print('Invalid entry!')
@@ -326,17 +332,14 @@ def branches():
                 customer_id = input("Customer ID: ")
                 result = retrieve_accounts_customer(customer_id)
                 print (result)
-                pause()
             elif inp_1 == '2':
                 branch_code = input("Branch ID: ")
                 result = retrieve_accounts(branch_code)
                 print(result)
-                pause()
             elif inp == '#':
                 break
             else:
                 print('Invalid entry!')
-                pause()
         elif inp == '#':
             break
         else:
