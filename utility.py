@@ -64,8 +64,8 @@ def clear_console():
 
 
 def send_message(msg, to_number):
-    sid = os.getenv('account_sid')
-    token = os.getenv('auth_token')
+    sid = 'ACa506f9dde2c217237c9295cf3b2b37a2'
+    token = '99e6e2f5b75ef2a3b9d7c89a53bbcfab'
     client = Client(sid, token)
     client.messages.create(
         from_='whatsapp:+14155238886',
@@ -76,7 +76,7 @@ def send_message(msg, to_number):
 
 def generate_otp(to_number):
     otp = randint(10000, 99999)
-    send_message(f'Greetings from Bank XXX!\nYour OTP is: {otp}', to_number)
+    send_message(f'Greetings from Bank SPAAM!\nYour OTP is: {otp}', to_number)
     return otp
 
 

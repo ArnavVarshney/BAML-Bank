@@ -8,11 +8,9 @@ verify_ssl = true
 [packages]
 twilio = "*"
 phonenumbers = "*"
-pyisemail = "*"
 termcolor = "*"
-cryptography = "*"
 pyfiglet = "*"
-core = "*"
+pyIsEmail = "*"
 
 [requires]
 python_version = "3.8"

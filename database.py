@@ -16,8 +16,8 @@ def sql_setup():
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     create_transaction_log = (
-        "CREATE TABLE IF NOT EXISTS transaction_log(customer_id varchar(4), account_number varchar(10),"
-        "    date varchar(10), time varchar(8), branch varchar(4), amount int, opening_balance int, "
+        "CREATE TABLE IF NOT EXISTS transaction_log(customer_id INTEGER, account_number varchar(10),"
+        "    date varchar(10), time varchar(8), branch int, amount int, opening_balance int, "
         "closing_balance int, remarks varchar(255))")
     try:
         crsr.execute(create_transaction_log)
@@ -25,7 +25,8 @@ def sql_setup():
         print('Table transaction_log could not be created')
 
     create_branch = (
-        "CREATE TABLE IF NOT EXISTS branch(branch_code varchar(4), branch_name varchar(255), building varchar(255), "
+        "CREATE TABLE IF NOT EXISTS branch(branch_code INTEGER primary key AUTOINCREMENT, branch_name varchar(255), "
+        "building varchar(255), "
         "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255), "
         "country varchar(255), zip_code varchar(6))")
     try:
@@ -37,7 +38,7 @@ def sql_setup():
         "CREATE TABLE IF NOT EXISTS customer(first_name varchar(255), last_name varchar(255), building varchar(255), "
         "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),"
         "    country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), "
-        "customer_id varchar(4), user_name varchar(255),password varchar(255))")
+        "customer_id INTEGER primary key AUTOINCREMENT, user_name varchar(255), password varchar(255))")
     try:
         crsr.execute(create_customer)
     except sqlite3.OperationalError:
@@ -133,3 +134,59 @@ def make_admin(user_name):
     crsr.execute(make_admi, (user_name,))
     connection.commit()
     connection.close()
+
+
+def retrieve_customer(user):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_customer = "SELECT * FROM customer WHERE user_name = ?"
+    crsr.execute(select_customer, (user,))
+    rows = crsr.fetchall()
+    connection.close()
+    if len(rows) != 0:
+        return rows[0]
+    else:
+        return False
+
+
+def retrieve_all_customers():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_all_customers = "SELECT * FROM customer"
+    crsr.execute(select_all_customers)
+    rows = crsr.fetchall()
+    connection.close()
+    return rows
+
+
+def register_customer(first_name, last_name, building, street_name, locality, landmark, city, state, country, zip_code,
+                      phone_number, email_id, user_name, password):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    insert_customer = "INSERT INTO customer(first_name, last_name, building, street_name, locality, landmark, city, " \
+                      "state, country, zip_code, phone_number, email_id, user_name, password) VALUES" \
+                      "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+    crsr.execute(insert_customer, (
+        first_name, last_name, building, street_name, locality, landmark, city, state, country, zip_code, phone_number,
+        email_id, user_name, password))
+    connection.commit()
+    connection.close()
+
+
+def delete_customer(user_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    delete_customer_ = "DELETE FROM customer WHERE user_name = ?"
+    crsr.execute(delete_customer_, (user_name,))
+    connection.commit()
+    connection.close()
+
+
+def get_id_customer(user_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user_name,))
+    rows = crsr.fetchall()
+    connection.commit()
+    connection.close()
+    return rows
