@@ -38,7 +38,7 @@ def sql_setup():
         "CREATE TABLE IF NOT EXISTS customer(first_name varchar(255), last_name varchar(255), building varchar(255), "
         "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),"
         "country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), "
-        "customer_id varchar(6), user_name varchar(255),password varchar(255),balance varchar(9), branch varchar(6))")
+        "customer_id varchar(6), user_name varchar(255),password varchar(255),balance , branch varchar(6))")
     try:
         crsr.execute(create_customer)
     except sqlite3.OperationalError:
@@ -139,12 +139,12 @@ def make_admin(user_name):
 def retrieve_customer(user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    select_customer = "SELECT * FROM customer WHERE user_name = ?"
+    select_customer = "SELECT * FROM customer WHERE customer_id = ?"
     crsr.execute(select_customer, (user,))
     rows = crsr.fetchall()
     connection.close()
     if len(rows) != 0:
-        return rows[0]
+        return rows
     else:
         return False
 
@@ -274,15 +274,16 @@ def retrieve_all_accounts():
 
 
 
-def add_customer(customer_id, branch_code):
+def add_customer(customer_id, branch_code,num):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute('UPDATE transaction_log SET branch = ? WHERE customer_id = ?',
-        (branch_code, customer_id))
+    crsr.execute('UPDATE transaction_log SET branch = ? ,account_number =?  WHERE customer_id = ?',
+        (branch_code, num, customer_id))
     crsr.execute('UPDATE customer SET branch = ? WHERE customer_id = ?',
         (branch_code, customer_id))
     connection.commit()
     connection.close()
+    print("Your Account Number: " + str(num))
 
 
 def remove_customer(customer_id):
@@ -293,6 +294,28 @@ def remove_customer(customer_id):
     connection.commit()
     connection.close()
 
+def id_account():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    while True:
+        number = random.randint(1000000000, 9999999999)
+        tem = (number,)
+        crsr.execute('SELECT * FROM transaction_log WHERE account_number = ?', tem)
+        if crsr.fetchone() is None:
+            return number
+        else:
+            continue
+
+
+def deposit(deposit,user_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    temp = crsr.execute ('SELECT balance FROM customer WHERE user_name = ?', user_name)
+    if temp is None:
+        crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
+                     (deposit, user_name))
+    else:
+        print(temp)
 
 def deltable():
     connection = connect('db.sqlite')

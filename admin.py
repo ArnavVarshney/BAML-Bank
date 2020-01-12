@@ -78,7 +78,7 @@ def employees():
             print()
             inp1 = input('Command: ')
             if inp1 == '1':
-                while True:
+                for x in range(0, 3):
                     employee_user_name = input('Employee Username: ')
                     if retrieve_employee(employee_user_name):
                         ch = input('Confirm? (Y/N): ')
@@ -88,7 +88,7 @@ def employees():
                     else:
                         print('Employee Not Found!')
             elif inp1 == '2':
-                while True:
+                for x in range(0, 3):
                     employee_user_name = input('Employee Username: ')
                     if retrieve_employee(employee_user_name):
                         ch = input('Confirm? (Y/N): ')
@@ -173,7 +173,7 @@ def customers():
                 else:
                     break
             register_customer(first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password)
-            print('Customer registered successfully!\nCustomer ID: ' + str(retrieve_customer(user_name)[12]))
+            print('Customer registered successfully!\nCustomer ID: ' + str(retrieve_customer(customer_id)[12]))
             pause()
             break
         elif inp == '3':
@@ -292,13 +292,13 @@ def branches():
                     for i in branches_list:
                         print('\t' + i)
                     print()
-                    pause()
                     inp_1 = input('Command: ')
                     if inp_1 == '1':
                         customer_id = input("Customer ID: ")
                         result = retrieve_customer(customer_id)
                         if result:
-                            add_customer(customer_id,branch_code)
+                            num = id_account()
+                            add_customer(customer_id,branch_code,num)
                         else:
                             print('Invalid entry!')
                             break
