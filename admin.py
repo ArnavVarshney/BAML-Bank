@@ -4,7 +4,7 @@ from pyfiglet import Figlet
 from termcolor import colored
 
 import main
-from database import *
+from database import retrieve_employee, retrieve_all_employees, register_employee, delete_employee, make_admin, retrieve_all_customers, retrieve_customer, register_customer, delete_customer, id_customer
 from utility import clear_console, print_name, get_current_time, pause, about
 
 
@@ -200,94 +200,19 @@ def customers():
 
 
 def branches():
-    branches_list = ['1. View all Branches','2. Create a new branch', '3. Add/Remove Customer from Branch', '4. Modify Branch',
-                      '#. Return to Previous Menu', ]
+    branches_list = ['1. Assign a branch', '2. Register New Customer', '3. Modify Customer',
+                      '#. Return to Previous Menu']
     while True:
         clear_console()
         print_name()
-        print(Figlet('small').renderText('Branches'))
+        print(Figlet('small').renderText('Customers'))
         print('Choose an option: \n')
         for i in branches_list:
             print('\t' + i)
         print()
         inp = input('Command: ')
         if inp == '1':
-            print(
-                198 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} |'.format(
-                    'Branch Code',
-                    'Branch Name',
-                    'Building',
-                    'Street Name',
-                    'Locality',
-                    'Landmark',
-                    'City',
-                    'State',
-                    'Country',
-                    'Zip Code'))
-            all_branches = retrieve_all_branches()
-            if all_branches:
-                for i in all_branches:
-                    print(
-                        198 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} |'.format(
-                            str(i[0]), i[1],
-                            str(i[2]), i[3],
-                            i[4], i[5],
-                            i[6], i[7],
-                            i[8],str(i[9])))
-                print(198 * '-')
-                pause()
-            else:
-                print('No registered branches found!')
-            break
-        elif inp == '2':
-            clear_console()
-            print_name()
-            print(Figlet('small').renderText('Register Branch'))
-            branch_code = id_branch()
-            branch_name = input('Branch Name: ')
-            building = input('Building: ')
-            street_name = input('Street Name: ')
-            locality = input('Locality: ')
-            landmark = input('Landmark: ')
-            city = input('City: ')
-            state = input('State: ')
-            country = input('Country: ')
-            zip_code = input('Zip Code: ')
-            register_branch(branch_code , branch_name , building , street_name , locality , landmark , city , state , country , zip_code)
-            print('Branch registered successfully!\nBranch Code: ' + str(branch_code))
-            break
-        elif inp == '3':
-            branches_list = ['1. Add a Customer', '2. Remove a Customer',
-                             '#. Return to Previous Menu' ]
-            clear_console()
-            print_name()
-            print(Figlet('small').renderText('Associated Customers'))
-            branch_code = input('Branch Code: ')
-            print(
-                60 * '-' + '\n' + '| {:^15s} | {:^10s} | {:^10s} |'.format(
-                    'Branch Code',
-                    'Customer ID',
-                    'Account Number',))
-            result = retrieve_accounts(branch_code)
-            if result:
-                for i in result:
-                    print(
-                        60 * '-' + '\n' + '| {:^15s} | {:^10s} | {:^10s} |'.format(
-                            str(i[0]), str(i[1]),
-                            i[4]))
-                print(60 * '-')
-                pause()
-                for i in branches_list:
-                    print('\t' + i)
-                print()
-                inp_1 = input('Command: ')
-                if inp_1 == '1':
-                    customer_id = input("Customer ID: ")
-
-            else:
-                print("No associated Customers")
-
-
+            pause()
 def intro():
     username = os.getenv('loggedin')
     try:
@@ -312,6 +237,7 @@ def intro():
                 customers()
             elif inp == '3':
                 branches()
+                # TODO: Implement Branches
             elif inp == '4':
                 about()
             elif inp == '5':
