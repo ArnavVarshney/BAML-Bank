@@ -1,16 +1,14 @@
 import os
 
 from pyfiglet import Figlet
-from database import sql_setup
 
-sql_setup()
 import admin
 from authentication import existing_user
+from database import sql_setup
 from utility import print_name, clear_console, pause, about
 
 sql_setup()
 os.environ['loggedin'] = ''
-
 
 def intro():
     main_menu = ['1. Login', '2. About Us', '3. Exit']
