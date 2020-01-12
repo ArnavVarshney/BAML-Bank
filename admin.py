@@ -118,28 +118,28 @@ def customers():
         inp = input('Command: ')
         if inp == '1':
             print(
-                103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^6s} | {:^20s} | {:^20s} | {:^20s} |'.format(
+                103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^10s} |'.format(
                     'Customer ID',
                     'Username',
                     'Password',
                     'First Name',
                     'Last Name',
                     'Phone Number',
-                    'Email ID'))
+                    'Email ID',
+                    'Branch'))
             all_customers = retrieve_all_customers()
             if all_customers:
                 for i in all_customers:
                     print(
-                        103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^6s} | {:^20s} | {:^20s} | {:^20s} |'.format(
+                        103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} | {:^20s} | {:^10s} |'.format(
                             str(i[12]), i[13],
                             i[14], i[0],
                             i[1],
-                            str(i[10]), i[11]))
+                            str(i[10]), i[11], str(i[16])))
                 print(103 * '-')
                 pause()
             else:
                 print('No registered customers found!')
-                pause()
             break
         elif inp == '2':
             clear_console()
@@ -244,6 +244,7 @@ def branches():
                 print('No registered branches found!')
                 pause()
             break
+
         elif inp == '2':
             clear_console()
             print_name()
@@ -260,62 +261,87 @@ def branches():
             zip_code = input('Zip Code: ')
             register_branch(branch_code , branch_name , building , street_name , locality , landmark , city , state , country , zip_code)
             print('Branch registered successfully!\nBranch Code: ' + str(branch_code))
+            pause()
             break
+
         elif inp == '3':
             branches_list = ['1. Add a Customer', '2. Remove a Customer',
                              '#. Return to Previous Menu' ]
             clear_console()
             print_name()
             print(Figlet('small').renderText('Associated Customers'))
-            branch_code = input('Branch Code: ')
+            result = retrieve_all_accounts()
             print(
-                60 * '-' + '\n' + '| {:^15s} | {:^10s} | {:^10s} |'.format(
+                100 * '-' + '\n' + '| {:^15s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} |'.format(
                     'Branch Code',
                     'Customer ID',
-                    'Account Number',))
-            result = retrieve_accounts(branch_code)
+                    'First Name',
+                    'Last Name',
+                    'Account Number', ))
             if result:
                 for i in result:
                     print(
-                        60 * '-' + '\n' + '| {:^15s} | {:^10s} | {:^10s} |'.format(
-                            str(i[0]), str(i[1]),
-                            i[4]))
-                print(60 * '-')
-                for i in branches_list:
-                    print('\t' + i)
-                print()
-                inp_1 = input('Command: ')
-                if inp_1 == '1':
-                    customer_id = input("Customer ID: ")
-                    add_customer(customer_id,branch_code)
-                    pause()
-                if inp_1 == '1':
-                    customer_id = input("Customer ID: ")
-                    remove_customer(customer_id)
-            elif inp == '4':
-                clear_console()
-                print_name()
-                print('\n'"Filter by:")
-                branches_list = ['1.Customer ID ', '2. Branch ID',
-                                 '#. Return to Previous Menu']
-                print(Figlet('small').renderText('Transaction Details'))
+                        100 * '-' + '\n' + '| {:^15s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} |'.format(
+                            str(i[4]), str(i[0]),
+                            i[10], i[11],
+                            str(i[2])))
+                print(100 * '-')
                 branch_code = input('Branch Code: ')
-                for i in branches_list:
-                    print('\t' + i)
-                print()
-                inp_1 = input('Command: ')
-                if inp_1 == '1':
-                    customer_id = input("Customer ID: ")
-                    result = retrieve_accounts_customer(customer_id)
-                    print (result)
-                if inp_1 == '2':
-                    branch_code = input("Branch ID: ")
-                    result = retrieve_accounts(branch_code)
-                    print(result)
+                result = retrieve_branch(branch_code)
+                if result:
+                    for i in branches_list:
+                        print('\t' + i)
+                    print()
+                    pause()
+                    inp_1 = input('Command: ')
+                    if inp_1 == '1':
+                        customer_id = input("Customer ID: ")
+                        result = retrieve_customer(customer_id)
+                        if result:
+                            add_customer(customer_id,branch_code)
+                        else:
+                            print('Invalid entry!')
+                            break
+                    elif inp_1 == '2':
+                        customer_id = input("Customer ID: ")
+                        remove_customer(customer_id)
+                    elif inp == '#':
+                        break
+                    else:
+                        print('Invalid entry!')
+                        pause()
+                        break
+                else:
+                    print('Invalid entry!')
+                    break
+        elif inp == '4':
+            clear_console()
+            print_name()
+            print('\n'"Filter by:")
+            branches_list = ['1.Customer ID ', '2. Branch ID',
+                             '#. Return to Previous Menu']
+            print(Figlet('small').renderText('Transaction Details'))
+            for i in branches_list:
+                print('\t' + i)
+            print()
+            inp_1 = input('Command: ')
+            if inp_1 == '1':
+                customer_id = input("Customer ID: ")
+                result = retrieve_accounts_customer(customer_id)
+                print (result)
+            elif inp_1 == '2':
+                branch_code = input("Branch ID: ")
+                result = retrieve_accounts(branch_code)
+                print(result)
+            elif inp == '#':
+                break
             else:
-                print("No associated Customers")
+                print('Invalid entry!')
+        elif inp == '#':
+            break
         else:
-            print('Invalid input. Try again!')
+            print('Invalid entry!')
+
 
 def intro():
     username = os.getenv('loggedin')
