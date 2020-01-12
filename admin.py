@@ -173,7 +173,7 @@ def customers():
                 else:
                     break
             register_customer(first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password)
-            print('Customer registered successfully!\nCustomer ID: ' + str(retrieve_customer(customer_id)[12]))
+            print('Customer registered successfully!\nCustomer ID: ' + str(retrieve_customer(user_name)[12]))
             pause()
             break
         elif inp == '3':
@@ -295,7 +295,10 @@ def branches():
                     inp_1 = input('Command: ')
                     if inp_1 == '1':
                         customer_id = input("Customer ID: ")
-                        result = retrieve_customer(customer_id)
+                        connection = connect('db.sqlite')
+                        crsr = connection.cursor()
+                        select_customer = "SELECT * FROM customer WHERE customer_id = ?"
+                        crsr.execute(select_customer, (customer_id,))
                         if result:
                             num = id_account()
                             add_customer(customer_id,branch_code,num)
