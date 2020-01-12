@@ -4,7 +4,7 @@ from pyfiglet import Figlet
 from termcolor import colored
 
 import main
-from database import retrieve_employee, retrieve_all_employees, register_employee, delete_employee, make_admin, retrieve_all_customers, retrieve_customer, register_customer, delete_customer, id_customer
+from database import retrieve_employee, retrieve_all_employees, register_employee, delete_employee, make_admin
 from utility import clear_console, print_name, get_current_time, pause, about
 
 
@@ -106,97 +106,7 @@ def employees():
 
 
 def customers():
-    customers_list = ['1. View All Customers', '2. Register New Customer', '3. Modify Customer',
-                      '#. Return to Previous Menu']
-    while True:
-        clear_console()
-        print_name()
-        print(Figlet('small').renderText('Customers'))
-        print('Choose an option: \n')
-        for i in customers_list:
-            print('\t' + i)
-        print()
-        inp = input('Command: ')
-        if inp == '1':
-            print(
-                103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^6s} | {:^20s} | {:^20s} | {:^20s} |'.format(
-                    'Customer ID',
-                    'Username',
-                    'Password',
-                    'First Name',
-                    'Last Name',
-                    'Phone Number',
-                    'Email ID'))
-            all_customers = retrieve_all_customers()
-            if all_customers:
-                for i in all_customers:
-                    print(
-                        103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^6s} | {:^20s} | {:^20s} | {:^20s} |'.format(
-                            str(i[12]), i[13],
-                            i[14], i[0],
-                            i[1],
-                            str(i[10]), i[11]))
-                print(103 * '-')
-            else:
-                print('No registered customers found!')
-            break
-        elif inp == '2':
-            clear_console()
-            print_name()
-            print(Figlet('small').renderText('Register Customer'))
-            while True:
-                user_name = input('Username: ')
-                if retrieve_customer(user_name):
-                    print('\nUsername already in use!\n')
-                else:
-                    break
-            first_name = input('First Name: ')
-            last_name = input('Last Name: ')
-            building = input('Building: ')
-            street_name = input('Street Name: ')
-            locality =input('Locality: ')
-            landmark =input('Landmark: ')
-            city = input('City: ')
-            state = input('State: ')
-            country = input('Country: ')
-            zip_code = input('Zip code: ')
-            phone_number = input('Phone Number: ')
-            email_id = input('Email ID: ')
-            customer_id = id_customer()
-            while True:
-                password = input('Password: ')
-                if len(password) == 0:
-                    print('\nInvalid password!\n')
-                else:
-                    break
-            register_customer(first_name, last_name, building, street_name, locality, landmark, city, state,country, zip_code, phone_number, email_id, customer_id, user_name,password)
-            print('Customer registered successfully!\nCustomer ID: ' + str(retrieve_customer(user_name)[12]))
-            break
-        elif inp == '3':
-            clear_console()
-            print_name()
-            print(Figlet('small').renderText('Modify Customer'))
-            print('Choose an option: \n')
-            modify_customer_list = ['1. Delete Customer', '#. Return to Previous Menu']
-            for i in modify_customer_list:
-                print('\t' + i)
-            print()
-            inp1 = input('Command: ')
-            if inp1 == '1':
-                while True:
-                    customer_user_name = input('Customer Username: ')
-                    if retrieve_customer(customer_user_name):
-                        ch = input('Confirm? (Y/N): ')
-                        if ch == 'Y':
-                            delete_customer(customer_user_name)
-                        break
-                    else:
-                        print('Customer Not Found!')
-        elif inp == '#':
-            break
-        else:
-            print('Invalid entry!')
-            pause()
+    customers_list = []
 
 
 def branches():
@@ -225,6 +135,7 @@ def intro():
                 employees()
             elif inp == '2':
                 customers()
+                # TODO: Implement Customers
             elif inp == '3':
                 branches()
                 # TODO: Implement Branches
