@@ -6,7 +6,7 @@ from termcolor import colored
 
 import main
 from database import retrieve_employee, retrieve_all_employees, register_employee, delete_employee, make_admin, \
-    retrieve_all_customers, retrieve_customer, get_id_customer, register_customer, delete_customer
+    retrieve_all_customers, retrieve_customer, get_id_customer, register_customer, delete_customer, update_customer
 from utility import clear_console, print_name, get_current_time, pause, about, validate_email, validate_phone, \
     send_message, generate_otp
 
@@ -121,6 +121,9 @@ def customers():
         print()
         inp = input('Command: ')
         if inp == '1':
+            clear_console()
+            print_name()
+            print(Figlet('small').renderText('All Customers'))
             print(
                 112 * '-' + '\n' + '| {:^13s} | {:^20s} | {:^10s} | {:^12s} | {:^11} | {:^14s} | {:^20s} |'.format(
                     'Customer ID',
@@ -145,6 +148,9 @@ def customers():
                 print('No registered customers found!')
             break
         elif inp == '2':
+            clear_console()
+            print_name()
+            print(Figlet('small').renderText('Customer Info'))
             while True:
                 customer_user_name = input('Customer Username: ')
                 cust = retrieve_customer(customer_user_name)
@@ -190,7 +196,6 @@ def customers():
                 phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
                 if validate_phone(phone_number):
                     otp = generate_otp(phone_number)
-                    otp = 0
                     flag = False
                     while not flag:
                         otp_input = input(f'OTP sent on {phone_number}: ')
@@ -223,7 +228,7 @@ def customers():
                     break
             customer_id = str(get_id_customer(user_name)[12])
             send_message(
-                f'Greetings from Bank XXX!\nWelcome {first_name} {last_name}!\nYour Customer ID '
+                f'Greetings from Bank SPAAM!\nWelcome {first_name} {last_name}!\nYour Customer ID '
                 f'{customer_id}.', phone_number)
             register_customer(first_name, last_name, building, street_name, locality, landmark, city, state, country,
                               zip_code, phone_number, email, user_name, password)
@@ -234,13 +239,16 @@ def customers():
             print_name()
             print(Figlet('small').renderText('Modify Customer'))
             print('Choose an option: \n')
-            modify_customer_list = ['1. Delete Customer', '#. Return to Previous Menu']
+            modify_customer_list = ['1. Delete Customer', '2. Edit Customer', '#. Return to Previous Menu']
             for i in modify_customer_list:
                 print('\t' + i)
             print()
             inp1 = input('Command: ')
             if inp1 == '1':
                 while True:
+                    clear_console()
+                    print_name()
+                    print(Figlet('small').renderText('Delete Customer'))
                     customer_user_name = input('Customer Username: ')
                     if retrieve_customer(customer_user_name):
                         ch = input('Confirm? (Y/N): ')
@@ -249,6 +257,119 @@ def customers():
                         break
                     else:
                         print('Customer Not Found!')
+                        pause()
+            elif inp1 == '2':
+                while True:
+                    clear_console()
+                    print_name()
+                    print(Figlet('small').renderText('Edit Customer'))
+                    customer_user_name = input('Customer Username: ')
+                    cust = retrieve_customer(customer_user_name)
+                    if cust:
+                        phone_number = cust[10]
+                        customer_id = cust[12]
+                        modify_customer_list = ['1. First Name', '2. Last Name', '3. Address', '4. Phone Number',
+                                                '5. Email', '#. Return to Previous Menu']
+                        print('\nWhich parameter do you want to modify?')
+                        print('Choose an option: \n')
+                        for i in modify_customer_list:
+                            print('\t' + i)
+                        print()
+                        ch = input('Command: ')
+                        if ch == '1':
+                            clear_console()
+                            print_name()
+                            print(Figlet('small').renderText('Edit Customer'))
+                            first_name = input('New First Name: ')
+                            update_customer('first_name', first_name, customer_user_name)
+                            send_message(
+                                f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
+                                f'successfully.', phone_number)
+                            break
+                        elif ch == '2':
+                            clear_console()
+                            print_name()
+                            print(Figlet('small').renderText('Edit Customer'))
+                            last_name = input('New Last Name: ')
+                            update_customer('last_name', last_name, customer_user_name)
+                            send_message(
+                                f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
+                                f'successfully.', phone_number)
+                            break
+                        elif ch == '3':
+                            clear_console()
+                            print_name()
+                            print(Figlet('small').renderText('Edit Customer'))
+                            building = input('Building: ')
+                            update_customer('building', building, customer_user_name)
+                            street_name = input('Street Name: ')
+                            update_customer('street_name', street_name, customer_user_name)
+                            locality = input('Locality: ')
+                            update_customer('locality', locality, customer_user_name)
+                            landmark = input('Landmark: ')
+                            update_customer('landmark', landmark, customer_user_name)
+                            city = input('City: ')
+                            update_customer('city', city, customer_user_name)
+                            state = input('State: ')
+                            update_customer('state', state, customer_user_name)
+                            country = input('Country: ')
+                            update_customer('country', country, customer_user_name)
+                            while True:
+                                zip_code = input('Zip Code: ')
+                                if zip_code.isnumeric() and len(zip_code) == 6:
+                                    update_customer('zip_code', zip_code, customer_user_name)
+                                    break
+                                else:
+                                    print('\nInvalid Zip Code\n')
+                            send_message(
+                                f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
+                                f'successfully.', phone_number)
+                            break
+                        elif ch == '4':
+                            clear_console()
+                            print_name()
+                            print(Figlet('small').renderText('Edit Customer'))
+                            while True:
+                                phone_number = input('New Phone Number (+<Country Code><Phone Number>): ')
+                                if validate_phone(phone_number):
+                                    otp = generate_otp(phone_number)
+                                    flag = False
+                                    while not flag:
+                                        otp_input = input(f'OTP sent on {phone_number}: ')
+                                        if str(otp_input) == str(otp):
+                                            flag = True
+                                    if flag:
+                                        update_customer('phone_number', phone_number, customer_user_name)
+                                        break
+                                else:
+                                    print(
+                                        '\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
+                            send_message(
+                                f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
+                                f'successfully.', phone_number)
+                            break
+                        elif ch == '5':
+                            clear_console()
+                            print_name()
+                            print(Figlet('small').renderText('Edit Customer'))
+                            while True:
+                                email = input('Email: ')
+                                if validate_email(email):
+                                    update_customer('email_id', email, customer_user_name)
+                                    break
+                                else:
+                                    print('\nInvalid Email ID\n')
+                            send_message(
+                                f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
+                                f'successfully.', phone_number)
+                        elif ch == '#':
+                            break
+                        else:
+                            print('Invalid entry!')
+                    else:
+                        print('Customer Not Found!')
+                        pause()
+
         elif inp == '#':
             break
         else:

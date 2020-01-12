@@ -190,3 +190,13 @@ def get_id_customer(user_name):
     connection.commit()
     connection.close()
     return rows
+
+
+def update_customer(field, value, user_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    upd_customer = str("UPDATE customer SET " + field + " = '" + value + "' WHERE user_name = ?")
+    print(upd_customer)
+    crsr.execute(upd_customer, (user_name,))
+    connection.commit()
+    connection.close()
