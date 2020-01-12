@@ -139,12 +139,12 @@ def make_admin(user_name):
 def retrieve_customer(user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    select_customer = "SELECT * FROM customer WHERE user_name = ?"
+    select_customer = "SELECT * FROM customer WHERE customer_id = ?"
     crsr.execute(select_customer, (user,))
     rows = crsr.fetchall()
     connection.close()
     if len(rows) != 0:
-        return rows[0]
+        return rows
     else:
         return False
 
