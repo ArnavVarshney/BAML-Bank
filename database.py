@@ -18,7 +18,7 @@ def sql_setup():
     crsr = connection.cursor()
     create_transaction_log = (
         "CREATE TABLE IF NOT EXISTS transaction_log(customer_id varchar(4), account_number varchar(10),"
-        "    date varchar(10), time varchar(8), branch varchar(4), credit int,debit int, opening_balance int, "
+        "    date varchar(10), time varchar(8), branch varchar(4), amount int, opening_balance int, "
         "closing_balance int, remarks varchar(255))")
     try:
         crsr.execute(create_transaction_log)
@@ -244,14 +244,6 @@ def retrieve_accounts(branch_code):
     crsr = connection.cursor()
     select_accounts = "SELECT * FROM transaction_log WHERE branch = ?"
     crsr.execute(select_accounts,(branch_code,))
-    rows = crsr.fetchall()
-    connection.close()
-    return rows
-def retrieve_accounts_customer(customer_id):
-    connection = connect('db.sqlite')
-    crsr = connection.cursor()
-    select_accounts = "SELECT * FROM transaction_log WHERE customer_id = ?"
-    crsr.execute(select_accounts,(customer_id,))
     rows = crsr.fetchall()
     connection.close()
     return rows

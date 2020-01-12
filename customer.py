@@ -6,7 +6,7 @@ from termcolor import colored
 import main
 from database import retrieve_all_customers, retrieve_customer, register_customer, delete_customer, id_customer
 from utility import clear_console, print_name, get_current_time, pause, about
-def intro():
+'''def intro():
     username = os.getenv('loggedin')
     try:
         main_menu = ['1. Deposit', '2. Transact', '3. Transfer to another account', '4. Logout'
@@ -25,7 +25,7 @@ def intro():
             inp = input('Command: ')
             print()
             if inp == '1':
-                
+
             elif inp == '2':
 
             elif inp == '3':

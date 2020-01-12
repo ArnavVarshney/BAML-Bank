@@ -37,7 +37,18 @@ def get_customer_id(account_number):
 
 
 def pause():
-    lol = input('Enter any character to continue: ')
+    """
+    Function to pause program execution. Gives user time to interpret the output
+    """
+    if platform.system() == 'nt':
+        # For UNIX based systems
+        lol = ''
+        print('\nEnter any character to continue: ', end='')
+        while lol == '':
+            lol = input()
+    elif platform.system() == 'Windows':
+        # For Windows systems
+        os.system('PAUSE')
 
 
 def clear_console():
