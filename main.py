@@ -4,7 +4,6 @@ from pyfiglet import Figlet
 from database import sql_setup
 
 import admin
-import customer
 from authentication import existing_user
 from utility import print_name, clear_console, pause, about
 
@@ -31,8 +30,6 @@ def intro():
                 os.environ['loggedin'] = username
                 if role == '0':
                     admin.intro()
-                elif role == '2':
-                    customer.intro()
             else:
                 print('Invalid credentials!')
                 pause()
