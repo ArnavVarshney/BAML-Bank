@@ -94,7 +94,7 @@ def validate_email(email_str):
 
 def print_name():
     """
-    Beauty Mode: On
+    Beauty Mode: On xD
     """
     color = 'red'
     print(colored('██████╗  █████╗ ███╗   ██╗██╗  ██╗    ███████╗██████╗  █████╗  █████╗ ███╗   ███╗', color))
