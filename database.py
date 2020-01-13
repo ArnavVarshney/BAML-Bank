@@ -18,7 +18,7 @@ def sql_setup():
     create_transaction_log = (
         "CREATE TABLE IF NOT EXISTS transaction_log(customer_id INTEGER, account_number varchar(10),"
         "    date varchar(10), time varchar(8), branch int, amount int, opening_balance int, "
-        "closing_balance int, remarks varchar(255), first_name varchar(20), last_name varchar(20)))")
+        "closing_balance int, remarks varchar(255), first_name varchar(20), last_name varchar(20))")
     try:
         crsr.execute(create_transaction_log)
     except sqlite3.OperationalError:
@@ -75,7 +75,7 @@ def check_auth(user, password, role):
 def insert_admin():
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    add_admin_details = "INSERT INTO employee(user_name, first_name, last_name, password, role, date_of_birth, gender) VALUES('admin','Arnav'," \
+    add_admin_details = "INSERT INTO employee(user_name, first_name, last_name, password, role, branch, date_of_birth, gender) VALUES('admin','Arnav'," \
                         "'Varshney', 'admin', 0, 1, '29/12/2003', 'M')"
     if not retrieve_employee('admin'):
         try:
@@ -109,14 +109,13 @@ def retrieve_all_employees():
     return rows
 
 
-def register_employee(user_name, first_name, last_name, password, role, branch):
+def register_employee(user_name, first_name, last_name, password, role, branch, date_of_birth, gender):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    insert_employee = "INSERT INTO employee(user_name, first_name, last_name, password, role, branch) VALUES(?,?,?,?,?,?)"
-    crsr.execute(insert_employee, (user_name, first_name, last_name, password, role, branch,))
+    insert_employee = "INSERT INTO employee(user_name, first_name, last_name, password, role, branch, date_of_birth, gender) VALUES(?,?,?,?,?,?,?,?)"
+    crsr.execute(insert_employee, (user_name, first_name, last_name, password, role, branch, date_of_birth, gender))
     connection.commit()
     connection.close()
-
 
 def delete_employee(user_name):
     connection = connect('db.sqlite')
@@ -200,6 +199,20 @@ def update_customer(field, value, user_name):
     connection.commit()
     connection.close()
 
+
+def retrieve_branch(branch_code):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_branch = "SELECT * FROM branch WHERE branch_code = ?"
+    crsr.execute(select_branch, (branch_code,))
+    rows = crsr.fetchall()
+    connection.close()
+    if len(rows) != 0:
+        return rows[0]
+    else:
+        return False
+
+
 def retrieve_all_branches():
     connection = connect('db.sqlite')
     crsr = connection.cursor()
@@ -210,10 +223,75 @@ def retrieve_all_branches():
     return rows
 
 
+def register_branch(branch_code, branch_name, building, street_name, locality, landmark, city, state, country,
+                    zip_code):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    insert_branch = "INSERT INTO branch(branch_code , branch_name , building , street_name , locality , landmark , city , state , country , zip_code) VALUES(?,?,?,?,?,?,?,?,?,?)"
+    crsr.execute(insert_branch,
+                 (branch_code, branch_name, building, street_name, locality, landmark, city, state, country, zip_code))
+    connection.commit()
+    connection.close()
+
+
+def delete_branch(user_name):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    delete_branch_ = "DELETE FROM branch WHERE branch_name = ?"
+    crsr.execute(delete_branch_, (user_name,))
+    connection.commit()
+    connection.close()
+
+
+def id_branch():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    while True:
+        number = random.randint(100000, 999999)
+        tem = (number,)
+        crsr.execute('SELECT * FROM branch WHERE branch_code = ?', tem)
+        if crsr.fetchone() is None:
+            return number
+        else:
+            continue
+
+
+def retrieve_accounts(branch_code):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_accounts = "SELECT * FROM transaction_log WHERE branch = ?"
+    crsr.execute(select_accounts, (branch_code,))
+    rows = crsr.fetchall()
+    connection.close()
+    return rows
+
+
+def retrieve_accounts_customer(customer_id):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    select_accounts = "SELECT * FROM transaction_log WHERE customer_id = ?"
+    crsr.execute(select_accounts, (customer_id,))
+    rows = crsr.fetchall()
+    connection.close()
+    return rows
+
+
+def retrieve_all_accounts():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute("SELECT * FROM transaction_log")
+    rows = crsr.fetchall()
+    connection.close()
+    if len(rows) != 0:
+        return rows
+    else:
+        return False
+
+
 def deposit(deposit, user_name, user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute ('SELECT * FROM customer WHERE user_name = ?', user_name)
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', user_name)
     temp = crsr.fetchone()
     temp = temp[16]
     if temp is None:
@@ -222,7 +300,7 @@ def deposit(deposit, user_name, user):
     else:
         temp = temp + deposit
         crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
-                     (temp , user))
+                     (temp, user))
     connection.commit()
     connection.close()
 
@@ -230,7 +308,7 @@ def deposit(deposit, user_name, user):
 def transact(transact, user_name, user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute ('SELECT * FROM customer WHERE user_name = ?', user_name)
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', user_name)
     temp = crsr.fetchone()
     temp = temp[16]
     if temp is None or temp < transact:
@@ -238,7 +316,7 @@ def transact(transact, user_name, user):
     else:
         temp = temp - transact
         crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
-                     (temp , user))
+                     (temp, user))
     connection.commit()
     connection.close()
 
@@ -246,7 +324,7 @@ def transact(transact, user_name, user):
 def transfer(transfer, user_1, user_2):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute ('SELECT * FROM customer WHERE user_name = ?', user_1)
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', user_1)
     temp = crsr.fetchone()
     temp = temp[16]
     if temp is None or temp < transfer:

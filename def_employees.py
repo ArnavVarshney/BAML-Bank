@@ -1,3 +1,11 @@
+import datetime
+
+from pyfiglet import Figlet
+
+from database import retrieve_all_employees, retrieve_employee, register_employee, delete_employee, make_admin
+from utility import clear_console, print_name, pause
+
+
 def employees():
     employees_list = ['1. View All Employees', '2. Register New Employee', '3. Modify Employee',
                       '#. Return to Previous Menu']
@@ -12,23 +20,25 @@ def employees():
         inp = input('Command: ')
         if inp == '1':
             print(
-                103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^6s} | {:^8s} | {:^20s} | {:^20s} |'.format(
+                140 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^6s} | {:^8s} | {:^20s} | {:^20s} | {:^12s} | {:^8s} |'.format(
                     'Employee ID',
                     'Username',
                     'Password',
                     'Role',
                     'Branch',
                     'First Name',
-                    'Last Name'))
+                    'Last Name',
+                    'DOB',
+                    'Gender'))
             all_employees = retrieve_all_employees()
             if all_employees:
                 for i in all_employees:
                     print(
-                        103 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^6s} | {:^8s} | {:^20s} | {:^20s} |'.format(
+                        140 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^6s} | {:^8s} | {:^20s} | {:^20s} | {:^12s} | {:^8s} |'.format(
                             str(i[0]), i[1],
                             i[2], str(i[5]), str(i[6]),
-                            i[3], i[4]))
-                print(103 * '-')
+                            i[3], i[4], i[8], i[7]))
+                print(140 * '-')
             else:
                 print('No registered employees found!')
             break
@@ -46,15 +56,15 @@ def employees():
             last_name = input('Last Name: ')
             while True:
                 date_of_birth = input('Date of Birth (DD/MM/YYYY): ')
-                day,month,year = date_of_birth.split('/')
                 try:
+                    day, month, year = date_of_birth.split('/')
                     datetime.datetime(int(year), int(month), int(day))
                     break
                 except ValueError:
-                    print('\nInvalid value!\n
-            while not isValidGender:
+                    print('\nInvalid value!\n')
+            while True:
                 gender = input('Gender (M/F): ')
-                if gender in ['M','F']:
+                if gender in ['M', 'F']:
                     break
                 else:
                     print('\nInvalid gender value!\n')
@@ -70,7 +80,7 @@ def employees():
                     print('\nInvalid role!\n')
                 else:
                     break
-            register_employee(user_name, first_name, last_name, password, role)
+            register_employee(user_name, first_name, last_name, password, role, 1, date_of_birth, gender)
             print('Employee registered successfully!\nEmployee Number: ' + str(retrieve_employee(user_name)[0]))
             break
         elif inp == '3':

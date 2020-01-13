@@ -61,6 +61,8 @@ def clear_console():
     elif platform.system() == 'Windows':
         # For Windows systems
         os.system('cls')
+    else:
+        os.system('cls')
 
 
 def send_message(msg, to_number):

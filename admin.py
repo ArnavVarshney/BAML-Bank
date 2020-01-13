@@ -1,19 +1,13 @@
-import getpass
 import os
 
-import main
-from database import retrieve_employee, retrieve_all_employees, register_employee, delete_employee, make_admin, \
-    retrieve_all_customers, retrieve_customer, get_id_customer, register_customer, delete_customer, update_customer
-from def_customers import customers
-from def_employees import employees
 from pyfiglet import Figlet
 from termcolor import colored
-from utility import clear_console, print_name, get_current_time, pause, about, validate_email, validate_phone, \
-    send_message, generate_otp
 
-
-def branches():
-    branch_list = []
+import main
+from database import retrieve_employee
+from def_customers import customers
+from def_employees import employees
+from utility import clear_console, print_name, get_current_time, pause, about
 
 
 def intro():
@@ -40,8 +34,8 @@ def intro():
             elif inp == '2':
                 customers()
             elif inp == '3':
-                branches()
-                # TODO: Implement Branches
+                # branches()
+                print('Coming soon!')
             elif inp == '4':
                 about()
             elif inp == '5':
