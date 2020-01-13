@@ -12,12 +12,13 @@ from utility import clear_console, print_name, get_current_time, pause, about
 
 def intro():
     username = os.getenv('loggedin')
-
+    branch = retrieve_employee(username)[6]
     try:
-        main_menu = ['1. Employees', '2. Customers', '3. Branches', '4. About Us', '5. Logout', '6. Exit',
+        main_menu = ['1. My Account', '2. Employees', '3. Customers', '4. Branches', '5. About Us', '6. Logout',
+                     '7. Exit',
                      'Press Ctrl + C to Force Exit']
         login_time = get_current_time()
-        while True:
+        for counter in range(5):
             clear_console()
             print_name()
             print(Figlet('small').renderText('Admin Menu'))
@@ -30,18 +31,20 @@ def intro():
             inp = input('Command: ')
             print()
             if inp == '1':
-                employees()
+                print('Coming soon!')
             elif inp == '2':
-                customers()
+                employees()
             elif inp == '3':
+                customers()
+            elif inp == '4':
                 # branches()
                 print('Coming soon!')
-            elif inp == '4':
-                about()
             elif inp == '5':
+                about()
+            elif inp == '6':
                 print('Logged out!')
                 main.intro()
-            elif inp == '6':
+            elif inp == '7':
                 print('Goodbye!\nLogout time: ', get_current_time())
                 break
             else:

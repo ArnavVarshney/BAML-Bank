@@ -7,7 +7,7 @@ from utility import clear_console, print_name, pause
 def branches():
     branches_list = ['1. View all Branches','2. Create a new branch', '3. Add/Remove Customer from Branch', '4. View transaction details',
                       '#. Return to Previous Menu', ]
-    while True:
+    for counter in range(5):
         clear_console()
         print_name()
         print(Figlet('small').renderText('Branches'))

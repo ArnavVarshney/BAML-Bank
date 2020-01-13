@@ -1,4 +1,4 @@
-import os
+'''import os
 
 from pyfiglet import Figlet
 from termcolor import colored
@@ -13,7 +13,7 @@ def intro():
         main_menu = ['1. Deposit', '2. Transact', '3. Transfer to another account', '4. View your Balance/Transaction details', '5. Logout',
                      'Press Ctrl + C to Force Exit']
         login_time = get_current_time()
-        while True:
+        for counter in range(5):
             clear_console()
             print_name()
             print(Figlet('small').renderText('Customer Menu'))
@@ -149,4 +149,4 @@ def intro():
 
 
     if __name__ == '__main__':
-        print('Log in first\nAbort!')
+        print('Log in first\nAbort!')'''

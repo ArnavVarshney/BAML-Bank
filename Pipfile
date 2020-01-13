@@ -12,6 +12,7 @@ termcolor = "*"
 pyfiglet = "*"
 pyIsEmail = "*"
 flake8 = "*"
+python-dateutil = "*"
 
 [requires]
 python_version = "3.8"
