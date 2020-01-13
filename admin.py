@@ -402,7 +402,6 @@ def intro():
                 employees()
             elif inp == '2':
                 customers()
-                # TODO: Implement Customers
             elif inp == '3':
                 branches()
                 # TODO: Implement Branches

@@ -76,7 +76,7 @@ def insert_admin():
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     add_admin_details = "INSERT INTO employee(user_name, first_name, last_name, password, role) VALUES('admin','Arnav'," \
-                        "'Varshney', 'admin', 0)"
+                        "'Varshney', 'admin', 0, 1)"
     if not retrieve_employee('admin'):
         try:
             crsr.execute(add_admin_details)
@@ -196,7 +196,6 @@ def update_customer(field, value, user_name):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     upd_customer = str("UPDATE customer SET " + field + " = '" + value + "' WHERE user_name = ?")
-    print(upd_customer)
     crsr.execute(upd_customer, (user_name,))
     connection.commit()
     connection.close()
