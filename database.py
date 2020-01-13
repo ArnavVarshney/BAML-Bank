@@ -38,7 +38,7 @@ def sql_setup():
         "CREATE TABLE IF NOT EXISTS customer(first_name varchar(255), last_name varchar(255), building varchar(255), "
         "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),"
         "    country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), "
-        "customer_id INTEGER primary key AUTOINCREMENT, user_name varchar(255), password varchar(255))")
+        "customer_id INTEGER primary key AUTOINCREMENT, user_name varchar(255), password varchar(255), branch int)")
     try:
         crsr.execute(create_customer)
     except sqlite3.OperationalError:
@@ -46,7 +46,7 @@ def sql_setup():
 
     create_employee = (
         "CREATE TABLE IF NOT EXISTS employee(employee_id INTEGER primary key AUTOINCREMENT, user_name varchar(255), "
-        "password varchar(255), first_name varchar(255), last_name varchar(255), role int)")
+        "password varchar(255), first_name varchar(255), last_name varchar(255), role int, branch int)")
     try:
         crsr.execute(create_employee)
     except sqlite3.OperationalError:
@@ -109,11 +109,11 @@ def retrieve_all_employees():
     return rows
 
 
-def register_employee(user_name, first_name, last_name, password, role):
+def register_employee(user_name, first_name, last_name, password, role, branch):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    insert_employee = "INSERT INTO employee(user_name, first_name, last_name, password, role) VALUES(?,?,?,?,?)"
-    crsr.execute(insert_employee, (user_name, first_name, last_name, password, role,))
+    insert_employee = "INSERT INTO employee(user_name, first_name, last_name, password, role, branch) VALUES(?,?,?,?,?,?)"
+    crsr.execute(insert_employee, (user_name, first_name, last_name, password, role, branch,))
     connection.commit()
     connection.close()
 
@@ -160,15 +160,15 @@ def retrieve_all_customers():
 
 
 def register_customer(first_name, last_name, building, street_name, locality, landmark, city, state, country, zip_code,
-                      phone_number, email_id, user_name, password):
+                      phone_number, email_id, user_name, password, branch):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     insert_customer = "INSERT INTO customer(first_name, last_name, building, street_name, locality, landmark, city, " \
-                      "state, country, zip_code, phone_number, email_id, user_name, password) VALUES" \
-                      "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                      "state, country, zip_code, phone_number, email_id, user_name, password, branch) VALUES" \
+                      "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
     crsr.execute(insert_customer, (
         first_name, last_name, building, street_name, locality, landmark, city, state, country, zip_code, phone_number,
-        email_id, user_name, password))
+        email_id, user_name, password, branch))
     connection.commit()
     connection.close()
 

@@ -378,8 +378,7 @@ def customers():
 
 
 def branches():
-    branches_list = []
-
+    branch_list = []
 
 def intro():
     username = os.getenv('loggedin')
