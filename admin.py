@@ -7,6 +7,7 @@ import main
 from database import retrieve_employee
 from def_customers import customers
 from def_employees import employees
+from def_branches import branches
 from utility import clear_console, print_name, get_current_time, pause, about
 
 
@@ -37,9 +38,8 @@ def intro():
             elif inp == '3':
                 customers()
             elif inp == '4':
-                # branches()
+                branches()
                 print('Coming soon!')
-                pause()
             elif inp == '5':
                 about()
             elif inp == '6':

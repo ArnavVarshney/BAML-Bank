@@ -1,5 +1,5 @@
 import sqlite3  # sqlite3 - provides functionality to deal with SQL database
-
+import random
 
 def connect(db_file):
     try:
@@ -25,7 +25,7 @@ def sql_setup():
 
     try:
         crsr.execute(
-            "CREATE TABLE IF NOT EXISTS branch(branch_code INTEGER primary key AUTOINCREMENT, branch_name varchar(255), "
+            "CREATE TABLE IF NOT EXISTS branch(branch_code INTEGER primary key AUTOINCREMENT,branch_name varchar(255), "
             "building varchar(255), "
             "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255), "
             "country varchar(255), zip_code varchar(6))")
@@ -198,7 +198,7 @@ def retrieve_all_branches():
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute("SELECT * FROM branch")
-    rows = crsr.fetchone()
+    rows = crsr.fetchall()
     connection.close()
     return rows
 
@@ -244,13 +244,48 @@ def retrieve_all_accounts():
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute("SELECT * FROM transaction_log")
-    rows = crsr.fetchone()
+    rows = crsr.fetchall()
     connection.close()
     if len(rows) != 0:
         return rows
     else:
         return False
 
+def id_account():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    while True:
+        num = random.randint(1000000000,9999999999)
+        crsr.execute("SELECT * FROM transaction_log WHERE account_number = ?",num)
+        rows = crsr.fetchall()
+        connection.close()
+        if len(rows) == 0:
+            return num
+        else:
+            return False
+
+
+def add_customer(customer_id, branch_code,num):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute('UPDATE transaction_log SET branch = ? ,account_number =?  WHERE customer_id = ?',
+        (branch_code, num, customer_id))
+    connection.commit()
+    crsr.execute('UPDATE customer SET branch = ? WHERE customer_id = ?',
+        (branch_code, customer_id))
+    print("Your Account Number: " + str(num))
+    connection.commit()
+    connection.close()
+
+
+def remove_customer(customer_id):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    delete_branch_ = "DELETE FROM transaction_log WHERE customer_id = ?"
+    crsr.execute(delete_branch_, (customer_id,))
+    crsr.execute("DELETE FROM transaction_log WHERE customer_id = ?", customer_id)
+    connection.commit()
+    connection.close()
 
 def deposit(deposit, user_name, user):
     connection = connect('db.sqlite')
@@ -313,3 +348,13 @@ def view_balance(user_name):
     connection.commit()
     connection.close()
     return temp[0]
+
+
+def deltable():
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute("DROP TABLE transaction_log")
+    crsr.execute("DROP TABLE branch")
+    crsr.execute("DROP TABLE customer")
+    connection.commit()
+

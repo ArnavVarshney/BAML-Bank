@@ -1,11 +1,41 @@
-'''from pyfiglet import Figlet
+from pyfiglet import Figlet
 
-from database import retrieve_all_branches
+from database import *
 from utility import clear_console, print_name, pause
 
 
+def view_all_branches():
+    all_branches = retrieve_all_branches()
+    if all_branches:
+        print(
+            155 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} |'.format(
+                'Branch Code',
+                'Branch Name',
+                'Building',
+                'Street Name',
+                'Locality',
+                'Landmark',
+                'City',
+                'State',
+                'Country',
+                'Zip Code'))
+        for i in all_branches:
+            print(
+                155 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} |'.format(
+                    str(i[0]), str(i[1]),
+                    str(i[2]), i[3],
+                    i[4], i[5],
+                    i[6], i[7],
+                    i[8],str(i[9])))
+        print(155 * '-')
+        pause()
+    else:
+        print('No registered branches found!')
+        pause()
+
+
 def branches():
-    branches_list = ['1. View all Branches','2. Create a new branch', '3. Add/Remove Customer from Branch', '4. View transaction details',
+    branches_list = ['1. View all Branches','2. Create a new branch', '3. Add/Remove customers from Branch ', '4. View transaction details',
                       '#. Return to Previous Menu', ]
     for counter in range(5):
         clear_console()
@@ -17,47 +47,7 @@ def branches():
         print()
         inp = input('Command: ')
         if inp == '1':
-            print(
-                198 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} |'.format(
-                    'Branch Code',
-                    'Branch Name',
-                    'Building',
-                    'Street Name',
-                    'Locality',
-                    'Landmark',
-                    'City',
-                    'State',
-                    'Country',
-                    'Zip Code'))
-            all_branches = retrieve_all_branches()
-            if all_branches:
-                print(
-                    198 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} |'.format(
-                        'Branch Code',
-                        'Branch Name',
-                        'Building',
-                        'Street Name',
-                        'Locality',
-                        'Landmark',
-                        'City',
-                        'State',
-                        'Country',
-                        'Zip Code'))
-                for i in all_branches:
-                    print(
-                        198 * '-' + '\n' + '| {:^13s} | {:^10s} | {:^15s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} | {:^10s} |'.format(
-                            str(i[0]), i[1],
-                            str(i[2]), i[3],
-                            i[4], i[5],
-                            i[6], i[7],
-                            i[8],str(i[9])))
-                print(198 * '-')
-                pause()
-            else:
-                print('No registered branches found!')
-                pause()
-            break
-
+            view_all_branches()
         elif inp == '2':
             clear_console()
             print_name()
@@ -72,7 +62,12 @@ def branches():
             country = input('Country: ')
             zip_code = input('Zip Code: ')
             register_branch(branch_name , building , street_name , locality , landmark , city , state , country , zip_code)
-            print('Branch registered successfully!\nBranch Code: ' + str(branch_code))
+            connection = connect('db.sqlite')
+            crsr = connection.cursor()
+            crsr.execute("SELECT * FROM branch WHERE branch_name = ?", (branch_name,))
+            rows = crsr.fetchone()
+            connection.close()
+            print('Branch registered successfully!\nBranch Code: ' + str(rows[0]))
             pause()
             break
 
@@ -82,56 +77,37 @@ def branches():
             clear_console()
             print_name()
             print(Figlet('small').renderText('Associated Customers'))
+            view_all_branches()
             result = retrieve_all_accounts()
-            print(
-                100 * '-' + '\n' + '| {:^15s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} |'.format(
-                    'Branch Code',
-                    'Customer ID',
-                    'First Name',
-                    'Last Name',
-                    'Account Number', ))
-            if result:
-                for i in result:
-                    print(
-                        100 * '-' + '\n' + '| {:^15s} | {:^15s} | {:^20s} | {:^20s} | {:^20s} |'.format(
-                            str(i[4]), str(i[0]),
-                            i[10], i[11],
-                            str(i[2])))
-                            str(i[1])))
-                print(100 * '-')
-                branch_code = input('Branch Code: ')
-                result = retrieve_branch(branch_code)
+            for i in branches_list:
+                print('\t' + i)
+            print()
+            inp_1 = input('Command: ')
+            if inp_1 == '1':
+                customer_id = input("Customer ID: ")
+                connection = connect('db.sqlite')
+                crsr = connection.cursor()
+                select_customer = "SELECT * FROM customer WHERE customer_id = ?"
+                crsr.execute(select_customer, (customer_id,))
+                connection.close()
                 if result:
-                    for i in branches_list:
-                        print('\t' + i)
-                    print()
-                    inp_1 = input('Command: ')
-                    if inp_1 == '1':
-                        customer_id = input("Customer ID: ")
-                        connection = connect('db.sqlite')
-                        crsr = connection.cursor()
-                        select_customer = "SELECT * FROM customer WHERE customer_id = ?"
-                        crsr.execute(select_customer, (customer_id,))
-                        connection.close()
-                        if result:
-                            num = id_account()
-                            add_customer(customer_id,branch_code,num)
-                        else:
-                            print('Invalid entry!')
-                            break
-                    elif inp_1 == '2':
-                        customer_id = input("Customer ID: ")
-                        remove_customer(customer_id)
-                    elif inp == '#':
-                        break
-                    else:
-                        print('Invalid entry!')
-                        pause()
-                        break
+                    num = id_account()
+                    branch_code = input("Branch Code: ")
+                    add_customer(customer_id, branch_code, num)
                 else:
                     print('Invalid entry!')
                     break
-        elif inp == '4':
+            elif inp_1 == '2':
+                customer_id = input("Customer ID: ")
+                remove_customer(customer_id)
+            elif inp == '#':
+                break
+            else:
+                print('Invalid entry!')
+                pause()
+                break
+
+        '''elif inp == '4':
             clear_console()
             print_name()
             print('\n'"Filter by:")

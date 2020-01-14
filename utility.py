@@ -49,9 +49,9 @@ def pause():
     elif platform.system() == 'Windows':
         os.system('PAUSE')
     else:
-        lol = ''
+        lol = ' '
         print('\nEnter any character to continue: ', end='')
-        while lol == '':
+        while lol == ' ':
             lol = input()
 
 
