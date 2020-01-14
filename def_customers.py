@@ -1,7 +1,7 @@
 import datetime
 import getpass
 
-from dateutil.relativedelta import relativedelta
+from dateutil.relativedelta import *
 from pyfiglet import Figlet
 
 from database import retrieve_all_customers, retrieve_customer, get_id_customer, register_customer, delete_customer, \

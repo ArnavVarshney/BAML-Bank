@@ -62,7 +62,6 @@ def branches():
             clear_console()
             print_name()
             print(Figlet('small').renderText('Register Branch'))
-            branch_code = id_branch()
             branch_name = input('Branch Name: ')
             building = input('Building: ')
             street_name = input('Street Name: ')
@@ -72,7 +71,7 @@ def branches():
             state = input('State: ')
             country = input('Country: ')
             zip_code = input('Zip Code: ')
-            register_branch(branch_code , branch_name , building , street_name , locality , landmark , city , state , country , zip_code)
+            register_branch(branch_name , building , street_name , locality , landmark , city , state , country , zip_code)
             print('Branch registered successfully!\nBranch Code: ' + str(branch_code))
             pause()
             break

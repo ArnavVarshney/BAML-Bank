@@ -39,6 +39,7 @@ def intro():
             elif inp == '4':
                 # branches()
                 print('Coming soon!')
+                pause()
             elif inp == '5':
                 about()
             elif inp == '6':
