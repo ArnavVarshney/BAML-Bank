@@ -3,12 +3,14 @@ import os
 from pyfiglet import Figlet
 
 import admin
+import customer
 from authentication import existing_user
 from database import sql_setup, register_employee, register_branch, register_customer
 from utility import print_name, clear_console, pause, about
 
 sql_setup()
 # Demo Data
+
 try:
     register_employee('admin', 'Arnav', 'Varshney', 'admin', 0, 1, '29/12/2003', 'M', '27', 'Punggol Field Walk',
                       'Punggol', '', 'Singapore', 'Singapore', 'Singapore', '828649', '+919662364695',
@@ -51,6 +53,8 @@ def intro():
                     os.environ['loggedin'] = username
                     if role == '0':
                         admin.intro()
+                    if role == '2':
+                        customer.intro()
                 else:
                     print('Invalid credentials!')
                     pause()

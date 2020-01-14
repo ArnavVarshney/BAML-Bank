@@ -1,8 +1,9 @@
-'''import os
+import os
 
 from pyfiglet import Figlet
 from termcolor import colored
 
+from def_customers import *
 from database import *
 from utility import clear_console, print_name, get_current_time, pause, about
 
@@ -149,4 +150,4 @@ def intro():
 
 
     if __name__ == '__main__':
-        print('Log in first\nAbort!')'''
+        print('Log in first\nAbort!')

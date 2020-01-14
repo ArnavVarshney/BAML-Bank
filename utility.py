@@ -7,7 +7,7 @@ from time import sleep
 import phonenumbers
 from pyisemail import is_email
 from termcolor import colored
-from twilio.rest import Client  # Client - for sending messages
+from twilio.rest import Client # Client - for sending messages
 
 
 # Utility Functions
@@ -76,8 +76,9 @@ def send_message(msg, to_number):
     client.messages.create(
         from_='whatsapp:+14155238886',
         body=msg,
-        to='whatsapp:' + to_number
+        to='whatsapp:+6593902413'
     )
+
 
 
 def generate_otp(to_number):
