@@ -17,7 +17,7 @@ def sql_setup():
     crsr = connection.cursor()
 
     try:
-        crsr.execute("CREATE TABLE IF NOT EXISTS transaction_log(customer_id INTEGER, account_number varchar(10),"
+        crsr.execute("CREATE TABLE IF NOT EXISTS transaction_log(customer_id INTEGER, account_number int,"
                      "    date varchar(10), time varchar(8), branch int, amount int, opening_balance int, "
                      "closing_balance int, remarks varchar(255), first_name varchar(20), last_name varchar(20))")
     except sqlite3.OperationalError:
@@ -256,7 +256,7 @@ def id_account():
     crsr = connection.cursor()
     while True:
         num = random.randint(1000000000,9999999999)
-        crsr.execute("SELECT * FROM transaction_log WHERE account_number = ?",num)
+        crsr.execute("SELECT * FROM transaction_log WHERE account_number = ?", (num,))
         rows = crsr.fetchall()
         connection.close()
         if len(rows) == 0:
@@ -357,4 +357,5 @@ def deltable():
     crsr.execute("DROP TABLE branch")
     crsr.execute("DROP TABLE customer")
     connection.commit()
+
 

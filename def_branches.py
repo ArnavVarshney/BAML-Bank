@@ -28,10 +28,8 @@ def view_all_branches():
                     i[6], i[7],
                     i[8],str(i[9])))
         print(155 * '-')
-        pause()
     else:
         print('No registered branches found!')
-        pause()
 
 
 def branches():
@@ -48,6 +46,7 @@ def branches():
         inp = input('Command: ')
         if inp == '1':
             view_all_branches()
+            pause()
         elif inp == '2':
             clear_console()
             print_name()
@@ -78,7 +77,7 @@ def branches():
             print_name()
             print(Figlet('small').renderText('Associated Customers'))
             view_all_branches()
-            result = retrieve_all_accounts()
+            retrieve_all_accounts()
             for i in branches_list:
                 print('\t' + i)
             print()
@@ -89,6 +88,8 @@ def branches():
                 crsr = connection.cursor()
                 select_customer = "SELECT * FROM customer WHERE customer_id = ?"
                 crsr.execute(select_customer, (customer_id,))
+                result = crsr.fetchone()
+                print(result)
                 connection.close()
                 if result:
                     num = id_account()
@@ -107,7 +108,7 @@ def branches():
                 pause()
                 break
 
-        '''elif inp == '4':
+        elif inp == '4':
             clear_console()
             print_name()
             print('\n'"Filter by:")
@@ -136,4 +137,4 @@ def branches():
         elif inp == '#':
             break
         else:
-            print('Invalid entry!')'''
+            print('Invalid entry!')
