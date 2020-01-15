@@ -1,6 +1,8 @@
 import sqlite3  # sqlite3 - provides functionality to deal with SQL database
 import random
 
+from utility import *
+
 def connect(db_file):
     try:
         conn = sqlite3.connect(db_file)
@@ -96,7 +98,8 @@ def register_employee(user_name, first_name, last_name, password, role, branch, 
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute(
-        "INSERT INTO employee(user_name, first_name, last_name, password, role, branch, date_of_birth, gender, building, street_name, locality, landmark, city, "
+        "INSERT INTO employee(user_name, first_name, last_name, password, role, "
+        "branch, date_of_birth, gender, building, street_name, locality, landmark, city, "
         "state, country, zip_code, phone_number, email_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         (user_name, first_name, last_name, password, role, branch, date_of_birth, gender, building, street_name,
          locality, landmark, city, state, country, zip_code,
@@ -226,7 +229,7 @@ def retrieve_accounts(branch_code):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute("SELECT * FROM transaction_log WHERE branch = ?", (branch_code,))
-    rows = crsr.fetchone()
+    rows = crsr.fetchall()
     connection.close()
     return rows
 
@@ -294,6 +297,13 @@ def deposit(deposit, user):
     crsr = connection.cursor()
     crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
     temp = crsr.fetchone()
+    crsr.execute("SELECT account_number FROM transaction_log WHERE customer_id = ?", (temp[12],))
+    temp_1 = (crsr.fetchone())[0]
+    crsr.execute(
+        "INSERT INTO transaction_log(customer_id, account_number, date , time , "
+        "branch , amount , opening_balance , "
+        "closing_balance , remarks ) VALUES(?,?,?,?,?,?,?,?,?)",
+                 (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], deposit, temp[16], temp[16] + deposit, 'Deposit'))
     temp = temp[16]
     if temp is None:
         crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',

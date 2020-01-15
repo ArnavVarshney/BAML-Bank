@@ -118,22 +118,69 @@ def branches():
             clear_console()
             print_name()
             print('\n'"Filter by:")
-            branches_list = ['1.Customer ID ', '2. Branch ID',
+            branch_list = ['1. Customer ID ', '2. Branch ID',
                              '#. Return to Previous Menu']
             print(Figlet('small').renderText('Transaction Details'))
-            for i in branches_list:
+            for i in branch_list:
                 print('\t' + i)
             print()
             inp_1 = input('Command: ')
             if inp_1 == '1':
                 customer_id = input("Customer ID: ")
                 result = retrieve_accounts_customer(customer_id)
-                print (result)
+                if len(result) != 0:
+                    print(
+                        165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                            'Customer ID',
+                            'Account Number',
+                            'Branch ID',
+                            'Date',
+                            'Time',
+                            'Amount',
+                            'Opening Balance',
+                            'Closing Balance',
+                            'Remarks'))
+                    for i in result:
+                        if i[2] is not None:
+                            print(
+                                165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                    str(i[0]), str(i[1]),
+                                    str(i[4]), i[2],
+                                    i[3], str(i[5]),
+                                    str(i[6]), str(i[7]),
+                                    str(i[8])))
+                    print(165 * '-')
+                else:
+                    print('No records found!')
                 pause()
             elif inp_1 == '2':
                 branch_code = input("Branch ID: ")
                 result = retrieve_accounts(branch_code)
-                print(result)
+                if len(result) != 0:
+                    print(
+                        165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                            'Customer ID',
+                            'Account Number',
+                            'Branch ID',
+                            'Date',
+                            'Time',
+                            'Amount',
+                            'Opening Balance',
+                            'Closing Balance',
+                            'Remarks'))
+                    for i in result:
+                        if i[2] is not None:
+                            print(
+                                165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                    str(i[0]), str(i[1]),
+                                    str(i[4]), i[2],
+                                    i[3], str(i[5]),
+                                    str(i[6]), str(i[7]),
+                                    str(i[8])))
+                    print(165 * '-')
+                else:
+                    print('No records found!')
+                pause()
                 pause()
             elif inp == '#':
                 break

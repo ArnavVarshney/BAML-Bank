@@ -7,7 +7,6 @@ from def_customers import *
 from database import *
 from utility import clear_console, print_name, get_current_time, pause, about
 
-
 def intro():
     username = os.getenv('loggedin')
     try:
