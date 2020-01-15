@@ -288,10 +288,11 @@ def remove_customer(customer_id):
     connection.commit()
     connection.close()
 
-def deposit(deposit, user_name, user):
+
+def deposit(deposit, user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute('SELECT * FROM customer WHERE user_name = ?', user_name)
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
     temp = crsr.fetchone()
     temp = temp[16]
     if temp is None:
@@ -305,10 +306,10 @@ def deposit(deposit, user_name, user):
     connection.close()
 
 
-def transact(transact, user_name, user):
+def transact(transact, user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute('SELECT * FROM customer WHERE user_name = ?', user_name)
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
     temp = crsr.fetchone()
     temp = temp[16]
     if temp is None or temp < transact:
@@ -321,22 +322,29 @@ def transact(transact, user_name, user):
     connection.close()
 
 
-def transfer(transfer, user_1, user_2):
+def transfer(transfer, user_1, acc):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute('SELECT * FROM customer WHERE user_name = ?', user_1)
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user_1,))
     temp = crsr.fetchone()
     temp = temp[16]
     if temp is None or temp < transfer:
         print("You do not have enough funds to complete your transfer")
     else:
-        crsr.execute('SELECT branch FROM customer WHERE customer_id = ?', user_2)
-        if crsr.fetchone() is not None:
-            crsr.execute('SELECT user_name FROM customer WHERE customer_id = ?', user_2)
-            temp_1 = crsr.fetchone()
-            deposit(temp, (temp_1,), temp_1)
+        crsr.execute('SELECT customer_id FROM transaction_log WHERE account_number = ?', acc)
+        temp = crsr.fetchone()
+        if temp is not None:
+            crsr.execute('SELECT balance FROM customer WHERE customer_id = ?', (temp,))
+            if crsr.fetchone() is not None:
+                crsr.execute('SELECT user_name FROM customer WHERE customer_id = ?', (temp,))
+                temp_2 = str((crsr.fetchone())[0])
+                print(temp_2)
+                deposit(transfer, temp_2)
+                transact(transfer, user_1)
+            else:
+                print("User does not exist")
         else:
-            print("User does not exist")
+            print("Account does not exist")
     connection.commit()
     connection.close()
 

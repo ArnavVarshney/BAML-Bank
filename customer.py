@@ -14,7 +14,7 @@ def intro():
         main_menu = ['1. Deposit', '2. Transact', '3. Transfer to another account', '4. View your Balance/Transaction details', '5. Logout',
                      'Press Ctrl + C to Force Exit']
         login_time = get_current_time()
-        for counter in range(5):
+        for counter in range(20):
             clear_console()
             print_name()
             print(Figlet('small').renderText('Customer Menu'))
@@ -60,7 +60,7 @@ def intro():
                     break
                 else:
                     deposit_amount = int(input("Deposit Amount: "))
-                    deposit(deposit_amount, (username,), username)
+                    deposit(deposit_amount, username)
 
             elif inp == '2':
                 result = retrieve_customer(username)
@@ -96,7 +96,7 @@ def intro():
                     break
                 else:
                     transact_amount = int(input("Transaction Amount: "))
-                    transact(transact_amount, (username,), username)
+                    transact(transact_amount, username)
 
             elif inp == '3':
                 result = retrieve_customer(username)
@@ -133,12 +133,11 @@ def intro():
                 else:
                     acc = input("Target Account: ")
                     transfer_amount = int(input("Transfer Amount: "))
-                    transfer(transfer_amount, (username,), (acc,))
+                    transfer(transfer_amount, username, (acc,))
 
             elif inp == '4':
                 result = str(view_balance(username))
                 print("Your account balance is: $ " + result)
-                break
             elif inp == '5':
                 print('Goodbye!\nLogout time: ', get_current_time())
                 break
