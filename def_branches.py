@@ -33,7 +33,7 @@ def view_all_branches():
 
 
 def branches():
-    branches_list = ['1. View all Branches','2. Create a new branch', '3. Add/Remove customers from Branch ', '4. View transaction details',
+    branches_list = ['1. View all Branches','2. Create a new branch', '3. Add/Remove customers from Branch ', '4. View Transaction details',
                       '#. Return to Previous Menu', ]
     for counter in range(5):
         clear_console()
@@ -59,7 +59,12 @@ def branches():
             city = input('City: ')
             state = input('State: ')
             country = input('Country: ')
-            zip_code = input('Zip Code: ')
+            for counter in range(5):
+                zip_code = input('Zip Code: ')
+                if zip_code.isnumeric() and len(zip_code) == 6:
+                    break
+                else:
+                    print('\nInvalid Zip Code\n')
             register_branch(branch_name , building , street_name , locality , landmark , city , state , country , zip_code)
             connection = connect('db.sqlite')
             crsr = connection.cursor()
@@ -71,14 +76,14 @@ def branches():
             break
 
         elif inp == '3':
-            branches_list = ['1. Add a Customer', '2. Remove a Customer',
+            branch_list = ['1. Add a Customer', '2. Remove a Customer',
                              '#. Return to Previous Menu' ]
             clear_console()
             print_name()
             print(Figlet('small').renderText('Associated Customers'))
             view_all_branches()
             retrieve_all_accounts()
-            for i in branches_list:
+            for i in branch_list:
                 print('\t' + i)
             print()
             inp_1 = input('Command: ')
@@ -95,6 +100,7 @@ def branches():
                     num = id_account()
                     branch_code = input("Branch Code: ")
                     add_customer(customer_id, branch_code, num)
+                    pause()
                 else:
                     print('Invalid entry!')
                     break

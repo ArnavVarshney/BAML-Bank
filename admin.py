@@ -39,7 +39,6 @@ def intro():
                 customers()
             elif inp == '4':
                 branches()
-                print('Coming soon!')
             elif inp == '5':
                 about()
             elif inp == '6':

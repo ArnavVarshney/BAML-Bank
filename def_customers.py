@@ -109,6 +109,7 @@ def register_new_customer():
         phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
         if validate_phone(phone_number):
             otp = generate_otp(phone_number)
+            print(otp)
             flag = False
             while not flag:
                 otp_input = input(f'OTP sent on {phone_number}: ')
@@ -139,7 +140,8 @@ def register_new_customer():
             print('\nPasswords don\'t match\n')
         else:
             break
-    customer_id = str(get_id_customer(user_name)[12])
+    temp = get_id_customer(user_name)
+    customer_id = str(temp[12])
     send_message(
         f'Greetings from Bank SPAAM!\nWelcome {first_name} {last_name}!\nYour Customer ID '
         f'{customer_id}.', phone_number)

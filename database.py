@@ -235,7 +235,7 @@ def retrieve_accounts_customer(customer_id):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute("SELECT * FROM transaction_log WHERE customer_id = ?", (customer_id,))
-    rows = crsr.fetchone()
+    rows = crsr.fetchall()
     connection.close()
     return rows
 
@@ -250,6 +250,7 @@ def retrieve_all_accounts():
         return rows
     else:
         return False
+
 
 def id_account():
     connection = connect('db.sqlite')
@@ -268,8 +269,8 @@ def id_account():
 def add_customer(customer_id, branch_code,num):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute('UPDATE transaction_log SET branch = ? ,account_number =?  WHERE customer_id = ?',
-        (branch_code, num, customer_id))
+    crsr.execute('INSERT into transaction_log(branch ,account_number ,customer_id) VALUES(?,?,?)',
+                 (branch_code,num,customer_id))
     connection.commit()
     crsr.execute('UPDATE customer SET branch = ? WHERE customer_id = ?',
         (branch_code, customer_id))
@@ -357,5 +358,3 @@ def deltable():
     crsr.execute("DROP TABLE branch")
     crsr.execute("DROP TABLE customer")
     connection.commit()
-
-
