@@ -344,11 +344,10 @@ def transfer(transfer, user_1, acc):
         crsr.execute('SELECT customer_id FROM transaction_log WHERE account_number = ?', acc)
         temp = crsr.fetchone()
         if temp is not None:
-            crsr.execute('SELECT balance FROM customer WHERE customer_id = ?', (temp,))
+            crsr.execute('SELECT balance FROM customer WHERE customer_id = ?', temp)
             if crsr.fetchone() is not None:
-                crsr.execute('SELECT user_name FROM customer WHERE customer_id = ?', (temp,))
+                crsr.execute('SELECT user_name FROM customer WHERE customer_id = ?', temp)
                 temp_2 = str((crsr.fetchone())[0])
-                print(temp_2)
                 deposit(transfer, temp_2)
                 transact(transfer, user_1)
             else:
