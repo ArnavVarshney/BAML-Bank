@@ -321,6 +321,13 @@ def transact(transact, user):
     crsr = connection.cursor()
     crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
     temp = crsr.fetchone()
+    crsr.execute("SELECT account_number FROM transaction_log WHERE customer_id = ?", (temp[12],))
+    temp_1 = (crsr.fetchone())[0]
+    crsr.execute(
+        "INSERT INTO transaction_log(customer_id, account_number, date , time , "
+        "branch , amount , opening_balance , "
+        "closing_balance , remarks ) VALUES(?,?,?,?,?,?,?,?,?)",
+                 (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], transact, temp[16], temp[16] + transact, 'Transact'))
     temp = temp[16]
     if temp is None or temp < transact:
         print("You do not have enough funds to complete your transaction")

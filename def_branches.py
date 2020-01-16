@@ -126,61 +126,82 @@ def branches():
             print()
             inp_1 = input('Command: ')
             if inp_1 == '1':
-                customer_id = input("Customer ID: ")
-                result = retrieve_accounts_customer(customer_id)
-                if len(result) != 0:
-                    print(
-                        165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
-                            'Customer ID',
-                            'Account Number',
-                            'Branch ID',
-                            'Date',
-                            'Time',
-                            'Amount',
-                            'Opening Balance',
-                            'Closing Balance',
-                            'Remarks'))
-                    for i in result:
-                        if i[2] is not None:
-                            print(
-                                165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
-                                    str(i[0]), str(i[1]),
-                                    str(i[4]), i[2],
-                                    i[3], str(i[5]),
-                                    str(i[6]), str(i[7]),
-                                    str(i[8])))
-                    print(165 * '-')
-                else:
-                    print('No records found!')
-                pause()
+                clear_console()
+                print_name()
+                print('\n'"Filter by:")
+                print(Figlet('small').renderText('Transaction Details'))
+                list_1 =['1. Date','2. View all Transactions']
+                for i in list_1:
+                    print('\t' + i)
+                print()
+                inp_2 = input("Command: ")
+                if inp_1 == '1':
+                    ''''''
+                if inp_2 == '2':
+                    customer_id = input("Customer ID: ")
+                    result = retrieve_accounts_customer(customer_id)
+                    if len(result) != 0:
+                        print(
+                            165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                'Customer ID',
+                                'Account Number',
+                                'Branch ID',
+                                'Date',
+                                'Time',
+                                'Amount',
+                                'Opening Balance',
+                                'Closing Balance',
+                                'Remarks'))
+                        for i in result:
+                            if i[2] is not None:
+                                print(
+                                    165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                        str(i[0]), str(i[1]),
+                                        str(i[4]), i[2],
+                                        i[3], str(i[5]),
+                                        str(i[6]), str(i[7]),
+                                        str(i[8])))
+                        print(165 * '-')
+                    else:
+                        print('No records found!')
+                    pause()
             elif inp_1 == '2':
+                clear_console()
+                print_name()
+                print('\n'"Filter by:")
+                print(Figlet('small').renderText('Transaction Details'))
+                list_1 = ['1. Date', '2. View all Transactions']
+                for i in list_1:
+                    print('\t' + i)
+                print()
+                inp_2 = input("Command: ")
                 branch_code = input("Branch ID: ")
                 result = retrieve_accounts(branch_code)
-                if len(result) != 0:
-                    print(
-                        165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
-                            'Customer ID',
-                            'Account Number',
-                            'Branch ID',
-                            'Date',
-                            'Time',
-                            'Amount',
-                            'Opening Balance',
-                            'Closing Balance',
-                            'Remarks'))
-                    for i in result:
-                        if i[2] is not None:
-                            print(
-                                165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
-                                    str(i[0]), str(i[1]),
-                                    str(i[4]), i[2],
-                                    i[3], str(i[5]),
-                                    str(i[6]), str(i[7]),
-                                    str(i[8])))
-                    print(165 * '-')
-                else:
-                    print('No records found!')
-                pause()
+                if inp_2 == '2':
+                    if len(result) != 0:
+                        print(
+                            165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                'Customer ID',
+                                'Account Number',
+                                'Branch ID',
+                                'Date',
+                                'Time',
+                                'Amount',
+                                'Opening Balance',
+                                'Closing Balance',
+                                'Remarks'))
+                        for i in result:
+                            if i[2] is not None:
+                                print(
+                                    165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                        str(i[0]), str(i[1]),
+                                        str(i[4]), i[2],
+                                        i[3], str(i[5]),
+                                        str(i[6]), str(i[7]),
+                                        str(i[8])))
+                        print(165 * '-')
+                    else:
+                        print('No records found!')
                 pause()
             elif inp == '#':
                 break
