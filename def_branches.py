@@ -135,7 +135,7 @@ def branches():
                     print('\t' + i)
                 print()
                 inp_2 = input("Command: ")
-                if inp_1 == '1':
+                if inp_2 == '1':
                     ''''''
                 if inp_2 == '2':
                     customer_id = input("Customer ID: ")

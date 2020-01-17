@@ -344,10 +344,9 @@ def deposit(deposit, user):
 
     temp_2 = temp[16]
     crsr.execute(
-        "UPDATE account SET balance = ? WHERE customer_id = ?",
-        (temp_2 + deposit, temp[12])
+        "UPDATE account SET balance = ? WHERE account_number = ?",
+        (temp_2 + deposit, temp_1)
     )
-
     temp_2 = temp_2 + deposit
     crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
                  (temp_2, user))
