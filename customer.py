@@ -1,19 +1,16 @@
-import os
-
-from pyfiglet import Figlet
-from termcolor import colored
-
-from def_customers import *
 from database import *
-from utility import clear_console, print_name, get_current_time, pause, about
+from def_customers import *
+from utility import clear_console, print_name, get_current_time, pause
+
 
 def intro():
     username = os.getenv('loggedin')
     try:
-        main_menu = ['1. Deposit', '2. Transact', '3. Transfer to another account', '4. View your Balance/Transaction details', '5. Logout',
+        main_menu = ['1. Deposit', '2. Transact', '3. Transfer to another account',
+                     '4. View your Balance/Transaction details', '5. Logout',
                      'Press Ctrl + C to Force Exit']
         login_time = get_current_time()
-        for counter in range(20):
+        while True:
             clear_console()
             print_name()
             print(Figlet('small').renderText('Customer Menu'))

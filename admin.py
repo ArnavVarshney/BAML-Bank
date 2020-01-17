@@ -5,9 +5,9 @@ from termcolor import colored
 
 import main
 from database import retrieve_employee
+from def_branches import branches
 from def_customers import customers
 from def_employees import employees
-from def_branches import branches
 from utility import clear_console, print_name, get_current_time, pause, about
 
 
@@ -19,7 +19,7 @@ def intro():
                      '7. Exit',
                      'Press Ctrl + C to Force Exit']
         login_time = get_current_time()
-        for counter in range(5):
+        while True:
             clear_console()
             print_name()
             print(Figlet('small').renderText('Admin Menu'))

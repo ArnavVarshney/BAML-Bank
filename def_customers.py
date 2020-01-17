@@ -22,7 +22,7 @@ def view_all_customers():
             'Last Name',
             'Phone Number',
             'Email ID'))
-    print(112 * '-')
+    print(159 * '-')
     all_customers = retrieve_all_customers()
     if all_customers:
         for i in all_customers:
@@ -41,7 +41,7 @@ def view_customer_info():
     clear_console()
     print_name()
     print(Figlet('small').renderText('Customer Info'))
-    for counter in range(5):
+    while True:
         customer_user_name = input('Customer Username: ')
         cust = retrieve_customer(customer_user_name)
         if cust:
@@ -74,7 +74,7 @@ def register_new_customer():
     print(Figlet('small').renderText('Register Customer'))
     first_name = input('First Name: ')
     last_name = input('Last Name: ')
-    for counter in range(5):
+    while True:
         date_of_birth = input('Date of Birth (DD/MM/YYYY): ')
         try:
             day, month, year = date_of_birth.split('/')
@@ -86,7 +86,7 @@ def register_new_customer():
                 print('\nMinimum age should be 16 years!\n')
         except ValueError:
             print('\nInvalid value!\n')
-    for counter in range(5):
+    while True:
         gender = input('Gender (M/F): ')
         if gender in ['M', 'F']:
             break
@@ -99,13 +99,13 @@ def register_new_customer():
     city = input('City: ')
     state = input('State: ')
     country = input('Country: ')
-    for counter in range(5):
+    while True:
         zip_code = input('Zip Code: ')
         if zip_code.isnumeric() and len(zip_code) == 6:
             break
         else:
             print('\nInvalid Zip Code\n')
-    for counter in range(5):
+    while True:
         phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
         if validate_phone(phone_number):
             otp = generate_otp(phone_number)
@@ -119,19 +119,19 @@ def register_new_customer():
                 break
         else:
             print('\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
-    for counter in range(5):
+    while True:
         email = input('Email: ')
         if validate_email(email):
             break
         else:
             print('\nInvalid Email ID\n')
-    for counter in range(5):
+    while True:
         user_name = input('Username: ')
         if retrieve_customer(user_name):
             print('\nUsername already in use!\n')
         else:
             break
-    for counter in range(5):
+    while True:
         password = getpass.getpass()
         re_password = getpass.getpass(prompt='Re-enter Password: ')
         if len(password) == 0:
@@ -162,7 +162,7 @@ def modify_customer():
     print()
     inp1 = input('Command: ')
     if inp1 == '1':
-        for counter in range(5):
+        while True:
             clear_console()
             print_name()
             print(Figlet('small').renderText('Delete Customer'))
@@ -176,7 +176,7 @@ def modify_customer():
                 print('Customer Not Found!')
                 pause()
     elif inp1 == '2':
-        for counter in range(5):
+        while True:
             clear_console()
             print_name()
             print(Figlet('small').renderText('Edit Customer'))
@@ -231,7 +231,7 @@ def modify_customer():
                     update_customer('state', state, customer_user_name)
                     country = input('Country: ')
                     update_customer('country', country, customer_user_name)
-                    for counter in range(5):
+                    while True:
                         zip_code = input('Zip Code: ')
                         if zip_code.isnumeric() and len(zip_code) == 6:
                             update_customer('zip_code', zip_code, customer_user_name)
@@ -246,7 +246,7 @@ def modify_customer():
                     clear_console()
                     print_name()
                     print(Figlet('small').renderText('Edit Customer'))
-                    for counter in range(5):
+                    while True:
                         phone_number = input('New Phone Number (+<Country Code><Phone Number>): ')
                         if validate_phone(phone_number):
                             otp = generate_otp(phone_number)
@@ -269,7 +269,7 @@ def modify_customer():
                     clear_console()
                     print_name()
                     print(Figlet('small').renderText('Edit Customer'))
-                    for counter in range(5):
+                    while True:
                         email = input('Email: ')
                         if validate_email(email):
                             update_customer('email_id', email, customer_user_name)
@@ -291,7 +291,7 @@ def modify_customer():
 def customers():
     customers_list = ['1. View All Customers', '2. View Customer Info', '3. Register New Customer',
                       '4. Modify Customer', '#. Return to Previous Menu']
-    for counter in range(5):
+    while True:
         clear_console()
         print_name()
         print(Figlet('small').renderText('Customers'))
