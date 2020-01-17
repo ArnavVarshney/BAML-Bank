@@ -11,7 +11,7 @@ from utility import print_name, clear_console, pause, about
 sql_setup()
 # Demo Data
 
-'''try:
+try:
     register_employee('admin', 'Arnav', 'Varshney', 'admin', 0, 1, '29/12/2003', 'M', '27', 'Punggol Field Walk',
                       'Punggol', '', 'Singapore', 'Singapore', 'Singapore', '828649', '+919662364695',
                       'varshney.arnav@gmail.com')
@@ -29,14 +29,14 @@ try:
                       '29/12/2003', 'M', 0)
 except:
     print('Couldn\'t register customer. Check if value already exists!')
-'''
+
 os.environ['loggedin'] = ''
 
 
 def intro():
     main_menu = ['1. Login', '2. About Us', '3. Exit']
     try:
-        for counter in range(5):
+        while True:
             clear_console()
             print_name()
             print(Figlet('small').renderText('Welcome'))

@@ -35,7 +35,7 @@ def view_all_branches():
 def branches():
     branches_list = ['1. View all Branches','2. Create a new branch', '3. Add/Remove customers from Branch ', '4. View Transaction details',
                       '#. Return to Previous Menu', ]
-    for counter in range(5):
+    while True:
         clear_console()
         print_name()
         print(Figlet('small').renderText('Branches'))
@@ -59,7 +59,7 @@ def branches():
             city = input('City: ')
             state = input('State: ')
             country = input('Country: ')
-            for counter in range(5):
+            while True:
                 zip_code = input('Zip Code: ')
                 if zip_code.isnumeric() and len(zip_code) == 6:
                     break

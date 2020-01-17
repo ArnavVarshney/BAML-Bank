@@ -36,7 +36,7 @@ def view_employee_info():
     clear_console()
     print_name()
     print(Figlet('small').renderText('Employee Info'))
-    for counter in range(5):
+    while True:
         employee_user_name = input('Employee Username: ')
         emp = retrieve_employee(employee_user_name)
         if emp:
@@ -67,7 +67,7 @@ def register_new_employee():
     clear_console()
     print_name()
     print(Figlet('small').renderText('Register Employee'))
-    for counter in range(5):
+    while True:
         user_name = input('Username: ')
         if retrieve_employee(user_name):
             print('\nUsername already in use!\n')
@@ -75,7 +75,7 @@ def register_new_employee():
             break
     first_name = input('First Name: ')
     last_name = input('Last Name: ')
-    for counter in range(5):
+    while True:
         date_of_birth = input('Date of Birth (DD/MM/YYYY): ')
         try:
             day, month, year = date_of_birth.split('/')
@@ -87,19 +87,19 @@ def register_new_employee():
                 print('\nMinimum age should be 16 years!\n')
         except ValueError:
             print('\nInvalid value!\n')
-    for counter in range(5):
+    while True:
         gender = input('Gender (M/F): ')
         if gender in ['M', 'F']:
             break
         else:
             print('\nInvalid gender value!\n')
-    for counter in range(5):
+    while True:
         password = input('Password: ')
         if len(password) == 0:
             print('\nInvalid password!\n')
         else:
             break
-    for counter in range(5):
+    while True:
         role = input('Role [1. Employee, 2. Customer]: ')
         if role not in ['0', '1', '2']:
             print('\nInvalid role!\n')
@@ -112,13 +112,13 @@ def register_new_employee():
     city = input('City: ')
     state = input('State: ')
     country = input('Country: ')
-    for counter in range(5):
+    while True:
         zip_code = input('Zip Code: ')
         if zip_code.isnumeric() and len(zip_code) == 6:
             break
         else:
             print('\nInvalid Zip Code\n')
-    for counter in range(5):
+    while True:
         phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
         if validate_phone(phone_number):
             otp = generate_otp(phone_number)
@@ -131,7 +131,7 @@ def register_new_employee():
                 break
         else:
             print('\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
-    for counter in range(5):
+    while True:
         email = input('Email: ')
         if validate_email(email):
             break
@@ -154,7 +154,7 @@ def modify_employee():
     print()
     inp1 = input('Command: ')
     if inp1 == '1':
-        for counter in range(5):
+        while True:
             employee_user_name = input('Employee Username: ')
             if retrieve_employee(employee_user_name):
                 ch = input('Confirm? (Y/N): ')
@@ -164,7 +164,7 @@ def modify_employee():
             else:
                 print('Employee Not Found!')
     elif inp1 == '2':
-        for counter in range(5):
+        while True:
             employee_user_name = input('Employee Username: ')
             if retrieve_employee(employee_user_name):
                 ch = input('Confirm? (Y/N): ')
@@ -179,7 +179,7 @@ def employees():
     employees_list = ['1. View All Employees', '2. View Employee Info', '3. Register New Employee',
                       '4. Modify Employee',
                       '#. Return to Previous Menu']
-    for counter in range(5):
+    while True:
         clear_console()
         print_name()
         print(Figlet('small').renderText('Employees'))
