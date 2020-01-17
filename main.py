@@ -5,7 +5,7 @@ from pyfiglet import Figlet
 import admin
 import customer
 from authentication import existing_user
-from database import sql_setup, register_employee, register_branch, register_customer
+from database import sql_setup, register_employee, register_branch, register_customer, register_account
 from utility import print_name, clear_console, pause, about
 
 sql_setup()
@@ -29,6 +29,9 @@ try:
                       '29/12/2003', 'M', 0)
 except:
     print('Couldn\'t register customer. Check if value already exists!')
+
+register_account(1,1)
+
 
 os.environ['loggedin'] = ''
 
