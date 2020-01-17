@@ -5,6 +5,9 @@ from utility import clear_console, print_name, get_current_time, pause
 
 def intro():
     username = os.getenv('loggedin')
+    all_accounts = list_all_account(username)
+    for i in all_accounts:
+        print(i[1])
     try:
         main_menu = ['1. Deposit', '2. Transact', '3. Transfer to another account',
                      '4. View your Balance/Transaction details', '5. Register a new account', '6. Logout',

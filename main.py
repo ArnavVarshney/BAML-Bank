@@ -30,7 +30,6 @@ try:
 except:
     print('Couldn\'t register customer. Check if value already exists!')
 
-register_account(1,1)
 
 
 os.environ['loggedin'] = ''

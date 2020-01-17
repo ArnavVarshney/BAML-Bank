@@ -355,6 +355,18 @@ def deposit(deposit, user):
     connection.close()
 
 
+def list_all_account(username):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (username,))
+    temp = crsr.fetchone()
+    temp = temp[16]
+    crsr.execute('SELECT * FROM account WHERE customer_id = ?', (temp,))
+    temp = crsr.fetchall()
+    connection.close()
+    return temp
+
+
 def transact(transact, user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
