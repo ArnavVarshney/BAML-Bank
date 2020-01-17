@@ -41,7 +41,7 @@ def sql_setup():
             "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),"
             "    country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), "
             "customer_id INTEGER primary key AUTOINCREMENT, user_name varchar(255), password varchar(255), branch int, balance int, "
-            "gender varchar(1), date_of_birth varchar(10))")
+            "gender varchar(1), date_of_birth varchar(10)")
     except sqlite3.OperationalError:
         print('Table customer could not be created')
 
@@ -284,9 +284,6 @@ def id_account():
 def add_customer(customer_id, branch_code, num):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute('INSERT into transaction_log(branch ,account_number ,customer_id) VALUES(?,?,?)',
-                 (branch_code, num, customer_id))
-    connection.commit()
     crsr.execute('INSERT into account(branch ,account_number ,customer_id) VALUES(?,?,?)',
                  (branch_code, num, customer_id))
     connection.commit()
@@ -295,6 +292,7 @@ def add_customer(customer_id, branch_code, num):
     print("Your Account Number: " + str(num))
     connection.commit()
     connection.close()
+
 
 def retrieve_all_accounts_customer(customer_id):
     connection = connect('db.sqlite')
@@ -306,6 +304,7 @@ def retrieve_all_accounts_customer(customer_id):
     connection.close()
     return len(rows)
 
+
 def register_account(customer_id, branch_code):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
@@ -314,6 +313,7 @@ def register_account(customer_id, branch_code):
                       str(branch_code) + str(retrieve_all_accounts_customer(customer_id)+1)
     crsr.execute('INSERT into account(branch ,account_number ,customer_id, balance) VALUES(?,?,?,?)',
                  (branch_code, account_number, customer_id, 0))
+    print("Your account number is " + account_number)
     connection.commit()
     connection.close()
 
@@ -358,9 +358,9 @@ def deposit(deposit, user):
 def transact(transact, user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute('SELECT balance FROM customer WHERE user_name = ?', (user,))
-    temp = (crsr.fetchone())[0]
-    crsr.execute("SELECT account_number FROM account WHERE customer_id = ?", (temp,))
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
+    temp = crsr.fetchone()
+    crsr.execute("SELECT account_number FROM account WHERE customer_id = ?", (temp[12],))
     temp_1 = (crsr.fetchone())[0]
     crsr.execute(
         "INSERT INTO transaction_log(customer_id, account_number, date , time , "
@@ -370,7 +370,7 @@ def transact(transact, user):
          'Transact'))
     crsr.execute(
         "UPDATE account SET balance = ? WHERE customer_id = ?",
-        (temp + transact, temp[12])
+        (temp[16] + transact, temp[12])
     )
     temp = temp[16]
     if temp is None or temp < transact:

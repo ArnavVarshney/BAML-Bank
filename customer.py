@@ -135,7 +135,11 @@ def intro():
                 result = str(view_balance(username))
                 print("Your account balance is: $ " + result)
             elif inp == '5':
-                print("coming SOOn")
+                connection = connect('db.sqlite')
+                crsr = connection.cursor()
+                crsr.execute('SELECT * FROM customer WHERE user_name = ?', (username,))
+                temp = crsr.fetchone()
+                register_account(temp[12], temp[15])
             elif inp == '6':
                 print('Goodbye!\nLogout time: ', get_current_time())
                 break
