@@ -2,12 +2,18 @@ from database import *
 from def_customers import *
 from utility import clear_console, print_name, get_current_time, pause
 
-
 def intro():
+    c = 1
     username = os.getenv('loggedin')
     all_accounts = list_all_account(username)
-    for i in all_accounts:
-        print(i[1])
+    while c == 1:
+        for i in all_accounts:
+            print(i[1])
+        choice = input("Which account would you like to login to? ")
+        for i in all_accounts:
+            if choice == i[1]:
+                account = choice
+                c = 0
     try:
         main_menu = ['1. Deposit', '2. Transact', '3. Transfer to another account',
                      '4. View your Balance/Transaction details', '5. Register a new account', '6. Logout',
@@ -19,6 +25,7 @@ def intro():
             print(Figlet('small').renderText('Customer Menu'))
             print(colored('Hello ' + retrieve_customer(username)[0], 'blue'))
             print('Login time: ' + login_time + '\n')
+            print("Account number:" + account)
             print('Choose an option: \n')
             for i in main_menu:
                 print('\t' + i)

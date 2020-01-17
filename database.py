@@ -48,7 +48,7 @@ def sql_setup():
     try:
         crsr.execute(
             "CREATE TABLE IF NOT EXISTS account(balance int, account_number varchar(10), "
-            "branch int, customer_id int) ")
+            "branch int, customer_id int)")
     except sqlite3.OperationalError:
         print('Table account could not be created')
 
