@@ -19,7 +19,7 @@ def sql_setup():
     crsr = connection.cursor()
 
     try:
-        crsr.execute("CREATE TABLE IF NOT EXISTS transaction_log(customer_id INTEGER, account_number int,"
+        crsr.execute("CREATE TABLE IF NOT EXISTS transaction_log(customer_id INTEGER, account_number varchar(10),"
                      "    date varchar(10), time varchar(8), branch int, amount int, opening_balance int, "
                      "closing_balance int, remarks varchar(255), first_name varchar(20), last_name varchar(20))")
     except sqlite3.OperationalError:
@@ -43,6 +43,13 @@ def sql_setup():
             "gender varchar(1), date_of_birth varchar(10))")
     except sqlite3.OperationalError:
         print('Table customer could not be created')
+
+    try:
+        crsr.execute(
+            "CREATE TABLE IF NOT EXISTS account(balance int, account_number varchar(10), "
+            "branch int, customer_id int ")
+    except sqlite3.OperationalError:
+        print('Table account could not be created')
 
     try:
         crsr.execute(
@@ -297,7 +304,7 @@ def deposit(deposit, user):
     crsr = connection.cursor()
     crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
     temp = crsr.fetchone()
-    crsr.execute("SELECT account_number FROM transaction_log WHERE customer_id = ?", (temp[12],))
+    crsr.execute("SELECT account_number FROM account WHERE customer_id = ?", (temp[12],))
     temp_1 = (crsr.fetchone())[0]
     crsr.execute(
         "INSERT INTO transaction_log(customer_id, account_number, date , time , "
