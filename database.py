@@ -1,7 +1,8 @@
-import sqlite3  # sqlite3 - provides functionality to deal with SQL database
 import random
+import sqlite3  # sqlite3 - provides functionality to deal with SQL database
 
 from utility import *
+
 
 def connect(db_file):
     try:
@@ -85,6 +86,10 @@ def retrieve_employee(user):
     rows = crsr.fetchone()
     connection.close()
     if rows:
+        '''employee_info = {'first_name':rows[0], 'last_name':rows[1], 'building':rows[2], 'street_name':rows[3], 'locality':rows[4], 'landmark':rows[5], 'city':rows[6],
+        'state':rows[7], 'country':rows[8], 'zip_code':rows[9], 'phone_number':rows[10], 'email_id':rows[11], 'customer_id':rows[12], 'user_name':rows[13], 'password':rows[14],
+        'branch':rows[15], 'balance':rows[16], 'gender':rows[17], 'date_of_birth':rows[18]}
+        return employee_info'''
         return rows
     else:
         return False
@@ -266,7 +271,7 @@ def id_account():
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     while True:
-        num = random.randint(1000000000,9999999999)
+        num = random.randint(1000000000, 9999999999)
         crsr.execute("SELECT * FROM transaction_log WHERE account_number = ?", (num,))
         rows = crsr.fetchall()
         connection.close()
@@ -276,14 +281,17 @@ def id_account():
             return False
 
 
-def add_customer(customer_id, branch_code,num):
+def add_customer(customer_id, branch_code, num):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute('INSERT into transaction_log(branch ,account_number ,customer_id) VALUES(?,?,?)',
-                 (branch_code,num,customer_id))
+                 (branch_code, num, customer_id))
+    connection.commit()
+    crsr.execute('INSERT into account(branch ,account_number ,customer_id) VALUES(?,?,?)',
+                 (branch_code, num, customer_id))
     connection.commit()
     crsr.execute('UPDATE customer SET branch = ? WHERE customer_id = ?',
-        (branch_code, customer_id))
+                 (branch_code, customer_id))
     print("Your Account Number: " + str(num))
     connection.commit()
     connection.close()
@@ -310,8 +318,14 @@ def deposit(deposit, user):
         "INSERT INTO transaction_log(customer_id, account_number, date , time , "
         "branch , amount , opening_balance , "
         "closing_balance , remarks ) VALUES(?,?,?,?,?,?,?,?,?)",
-                 (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], deposit, temp[16], temp[16] + deposit, 'Deposit'))
+        (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], deposit, temp[16], temp[16] + deposit,
+         'Deposit'))
+
     temp = temp[16]
+    crsr.execute(
+        "UPDATE account SET balance = ? WHERE customer_id = ?"
+        (temp + deposit, temp[12])
+    )
     if temp is None:
         crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
                      (deposit, user))
@@ -328,13 +342,18 @@ def transact(transact, user):
     crsr = connection.cursor()
     crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
     temp = crsr.fetchone()
-    crsr.execute("SELECT account_number FROM transaction_log WHERE customer_id = ?", (temp[12],))
+    crsr.execute("SELECT account_number FROM account WHERE customer_id = ?", (temp[12],))
     temp_1 = (crsr.fetchone())[0]
     crsr.execute(
         "INSERT INTO transaction_log(customer_id, account_number, date , time , "
         "branch , amount , opening_balance , "
         "closing_balance , remarks ) VALUES(?,?,?,?,?,?,?,?,?)",
-                 (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], transact, temp[16], temp[16] + transact, 'Transact'))
+        (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], transact, temp[16], temp[16] + transact,
+         'Transact'))
+    crsr.execute(
+        "UPDATE account SET balance = ? WHERE customer_id = ?"
+        (temp + deposit, temp[12])
+    )
     temp = temp[16]
     if temp is None or temp < transact:
         print("You do not have enough funds to complete your transaction")

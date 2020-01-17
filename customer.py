@@ -7,7 +7,7 @@ def intro():
     username = os.getenv('loggedin')
     try:
         main_menu = ['1. Deposit', '2. Transact', '3. Transfer to another account',
-                     '4. View your Balance/Transaction details', '5. Logout',
+                     '4. View your Balance/Transaction details', '5. Register a new account', '6. Logout',
                      'Press Ctrl + C to Force Exit']
         login_time = get_current_time()
         while True:
@@ -135,6 +135,8 @@ def intro():
                 result = str(view_balance(username))
                 print("Your account balance is: $ " + result)
             elif inp == '5':
+                print("coming SOOn")
+            elif inp == '6':
                 print('Goodbye!\nLogout time: ', get_current_time())
                 break
             else:
