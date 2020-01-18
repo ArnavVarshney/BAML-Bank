@@ -97,9 +97,12 @@ def branches():
                 print(result)
                 connection.close()
                 if result:
-                    num = id_account()
-                    branch_code = input("Branch Code: ")
-                    add_customer(customer_id, branch_code, num)
+                    connection = connect('db.sqlite')
+                    crsr = connection.cursor()
+                    crsr.execute('SELECT * FROM customer WHERE customer_id = ?', (customer_id,))
+                    temp = crsr.fetchone()
+                    num = register_account(temp[12], temp[15])
+                    add_customer(customer_id, temp[15], num)
                     pause()
                 else:
                     print('Invalid entry!')

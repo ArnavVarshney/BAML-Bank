@@ -316,6 +316,7 @@ def register_account(customer_id, branch_code):
     print("Your account number is " + account_number)
     connection.commit()
     connection.close()
+    return account_number
 
 
 def remove_customer(customer_id):
