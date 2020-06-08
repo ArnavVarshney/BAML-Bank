@@ -41,7 +41,8 @@ def view_customer_info():
     clear_console()
     print_name()
     print(Figlet('small').renderText('Customer Info'))
-    while True:
+    count = 0
+    while count < 3:
         customer_user_name = input('Customer Username: ')
         cust = retrieve_customer(customer_user_name)
         if cust:
@@ -66,6 +67,7 @@ def view_customer_info():
             break
         else:
             print('Customer Not Found!')
+            count = count + 1
 
 
 def register_new_customer():
@@ -105,20 +107,7 @@ def register_new_customer():
             break
         else:
             print('\nInvalid Zip Code\n')
-    while True:
-        phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
-        if validate_phone(phone_number):
-            otp = generate_otp(phone_number)
-            print(otp)
-            flag = False
-            while not flag:
-                otp_input = input(f'OTP sent on {phone_number}: ')
-                if str(otp_input) == str(otp):
-                    flag = True
-            if flag:
-                break
-        else:
-            print('\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
+    phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
     while True:
         email = input('Email: ')
         if validate_email(email):
@@ -144,9 +133,6 @@ def register_new_customer():
     register_customer(first_name, last_name, building, street_name, locality, landmark, city, state, country,
                       zip_code, phone_number, email, user_name, password, 1, date_of_birth, gender, 0)
     customer_id = (get_id_customer(user_name))[12]
-    send_message(
-        f'Greetings from Bank SPAAM!\nWelcome {first_name} {last_name}!\nYour Customer ID '
-        f'{customer_id}.', phone_number)
     print(customer_id)
     print('Customer registered successfully!\nCustomer ID: ' + str(customer_id))
 

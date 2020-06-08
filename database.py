@@ -41,7 +41,7 @@ def sql_setup():
             "street_name varchar(255), locality varchar(255), landmark varchar(255), city varchar(255), state varchar(255),"
             "    country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255), "
             "customer_id INTEGER primary key AUTOINCREMENT, user_name varchar(255), password varchar(255), branch int, balance int, "
-            "gender varchar(1), date_of_birth varchar(10)")
+            "gender varchar(1), date_of_birth varchar(10))")
     except sqlite3.OperationalError:
         print('Table customer could not be created')
 
