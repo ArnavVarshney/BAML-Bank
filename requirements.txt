@@ -1,4 +1,4 @@
-dateutil
+python-dateutil
 twilio
 phonenumbers
 pyIsEmail

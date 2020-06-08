@@ -4,18 +4,19 @@ from utility import clear_console, print_name, get_current_time, pause
 
 
 def intro():
-    c = 1
     username = os.getenv('loggedin')
     all_accounts = list_all_account(username)
-    if all_accounts != []:
+    account = None
+    flag = True
+    if all_accounts:
         for i in all_accounts:
             print(i[1])
-        while c == 1:
+        while flag:
             choice = input("Which account would you like to login to? ")
             for i in all_accounts:
                 if choice == i[1]:
                     account = choice
-                    c = 0
+                    flag = False
                     break
                 else:
                     print("Enter a valid account number")
@@ -181,13 +182,9 @@ def intro():
                             print('No records found!')
                     elif choice == '2':
                         result = str(view_balance(username))
-                        print("Your account balance is: $ " + result)
+                        print("Your account balance is: $" + result)
                 elif inp == '5':
-                    connection = connect('db.sqlite')
-                    crsr = connection.cursor()
-                    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (username,))
-                    temp = crsr.fetchone()
-                    register_account(temp[12], temp[15])
+                    register_account_1(username)
                 elif inp == '6':
                     print('Goodbye!\nLogout time: ', get_current_time())
                     break

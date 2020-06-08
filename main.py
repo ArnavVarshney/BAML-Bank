@@ -4,32 +4,12 @@ from pyfiglet import Figlet
 
 import admin
 import customer
+import employee
 from authentication import existing_user
+from database import sql_setup
 from utility import print_name, clear_console, pause, about
-'''
+
 sql_setup()
-# Demo Data
-
-try:
-    register_employee('admin', 'Arnav', 'Varshney', 'admin', 0, 1, '29/12/2003', 'M', '27', 'Punggol Field Walk',
-                      'Punggol', '', 'Singapore', 'Singapore', 'Singapore', '828649', '+919662364695',
-                      'varshney.arnav@gmail.com')
-except:
-    print('Couldn\'t register admin. Check if value already exists!')
-
-try:
-    register_branch('HQ', '27', 'Punggol Field Walk', 'Punggol', '', 'Singapore', 'Singapore', 'Singapore', '828649')
-except:
-    print('Couldn\'t register HQ. Check if value already exists!')
-
-try:
-    register_customer('Arnav', 'HQ', '27', 'Punggol Field Walk', 'Punggol', '', 'Singapore', 'Singapore', 'Singapore',
-                      '828649', '+919662364695', 'varshney.arnav@gmail.com', 'arnavvarshney', 'arnav29', 1,
-                      '29/12/2003', 'M', 0)
-except:
-    print('Couldn\'t register customer. Check if value already exists!')
-
-'''
 
 os.environ['loggedin'] = ''
 
@@ -54,7 +34,9 @@ def intro():
                     os.environ['loggedin'] = username
                     if role == '0':
                         admin.intro()
-                    if role == '2':
+                    elif role == '1':
+                        employee.intro()
+                    elif role == '2':
                         customer.intro()
                 else:
                     print('Invalid credentials!')

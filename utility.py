@@ -1,13 +1,11 @@
 import os  # os - for providing PAUSE functionality
 import platform  # platform - for determining the execution platform
 from datetime import datetime  # datetime - for getting current system date and time
-from random import randint  # randint - for generating OTP
 from time import sleep
 
 import phonenumbers
 from pyisemail import is_email
 from termcolor import colored
-from twilio.rest import Client # Client - for sending messages
 
 
 # Utility Functions
@@ -67,7 +65,6 @@ def clear_console():
         os.system('cls')
     else:
         os.system('clear')
-
 
 
 def validate_phone(phone_str):

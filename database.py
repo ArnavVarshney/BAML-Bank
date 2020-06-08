@@ -61,6 +61,15 @@ def sql_setup():
             "    country varchar(255), zip_code varchar(6), phone_number varchar(15), email_id varchar(255))")
     except sqlite3.OperationalError:
         print('Table employee could not be created')
+
+    # Demo Data
+
+    try:
+        register_employee('admin', 'Arnav', 'Varshney', 'admin', 0, 1, '29/12/2003', 'M', '27', 'Punggol Field Walk',
+                          'Punggol', '', 'Singapore', 'Singapore', 'Singapore', '828649', '+919662364695',
+                          'varshney.arnav@gmail.com')
+    except:
+        print('Couldn\'t register admin. Check if value already exists!')
     connection.commit()
     connection.close()
 
@@ -237,6 +246,14 @@ def delete_branch(user_name):
     connection.close()
 
 
+def register_account_1(username):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (username,))
+    temp = crsr.fetchone()
+    register_account(temp[12], temp[15])
+
+
 def retrieve_accounts(branch_code):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
@@ -304,6 +321,7 @@ def retrieve_all_accounts_customer(customer_id):
     connection.close()
     return len(rows)
 
+
 def retrieve_all_accounts_branch(branch):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
@@ -319,8 +337,8 @@ def register_account(customer_id, branch_code):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     account_number = ""
-    account_number += '0'*(4-len(str(customer_id))) + str(customer_id) + '0'*(4-len(str(branch_code))) + \
-                      str(branch_code) + str(retrieve_all_accounts_customer(customer_id)+1)
+    account_number += '0' * (4 - len(str(customer_id))) + str(customer_id) + '0' * (4 - len(str(branch_code))) + \
+                      str(branch_code) + str(retrieve_all_accounts_customer(customer_id) + 1)
     crsr.execute('INSERT into account(branch ,account_number ,customer_id, balance) VALUES(?,?,?,?)',
                  (branch_code, account_number, customer_id, 0))
     print("Your account number is " + account_number)
@@ -337,7 +355,6 @@ def remove_customer(customer_id):
     crsr.execute("DELETE FROM transaction_log WHERE customer_id = ?", customer_id)
     connection.commit()
     connection.close()
-
 
 
 def list_all_account(username):
@@ -440,7 +457,7 @@ def view_balance(user_name):
     return temp[0]
 
 
-def deltable():
+def del_table():
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute("DROP TABLE transaction_log")
