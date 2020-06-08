@@ -304,6 +304,16 @@ def retrieve_all_accounts_customer(customer_id):
     connection.close()
     return len(rows)
 
+def retrieve_all_accounts_branch(branch):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    acc = "SELECT * FROM account WHERE branch = ?"
+    crsr.execute(acc, (branch,))
+    connection.commit()
+    rows = crsr.fetchall()
+    connection.close()
+    return rows
+
 
 def register_account(customer_id, branch_code):
     connection = connect('db.sqlite')
@@ -360,8 +370,8 @@ def list_all_account(username):
     crsr = connection.cursor()
     crsr.execute('SELECT * FROM customer WHERE user_name = ?', (username,))
     temp = crsr.fetchone()
-    temp = temp[16]
-    crsr.execute('SELECT * FROM account WHERE customer_id = ?', (temp,))
+    temp_1 = temp[12]
+    crsr.execute('SELECT * FROM account WHERE customer_id = ?', (temp_1,))
     temp = crsr.fetchall()
     connection.close()
     return temp

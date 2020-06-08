@@ -169,8 +169,6 @@ def modify_customer():
             customer_user_name = input('Customer Username: ')
             cust = retrieve_customer(customer_user_name)
             if cust:
-                phone_number = cust[10]
-                customer_id = cust[12]
                 modify_customer_list = ['1. First Name', '2. Last Name', '3. Address', '4. Phone Number',
                                         '5. Email', '#. Return to Previous Menu']
                 print('\nWhich parameter do you want to modify?')
@@ -185,9 +183,6 @@ def modify_customer():
                     print(Figlet('small').renderText('Edit Customer'))
                     first_name = input('New First Name: ')
                     update_customer('first_name', first_name, customer_user_name)
-                    send_message(
-                        f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
-                        f'successfully.', phone_number)
                     break
                 elif ch == '2':
                     clear_console()
@@ -195,9 +190,6 @@ def modify_customer():
                     print(Figlet('small').renderText('Edit Customer'))
                     last_name = input('New Last Name: ')
                     update_customer('last_name', last_name, customer_user_name)
-                    send_message(
-                        f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
-                        f'successfully.', phone_number)
                     break
                 elif ch == '3':
                     clear_console()
@@ -224,33 +216,13 @@ def modify_customer():
                             break
                         else:
                             print('\nInvalid Zip Code\n')
-                    send_message(
-                        f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
-                        f'successfully.', phone_number)
                     break
                 elif ch == '4':
                     clear_console()
                     print_name()
                     print(Figlet('small').renderText('Edit Customer'))
-                    while True:
-                        phone_number = input('New Phone Number (+<Country Code><Phone Number>): ')
-                        if validate_phone(phone_number):
-                            otp = generate_otp(phone_number)
-                            flag = False
-                            while not flag:
-                                otp_input = input(f'OTP sent on {phone_number}: ')
-                                if str(otp_input) == str(otp):
-                                    flag = True
-                            if flag:
-                                update_customer('phone_number', phone_number, customer_user_name)
-                                break
-                        else:
-                            print(
-                                '\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
-                    send_message(
-                        f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
-                        f'successfully.', phone_number)
-                    break
+                    phone_number = input('New Phone Number (+<Country Code><Phone Number>): ')
+                    update_customer('phone_number', phone_number, customer_user_name)
                 elif ch == '5':
                     clear_console()
                     print_name()
@@ -262,9 +234,6 @@ def modify_customer():
                             break
                         else:
                             print('\nInvalid Email ID\n')
-                    send_message(
-                        f'Greetings from Bank SPAAM!\nYour Customer ID {customer_id}.\nYour account has been modified '
-                        f'successfully.', phone_number)
                 elif ch == '#':
                     break
                 else:

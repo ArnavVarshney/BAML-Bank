@@ -31,6 +31,22 @@ def view_all_branches():
     else:
         print('No registered branches found!')
 
+def view_all_accounts(branch_code):
+    all_records = retrieve_all_accounts_branch(branch_code)
+    if all_records:
+        print(
+            40 * '-' + '\n' + '| {:^13s} | {:^15s} | '.format(
+                'Customer Id',
+                'Account Number'))
+
+        for i in all_records:
+            print(
+                40 * '-' + '\n' + '| {:^13s} | {:^15s} | '.format(
+                    str(i[3]), str(i[1])))
+        print(40 * '-')
+    else:
+        print('No registered accounts found!')
+
 
 def branches():
     branches_list = ['1. View all Branches','2. Create a new branch', '3. Add/Remove customers from Branch ', '4. View Transaction details',
@@ -83,6 +99,8 @@ def branches():
             print(Figlet('small').renderText('Associated Customers'))
             view_all_branches()
             retrieve_all_accounts()
+            branch_code = input("Branch code?")
+            view_all_accounts(branch_code)
             for i in branch_list:
                 print('\t' + i)
             print()
@@ -101,8 +119,7 @@ def branches():
                     crsr = connection.cursor()
                     crsr.execute('SELECT * FROM customer WHERE customer_id = ?', (customer_id,))
                     temp = crsr.fetchone()
-                    num = register_account(temp[12], temp[15])
-                    add_customer(customer_id, temp[15], num)
+                    num = register_account(temp[12], branch_code)
                     pause()
                 else:
                     print('Invalid entry!')
