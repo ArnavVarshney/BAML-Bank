@@ -1,10 +1,10 @@
 # BAML Bank Project
 
-#####About Us
+## About Us
 
+<img src='about.png'>
 
-
-#####Setup
+## Setup
 
 Download this repo as ZIP file and extract it.
 Install all requirements by running:
