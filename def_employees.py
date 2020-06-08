@@ -99,12 +99,6 @@ def register_new_employee():
             print('\nInvalid password!\n')
         else:
             break
-    while True:
-        role = input('Role [1. Employee, 2. Customer]: ')
-        if role not in ['0', '1', '2']:
-            print('\nInvalid role!\n')
-        else:
-            break
     building = input('Building: ')
     street_name = input('Street Name: ')
     locality = input('Locality: ')
@@ -130,7 +124,7 @@ def register_new_employee():
             break
         else:
             print('\nInvalid Email ID\n')
-    register_employee(user_name, first_name, last_name, password, role, 1, date_of_birth,
+    register_employee(user_name, first_name, last_name, password, 0, 1, date_of_birth,
                       gender, building, street_name, locality, landmark, city, state, country,
                       zip_code, phone_number, email)
     print('Employee registered successfully!\nEmployee Number: ' + str(retrieve_employee(user_name)[0]))
