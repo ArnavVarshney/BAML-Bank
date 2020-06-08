@@ -1,5 +1,6 @@
 from pyfiglet import Figlet
-
+import datetime
+from dateutil.relativedelta import *
 from database import *
 from utility import clear_console, print_name, pause
 
@@ -157,7 +158,40 @@ def branches():
                 print()
                 inp_2 = input("Command: ")
                 if inp_2 == '1':
-                    ''''''
+                    while True:
+                        date = input('Date (DD/MM/YYYY): ')
+                        try:
+                            day, month, year = date.split('/')
+                            d1 = datetime(int(year), int(month), int(day))
+                            break
+                        except ValueError:
+                            print('\nInvalid value!\n')
+                    result = retrieve_accounts_date(date)
+                    if len(result) != 0:
+                        print(
+                            165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                'Customer ID',
+                                'Account Number',
+                                'Branch ID',
+                                'Date',
+                                'Time',
+                                'Amount',
+                                'Opening Balance',
+                                'Closing Balance',
+                                'Remarks'))
+                        for i in result:
+                            if i[2] is not None:
+                                print(
+                                    165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                        str(i[0]), str(i[1]),
+                                        str(i[4]), i[2],
+                                        i[3], str(i[5]),
+                                        str(i[6]), str(i[7]),
+                                        str(i[8])))
+                        print(165 * '-')
+                    else:
+                        print('No records found!')
+                    pause()
                 if inp_2 == '2':
                     customer_id = input("Customer ID: ")
                     result = retrieve_accounts_customer(customer_id)
@@ -198,6 +232,41 @@ def branches():
                 inp_2 = input("Command: ")
                 branch_code = input("Branch ID: ")
                 result = retrieve_accounts(branch_code)
+                if inp_2 == '1':
+                    while True:
+                        date = input('Date (DD/MM/YYYY): ')
+                        try:
+                            day, month, year = date.split('/')
+                            d1 = datetime(int(year), int(month), int(day))
+                            break
+                        except ValueError:
+                            print('\nInvalid value!\n')
+                    result = retrieve_accounts_date(date)
+                    if len(result) != 0:
+                        print(
+                            165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                'Customer ID',
+                                'Account Number',
+                                'Branch ID',
+                                'Date',
+                                'Time',
+                                'Amount',
+                                'Opening Balance',
+                                'Closing Balance',
+                                'Remarks'))
+                        for i in result:
+                            if i[2] is not None:
+                                print(
+                                    165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
+                                        str(i[0]), str(i[1]),
+                                        str(i[4]), i[2],
+                                        i[3], str(i[5]),
+                                        str(i[6]), str(i[7]),
+                                        str(i[8])))
+                        print(165 * '-')
+                    else:
+                        print('No records found!')
+                    pause()
                 if inp_2 == '2':
                     if len(result) != 0:
                         print(

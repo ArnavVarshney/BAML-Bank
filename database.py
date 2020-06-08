@@ -271,6 +271,14 @@ def retrieve_accounts_customer(customer_id):
     connection.close()
     return rows
 
+def retrieve_accounts_date(date):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute("SELECT * FROM transaction_log WHERE date = ?", (date,))
+    rows = crsr.fetchall()
+    connection.close()
+    return rows
+
 
 def retrieve_all_accounts():
     connection = connect('db.sqlite')
