@@ -6,7 +6,7 @@
 
 ## Setup
 
-Download this repo as ZIP file and extract it.
+Download this repo as ZIP file and extract it or clone it.
 Install all requirements by running:
 
 `pip install -r requirements.txt`
