@@ -339,31 +339,6 @@ def remove_customer(customer_id):
     connection.close()
 
 
-def deposit(deposit, user):
-    connection = connect('db.sqlite')
-    crsr = connection.cursor()
-    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
-    temp = crsr.fetchone()
-    crsr.execute("SELECT account_number FROM account WHERE customer_id = ?", (temp[12],))
-    temp_1 = (crsr.fetchone())[0]
-    crsr.execute(
-        "INSERT INTO transaction_log(customer_id, account_number, date , time , "
-        "branch , amount , opening_balance , "
-        "closing_balance , remarks ) VALUES(?,?,?,?,?,?,?,?,?)",
-        (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], deposit, temp[16], temp[16] + deposit,
-         'Deposit'))
-
-    temp_2 = temp[16]
-    crsr.execute(
-        "UPDATE account SET balance = ? WHERE account_number = ?",
-        (temp_2 + deposit, temp_1)
-    )
-    temp_2 = temp_2 + deposit
-    crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
-                 (temp_2, user))
-    connection.commit()
-    connection.close()
-
 
 def list_all_account(username):
     connection = connect('db.sqlite')
@@ -388,19 +363,43 @@ def transact(transact, user):
         "INSERT INTO transaction_log(customer_id, account_number, date , time , "
         "branch , amount , opening_balance , "
         "closing_balance , remarks ) VALUES(?,?,?,?,?,?,?,?,?)",
-        (temp[16], temp_1, get_current_date(), get_current_time(), temp[15], transact, temp[16], temp[16] + transact,
+        (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], transact, temp[16], temp[16] - transact,
          'Transact'))
+
+    temp_2 = temp[16]
     crsr.execute(
-        "UPDATE account SET balance = ? WHERE customer_id = ?",
-        (temp[16] + transact, temp[12])
+        "UPDATE account SET balance = ? WHERE account_number = ?",
+        (temp_2 + transact, temp_1)
     )
-    temp = temp[16]
-    if temp is None or temp < transact:
-        print("You do not have enough funds to complete your transaction")
-    else:
-        temp = temp - transact
-        crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
-                     (temp, user))
+    temp_2 = temp_2 - transact
+    crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
+                 (temp_2, user))
+    connection.commit()
+    connection.close()
+
+
+def deposit(deposit, user):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
+    temp = crsr.fetchone()
+    crsr.execute("SELECT account_number FROM account WHERE customer_id = ?", (temp[12],))
+    temp_1 = (crsr.fetchone())[0]
+    crsr.execute(
+        "INSERT INTO transaction_log(customer_id, account_number, date , time , "
+        "branch , amount , opening_balance , "
+        "closing_balance , remarks ) VALUES(?,?,?,?,?,?,?,?,?)",
+        (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], deposit, temp[16], temp[16] + deposit,
+         'Deposit'))
+
+    temp_2 = temp[16]
+    crsr.execute(
+        "UPDATE account SET balance = ? WHERE account_number = ?",
+        (temp_2 + deposit, temp_1)
+    )
+    temp_2 = temp_2 + deposit
+    crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
+                 (temp_2, user))
     connection.commit()
     connection.close()
 

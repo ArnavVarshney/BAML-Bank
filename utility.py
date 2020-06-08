@@ -69,15 +69,6 @@ def clear_console():
         os.system('clear')
 
 
-def send_message(msg, to_number):
-    sid = 'ACa506f9dde2c217237c9295cf3b2b37a2'
-    token = '99e6e2f5b75ef2a3b9d7c89a53bbcfab'
-    client = Client(sid, token)
-    client.messages.create(
-        from_='whatsapp:+14155238886',
-        body=msg,
-        to='whatsapp:+6593902413'
-    )
 
 def validate_phone(phone_str):
     try:

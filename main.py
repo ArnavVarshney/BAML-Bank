@@ -5,7 +5,6 @@ from pyfiglet import Figlet
 import admin
 import customer
 from authentication import existing_user
-from database import sql_setup, register_employee, register_branch, register_customer, register_account
 from utility import print_name, clear_console, pause, about
 '''
 sql_setup()

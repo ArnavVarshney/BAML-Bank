@@ -153,8 +153,8 @@ def intro():
                     print()
                     choice = input("Command: ")
                     if choice == '1':
-                        customer_id = input("Customer ID: ")
-                        result = retrieve_accounts_customer(customer_id)
+                        customer_id = get_id_customer(username)
+                        result = retrieve_accounts_customer(customer_id[12])
                         if len(result) != 0:
                             print(
                                 165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(

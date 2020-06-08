@@ -6,7 +6,7 @@ from pyfiglet import Figlet
 
 from database import retrieve_all_customers, retrieve_customer, get_id_customer, register_customer, delete_customer, \
     update_customer
-from utility import pause, clear_console, print_name, validate_phone,  validate_email, send_message
+from utility import pause, clear_console, print_name, validate_phone,  validate_email
 
 
 def view_all_customers():

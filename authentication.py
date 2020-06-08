@@ -13,7 +13,7 @@ def existing_user():
         print(Figlet('small').renderText('Login'))
         username = input('Username: ')
         password = getpass.getpass()
-        role = input('Role [1. Employee, 2. Customer]: ')
+        role = input('Role [0. Employee, 2. Customer]: ')
         if check_auth(username, password, role):
             print('Logged in successfully!')
             return role, username
