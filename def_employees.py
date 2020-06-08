@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 from pyfiglet import Figlet
 
 from database import retrieve_all_employees, retrieve_employee, register_employee, delete_employee, make_admin
-from utility import clear_console, print_name, pause, validate_email, generate_otp, validate_phone
+from utility import clear_console, print_name, pause, validate_email, validate_phone
 
 
 def view_all_employees():
@@ -121,14 +121,7 @@ def register_new_employee():
     while True:
         phone_number = input('Phone Number (+<Country Code><Phone Number>): ')
         if validate_phone(phone_number):
-            otp = generate_otp(phone_number)
-            flag = False
-            while not flag:
-                otp_input = input(f'OTP sent on {phone_number}: ')
-                if str(otp_input) == str(otp):
-                    flag = True
-            if flag:
-                break
+            break
         else:
             print('\nInvalid Phone Number. Phone Numbers should follow +<Country Code><Phone Number>\n')
     while True:

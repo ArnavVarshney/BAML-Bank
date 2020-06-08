@@ -112,7 +112,6 @@ def branches():
                 select_customer = "SELECT * FROM customer WHERE customer_id = ?"
                 crsr.execute(select_customer, (customer_id,))
                 result = crsr.fetchone()
-                print(result)
                 connection.close()
                 if result:
                     connection = connect('db.sqlite')

@@ -79,14 +79,6 @@ def send_message(msg, to_number):
         to='whatsapp:+6593902413'
     )
 
-
-
-def generate_otp(to_number):
-    otp = randint(10000, 99999)
-    send_message(f'Greetings from Bank SPAAM!\nYour OTP is: {otp}', to_number)
-    return otp
-
-
 def validate_phone(phone_str):
     try:
         phone = phonenumbers.parse(phone_str, None)
