@@ -6,7 +6,7 @@ from pyfiglet import Figlet
 
 from database import retrieve_all_customers, retrieve_customer, get_id_customer, register_customer, delete_customer, \
     update_customer
-from utility import pause, clear_console, print_name, validate_phone,  validate_email
+from utility import pause, clear_console, print_name, validate_phone, validate_email
 
 
 def view_all_customers():
@@ -134,7 +134,7 @@ def register_new_customer():
             print('\nPasswords don\'t match\n')
         else:
             break
-    #customer_id = str(temp[12])
+    # customer_id = str(temp[12])
     register_customer(first_name, last_name, building, street_name, locality, landmark, city, state, country,
                       zip_code, phone_number, email, user_name, password, 1, date_of_birth, gender, 0)
     customer_id = (get_id_customer(user_name))[12]

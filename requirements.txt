@@ -1,5 +1,4 @@
-dateutil
-twilio
+python-dateutil
 phonenumbers
 pyIsEmail
 termcolor

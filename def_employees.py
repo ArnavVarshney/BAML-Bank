@@ -32,13 +32,16 @@ def view_all_employees():
         print('No registered employees found!')
 
 
-def view_employee_info():
+def view_employee_info(**kwargs):
     clear_console()
     print_name()
     print(Figlet('small').renderText('Employee Info'))
     while True:
-        employee_user_name = input('Employee Username: ')
-        emp = retrieve_employee(employee_user_name)
+        if not kwargs:
+            employee_user_name = input('Employee Username: ')
+            emp = retrieve_employee(employee_user_name)
+        else:
+            emp = retrieve_employee(kwargs.get('employee_user_name'))
         if emp:
             print()
             print(f'Employee ID: {emp[0]}')

@@ -26,10 +26,11 @@ def view_all_branches():
                     str(i[2]), i[3],
                     i[4], i[5],
                     i[6], i[7],
-                    i[8],str(i[9])))
+                    i[8], str(i[9])))
         print(155 * '-')
     else:
         print('No registered branches found!')
+
 
 def view_all_accounts(branch_code):
     all_records = retrieve_all_accounts_branch(branch_code)
@@ -49,8 +50,9 @@ def view_all_accounts(branch_code):
 
 
 def branches():
-    branches_list = ['1. View all Branches','2. Create a new branch', '3. Add/Remove customers from Branch ', '4. View Transaction details',
-                      '#. Return to Previous Menu', ]
+    branches_list = ['1. View all Branches', '2. Create a new branch', '3. Add/Remove customers from Branch ',
+                     '4. View Transaction details',
+                     '#. Return to Previous Menu', ]
     while True:
         clear_console()
         print_name()
@@ -81,7 +83,7 @@ def branches():
                     break
                 else:
                     print('\nInvalid Zip Code\n')
-            register_branch(branch_name , building , street_name , locality , landmark , city , state , country , zip_code)
+            register_branch(branch_name, building, street_name, locality, landmark, city, state, country, zip_code)
             connection = connect('db.sqlite')
             crsr = connection.cursor()
             crsr.execute("SELECT * FROM branch WHERE branch_name = ?", (branch_name,))
@@ -93,7 +95,7 @@ def branches():
 
         elif inp == '3':
             branch_list = ['1. Add a Customer', '2. Remove a Customer',
-                             '#. Return to Previous Menu' ]
+                           '#. Return to Previous Menu']
             clear_console()
             print_name()
             print(Figlet('small').renderText('Associated Customers'))
@@ -118,7 +120,7 @@ def branches():
                     crsr = connection.cursor()
                     crsr.execute('SELECT * FROM customer WHERE customer_id = ?', (customer_id,))
                     temp = crsr.fetchone()
-                    num = register_account(temp[12], branch_code)
+                    register_account(temp[12], branch_code)
                     pause()
                 else:
                     print('Invalid entry!')
@@ -138,7 +140,7 @@ def branches():
             print_name()
             print('\n'"Filter by:")
             branch_list = ['1. Customer ID ', '2. Branch ID',
-                             '#. Return to Previous Menu']
+                           '#. Return to Previous Menu']
             print(Figlet('small').renderText('Transaction Details'))
             for i in branch_list:
                 print('\t' + i)
@@ -149,7 +151,7 @@ def branches():
                 print_name()
                 print('\n'"Filter by:")
                 print(Figlet('small').renderText('Transaction Details'))
-                list_1 =['1. Date','2. View all Transactions']
+                list_1 = ['1. Date', '2. View all Transactions']
                 for i in list_1:
                     print('\t' + i)
                 print()
