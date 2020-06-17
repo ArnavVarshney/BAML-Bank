@@ -71,8 +71,15 @@ def intro():
                             pause()
                         break
                     else:
-                        deposit_amount = int(input("Deposit Amount: "))
-                        deposit(deposit_amount, username)
+                        print("Maximum amount: 10000")
+                        while True:
+                            deposit_amount = int(input("Deposit Amount: "))
+                            if 0 < deposit_amount <= 10000:
+                                break
+                            else:
+                                print("Enter a Valid Number")
+                        print(deposit_amount)
+                        deposit(deposit_amount, account, username)
 
                 elif inp == '2':
                     result = retrieve_customer(username)
@@ -107,8 +114,14 @@ def intro():
                             pause()
                         break
                     else:
-                        transact_amount = int(input("Transaction Amount: "))
-                        transact(transact_amount, username)
+                        print("Maximum amount: 10000")
+                        while True:
+                            transact_amount = int(input("Transaction Amount: "))
+                            if 0 < transact_amount <= 10000:
+                                break
+                            else:
+                                print("Enter a Valid Number")
+                        transact(transact_amount, account, username)
 
                 elif inp == '3':
                     result = retrieve_customer(username)
@@ -144,8 +157,14 @@ def intro():
                         break
                     else:
                         acc = input("Target Account: ")
-                        transfer_amount = int(input("Transfer Amount: "))
-                        transfer(transfer_amount, username, (acc,))
+                        print("Maximum amount: 10000")
+                        while True:
+                            transfer_amount = int(input("Transfer Amount: "))
+                            if 0 < transfer_amount <= 10000:
+                                break
+                            else:
+                                print("Enter a Valid Number")
+                        transfer(transfer_amount, username, (acc,), account)
 
                 elif inp == '4':
                     sub_menu = ['1: View Transaction Details', '2. View Balance']
@@ -154,8 +173,7 @@ def intro():
                     print()
                     choice = input("Command: ")
                     if choice == '1':
-                        customer_id = get_id_customer(username)
-                        result = retrieve_accounts_customer(customer_id[12])
+                        result = retrieve_accounts_customer(account)
                         if len(result) != 0:
                             print(
                                 165 * '-' + '\n' + '| {:^13s} | {:^15s} | {:^15s} | {:^20s} | {:^10s} | {:^10s} | {:^20s} | {:^20s} | {:^15s} |'.format(
@@ -181,7 +199,7 @@ def intro():
                         else:
                             print('No records found!')
                     elif choice == '2':
-                        result = str(view_balance(username))
+                        result = str(view_accbalance(account))
                         print("Your account balance is: $" + result)
                 elif inp == '5':
                     register_account_1(username)

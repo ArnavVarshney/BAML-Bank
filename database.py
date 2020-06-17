@@ -263,10 +263,10 @@ def retrieve_accounts(branch_code):
     return rows
 
 
-def retrieve_accounts_customer(customer_id):
+def retrieve_accounts_customer(account_num):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
-    crsr.execute("SELECT * FROM transaction_log WHERE customer_id = ?", (customer_id,))
+    crsr.execute("SELECT * FROM transaction_log WHERE account_number = ?", (account_num,))
     rows = crsr.fetchall()
     connection.close()
     return rows
@@ -377,59 +377,57 @@ def list_all_account(username):
     return temp
 
 
-def transact(transact, user):
+def transact(transact, account_num, user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
     temp = crsr.fetchone()
-    crsr.execute("SELECT account_number FROM account WHERE customer_id = ?", (temp[12],))
-    temp_1 = (crsr.fetchone())[0]
     crsr.execute(
         "INSERT INTO transaction_log(customer_id, account_number, date , time , "
         "branch , amount , opening_balance , "
         "closing_balance , remarks ) VALUES(?,?,?,?,?,?,?,?,?)",
-        (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], transact, temp[16], temp[16] - transact,
+        (temp[12], account_num, get_current_date(), get_current_time(), temp[15], str(transact), temp[16], temp[16] - transact,
          'Transact'))
 
     temp_2 = temp[16]
     crsr.execute(
         "UPDATE account SET balance = ? WHERE account_number = ?",
-        (temp_2 + transact, temp_1)
+        (temp_2 + transact, account_num)
     )
     temp_2 = temp_2 - transact
     crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
                  (temp_2, user))
+    print("Transaction Successful")
     connection.commit()
     connection.close()
 
 
-def deposit(deposit, user):
+def deposit(deposit, account_num, user):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user,))
     temp = crsr.fetchone()
-    crsr.execute("SELECT account_number FROM account WHERE customer_id = ?", (temp[12],))
-    temp_1 = (crsr.fetchone())[0]
     crsr.execute(
         "INSERT INTO transaction_log(customer_id, account_number, date , time , "
         "branch , amount , opening_balance , "
         "closing_balance , remarks ) VALUES(?,?,?,?,?,?,?,?,?)",
-        (temp[12], temp_1, get_current_date(), get_current_time(), temp[15], deposit, temp[16], temp[16] + deposit,
+        (temp[12], int(account_num), get_current_date(), get_current_time(), temp[15], int(deposit), temp[16], temp[16] + int(deposit),
          'Deposit'))
 
     temp_2 = temp[16]
     crsr.execute(
         "UPDATE account SET balance = ? WHERE account_number = ?",
-        (temp_2 + deposit, temp_1)
+        (temp_2 + int(deposit), account_num)
     )
-    temp_2 = temp_2 + deposit
+    temp_2 = temp_2 + int(deposit)
     crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
                  (temp_2, user))
+    print("Deposit Successful")
     connection.commit()
     connection.close()
 
 
-def transfer(transfer, user_1, acc):
+def transfer(transfer, user_1, acc, acc_1):
     connection = connect('db.sqlite')
     crsr = connection.cursor()
     crsr.execute('SELECT * FROM customer WHERE user_name = ?', (user_1,))
@@ -445,8 +443,9 @@ def transfer(transfer, user_1, acc):
             if crsr.fetchone() is not None:
                 crsr.execute('SELECT user_name FROM customer WHERE customer_id = ?', temp)
                 temp_2 = str((crsr.fetchone())[0])
-                deposit(transfer, temp_2)
-                transact(transfer, user_1)
+                deposit(transfer, acc[0], temp_2)
+                transact(transfer, acc_1, user_1)
+                print("Transfer Successful")
             else:
                 print("User does not exist")
         else:
@@ -464,6 +463,15 @@ def view_balance(user_name):
     connection.close()
     return temp[0]
 
+
+def view_accbalance(acc):
+    connection = connect('db.sqlite')
+    crsr = connection.cursor()
+    crsr.execute('SELECT balance FROM account WHERE account_number = ?', (acc,))
+    temp = crsr.fetchone()
+    connection.commit()
+    connection.close()
+    return temp[0]
 
 def del_table():
     connection = connect('db.sqlite')
