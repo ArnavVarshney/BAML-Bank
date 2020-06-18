@@ -13,7 +13,6 @@ sql_setup()
 
 os.environ['loggedin'] = ''
 
-
 def intro():
     main_menu = ['1. Login', '2. About Us', '3. Exit']
     try:

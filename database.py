@@ -63,13 +63,11 @@ def sql_setup():
         print('Table employee could not be created')
 
     # Demo Data
-
-    try:
+    if retrieve_employee("admin") is False:
         register_employee('admin', 'Arnav', 'Varshney', 'admin', 0, 1, '29/12/2003', 'M', '27', 'Punggol Field Walk',
                           'Punggol', '', 'Singapore', 'Singapore', 'Singapore', '828649', '+919662364695',
                           'varshney.arnav@gmail.com')
-    except:
-        print('Couldn\'t register admin. Check if value already exists!')
+
     connection.commit()
     connection.close()
 
@@ -392,7 +390,7 @@ def transact(transact, account_num, user):
     temp_2 = temp[16]
     crsr.execute(
         "UPDATE account SET balance = ? WHERE account_number = ?",
-        (temp_2 + transact, account_num)
+        (temp_2 - transact, account_num)
     )
     temp_2 = temp_2 - transact
     crsr.execute('UPDATE customer SET balance = ?  WHERE user_name = ?',
@@ -479,4 +477,6 @@ def del_table():
     crsr.execute("DROP TABLE transaction_log")
     crsr.execute("DROP TABLE branch")
     crsr.execute("DROP TABLE customer")
+    crsr.execute("DROP TABLE account")
+    crsr.execute("DROP TABLE employee")
     connection.commit()
